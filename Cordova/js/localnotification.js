@@ -1,0 +1,82 @@
+var no_notifs = 0;
+var maxnotif = 0;
+var diff = "";
+
+function triggerConsumption(id, app_id) {
+	cordova.plugins.notification.local.hasPermission(function(granted) {
+		cordova.plugins.notification.local.schedule({
+			id: 2,
+			title: 'Appliance Almost At Limit',
+			text: 'Appliance: ' + app_id + ' Almost At Limit',
+			badge: 1
+		});
+	});
+}
+
+function triggerAnoApp(id, app_id) {
+	cordova.plugins.notification.local.hasPermission(function(granted) {
+		cordova.plugins.notification.local.schedule({
+			id: 1,
+			title: 'Anonymous Appliance',
+			text: 'An Anonymous Appliance is plugged',
+			badge: 2
+		});
+	});
+}
+
+function triggerNewApp(id, app_id) {
+	cordova.plugins.notification.local.hasPermission(function(granted) {
+		cordova.plugins.notification.local.schedule({
+			id: 1,
+			title: 'New Unregistered Appliance',
+			text: 'A New Unregistered Appliance Id: ' + app_id + ' is plugged',
+			badge: 3
+		});
+	});
+}
+
+
+function identifyNotifs(num) {
+	$.ajax({
+		type: "POST",
+		data: "getnewnotifs=" + num,
+		url: 'http://' + deviceHost + '/notifmethods.php',
+		crossDomain: true,
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		success: function(data) {
+			var latest_notif = JSON.parse(data.trim());
+			console.log(data.trim());
+			for (var i = 0; i < latest_notif.length; i++) {
+				if (latest_notif[i].type == 'newanoapp') {
+					triggerAnoApp(latest_notif[i].id, latest_notif[i].app);
+				} else if (latest_notif[i].type == 'newapp') {
+					triggerNewApp(latest_notif[i].id, latest_notif[i].app);
+				} else if (latest_notif[i].type == 'consumption') {
+					triggerConsumption(latest_notif[i].id, latest_notif[i].app);
+				}
+			}
+		}
+	});
+}
+
+function checkLocal() {
+	$.ajax({
+		type: "POST",
+		data: "countnotifs="+maxnotif+"&notifs="+no_notifs,
+		url: 'http://'+deviceHost+'/notifmethods.php',
+		crossDomain: true,
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		success: function(data) {
+			if (data.trim().match(/RELOAD/i)) {
+				var res = data.trim().split("|");
+				if(res[0]>no_notifs){
+					diff = res[0] - no_notifs;
+					identifyNotifs(diff);
+					no_notifs = res[0];
+					maxnotif = res[1];
+				}
+			}
+		}
+	});
+}
+

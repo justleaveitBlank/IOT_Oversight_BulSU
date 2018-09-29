@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>OVERSIGHT</title>
+	<link rel="shortcut icon" href="imgs/Logo3.png">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<!--Import Google Icon Font-->
+	<link href="css/material+icons.css" rel="stylesheet">
+
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+	<style>
+		@viewport {
+		  width: device-width ;
+		  zoom: 1.0 ;
+		}
+		@-ms-viewport {
+		  width: device-width ;
+		}
+		*{
+			margin:0;
+			font-family: verdana,arial;
+			font-smooth: always;
+			font-smoothing: antialiased;
+			font-size:16px;
+			user-select:none;
+			color:black;
+		}
+		body{
+			width: 100%;
+			height: 100%;
+			background: rgba(138,43,226,1) radial-gradient(transparent,rgba(75,0,130,1));
+			background: rgba(138,43,226,1) linear-gradient(rgba(75,0,130,1),rgba(138,43,226,1));
+			background-attachment: fixed;
+			background-position: center;
+			background-size: 100% 100%;
+			color: #fff;
+			align-items: center;
+		}
+		.appLogo{
+			margin:0 auto;
+			height:100px;
+			width:100px;
+			background:url("imgs/Logo_100px.png") no-repeat;
+			background-size:cover;
+			font-size: 3.2vh;
+			user-select:none;
+			position:relative;
+		}
+		.appName{
+			font-size: 2rem;
+			color:white;
+			font-weight:bold;
+			margin: 0 auto;
+			width: fit-content;
+			user-select:none;
+			position:relative;
+		}
+		.submitbtn{
+			width:100%;
+			font-weight:bold;
+			font-size:20px;
+			margin:10px 0;
+			box-sizing:border-box;
+		}
+		.spacing1{
+			display:inline-block;
+			width:100%;
+			padding: 10px;
+			margin: 0.1rem 0 1.5rem 0;
+			position:relative;
+		}
+		.modalContents{
+			width: 100%;
+			height: 100%;
+			display:block;
+			user-select: none
+		}
+
+		input.border_bottom_green.valid:not([type]),
+		input.border_bottom_green.valid:not([type]):focus,
+		input[type=text].border_bottom_green.valid:not(.browser-default),
+		input[type=text].border_bottom_green.valid:not(.browser-default):focus,
+		input[type=password].border_bottom_green.valid:not(.browser-default),
+		input[type=password].border_bottom_green.valid:not(.browser-default):focus,
+		input[type=email].border_bottom_green.valid:not(.browser-default),
+		input[type=email].border_bottom_green.valid:not(.browser-default):focus,
+		input[type=url].border_bottom_green.valid:not(.browser-default),
+		input[type=url].border_bottom_green.valid:not(.browser-default):focus,
+		input[type=time].border_bottom_green.valid:not(.browser-default),
+		input[type=time].border_bottom_green.valid:not(.browser-default):focus,
+		input[type=date].border_bottom_green.valid:not(.browser-default),
+		input[type=date].border_bottom_green.valid:not(.browser-default):focus,
+		input[type=datetime].border_bottom_green.valid:not(.browser-default),
+		input[type=datetime].border_bottom_green.valid:not(.browser-default):focus,
+		input[type=datetime-local].border_bottom_green.valid:not(.browser-default),
+		input[type=datetime-local].border_bottom_green.valid:not(.browser-default):focus,
+		input[type=tel].border_bottom_green.valid:not(.browser-default),
+		input[type=tel].border_bottom_green.valid:not(.browser-default):focus,
+		input[type=number].border_bottom_green.valid:not(.browser-default),
+		input[type=number].border_bottom_green.valid:not(.browser-default):focus,
+		input[type=search].border_bottom_green.valid:not(.browser-default),
+		input[type=search].border_bottom_green.valid:not(.browser-default):focus,
+		textarea.materialize-textarea.border_bottom_green.valid,
+		textarea.materialize-textarea.border_bottom_green.valid:focus,
+		.select-wrapper.border_bottom_green.valid > input.border_bottom_green.select-dropdown{
+		  border-bottom: 1px solid #4CAF50;
+		  -webkit-box-shadow: 0 1px 0 0 #4CAF50;
+				  box-shadow: 0 1px 0 0 #4CAF50;
+		}
+
+		.text_indent{
+			text-indent:2rem
+		}
+		input.border_bottom_darkgray:not([type]):focus:not([readonly]),
+		input[type=text].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		input[type=password].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		input[type=email].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		input[type=url].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		input[type=time].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		input[type=date].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		input[type=datetime].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		input[type=datetime-local].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		input[type=tel].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		input[type=number].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		input[type=search].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
+		textarea.border_bottom_darkgray.materialize-textarea:focus:not([readonly]) {
+		  border-bottom: 1px solid #616161;
+		  -webkit-box-shadow: 0 1px 0 0 #757575;
+				  box-shadow: 0 1px 0 0 #757575;
+		}
+		html, body, .my-wrapper {
+		  height: 100%;
+		}
+		.border_right{
+			border-right:solid 1px white;
+			height:95vh;
+		}
+		.modal-limits{
+			overflow-x:hidden;
+		}
+
+		#toast-container {
+		  top: auto !important;
+		  right: auto !important;
+		  bottom: 50%;
+		}
+	</style>
+	<!--JavaScript at end of body for optimized loading-->
+
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.js"></script>
+	<script type="text/javascript" src="js/socket.io.js"></script>
+	<script type="text/javascript" src='js/oversight_dep.js'></script>
+	<!--cordova-->
+
+	<script>
+		$(document).ready(function(){
+			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
+			$('#forgotPassword').modal();
+			$('#registerForm').modal();
+		});
+	</script>
+</head>
+<body>
+	<div class="my-wrapper valign-wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col l8 s12 hide-on-med-and-down border_right">
+					<h5 class="white-text">Company Bio</h5>
+					<p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+				</div>
+
+				<div class="col l4 s12 show-on-medium-and-down">
+					<div class="container">
+						<div class="row">
+								<div class="appLogo"></div>
+								<p class="appName ">OVERSIGHT</p>
+							<form class="col s12" method="POST" action="" id='loginForm'>
+								<div class="input-field col s12">
+									<i class="material-icons prefix">account_box</i>
+									<input id="user_name" type="text" class="validate white-text" autocomplete="off" required/>
+									<span class="helper-text" data-error="&#10006" data-success=""></span>
+									<label for="user_name">User Name</label>
+								</div>
+								<div class="input-field col s12">
+									<i class="material-icons prefix">lock</i>
+									<input id="password" type="password" class="validate white-text" autocomplete="off" required/>
+									<span class="helper-text" data-error="&#10006" data-success=""></span>
+									<label for="password">Password</label>
+								</div>
+								<button id='btnlogin' class="submitbtn btn waves-effect waves-light light-blue accent-4" type="submit" name="action">Log In</button>
+
+								<!-- Modal Trigger -->
+								<a class=" grey-text darken-4 spacing1 modal-trigger center-align" href="#forgotPassword">Forgot password?</a>
+
+								<!-- Modal Trigger -->
+								<a class="waves-effect waves-light btn modal-trigger submitbtn yellow darken-4" href="#registerForm">Register</a>
+							</form>
+
+							<div id='sampleholder'></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Modal Structures-->
+	<div class="modalCon">
+		<div class="my-wrapper valign-wrapper">
+			<!-- Modal Structure for forgot password-->
+			<div id="forgotPassword" class="modal modal-fixed-footer">
+				<form class="col s12" method="POST" action="">
+					<div class="modal-content">
+						<div class="row">
+							<h5>Forgot your passoword?</h5>
+							<p class="text_indent">Don't worry. Resseting your password is easy. Just tell us your email address you registered with OverSigth</p>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<i class="material-icons prefix grey-text text-darken-2">email</i>
+								<input id="email" type="email" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+								<label for="email" class="grey-text text-darken-2">Email</label>
+								<span class="helper-text" data-error="Invalid email address" data-success="Valid email address"></span>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a href="#!" class=" modal-action modal-close waves-effect waves-purple btn-flat">Send</a>
+						<a href="#!" class=" modal-action modal-close waves-effect waves-purple btn-flat">Cancel</a>
+					</div>
+				</form>
+			</div>
+
+			<!-- Modal Structure for register form-->
+			<div id="registerForm" class="modal bottom-sheet modal-limits">
+				<form class="col s12" method="POST" action="">
+					<div class="modal-content">
+						<h5>Register</h5>
+						<br>
+						<div class="row">
+							<div class="input-field col s6">
+								<input id="r_firstName" type="text" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+								<label for="r_firstName" class="grey-text text-darken-2">First name</label>
+							</div>
+							<div class="input-field col s6">
+								<input id="r_lastName" type="text" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+								<label for="r_lastName" class="grey-text text-darken-2">Last name</label>
+							</div>
+						</div>
+						<div class="input-field col s12">
+							<i class="material-icons prefix grey-text text-darken-2">account_box</i>
+							<input id="r_username" type="text" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+							<label for="r_username" class="grey-text text-darken-2">Username</label>
+							<span class="helper-text" data-error="Invalid Username" data-success="Valid username"></span>
+						</div>
+						<div class="input-field col s12">
+							<i class="material-icons prefix grey-text text-darken-2">email</i>
+							<input id="r_email" type="email" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+							<label for="r_email" class="grey-text text-darken-2">Email address</label>
+							<span class="helper-text" data-error="Invalid email address" data-success="Valid email address"></span>
+						</div>
+						<div class="input-field col s12">
+							<i class="material-icons prefix grey-text text-darken-2">contact_phone</i>
+							<input id="r_contact" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "11" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+							<label for="r_contact" class="grey-text text-darken-2">Contact Number</label>
+							<span class="helper-text" data-error="&#10006;" data-success="&#10004;"></span>
+						</div>
+						<div class="input-field col s12">
+							<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
+							<input id="r_password" type="password" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+							<label for="r_password" class="grey-text text-darken-2">Password</label>
+							<span class="helper-text" data-error="&#10006; 8 characters or longer" data-success="&#10004;"></span>
+						</div>
+						<div class="input-field col s12">
+							<i class="material-icons prefix grey-text text-darken-2">lock</i>
+							<input id="r_c_password" type="password" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+							<label for="r_c_password" class="grey-text text-darken-2">Confirm password</label>
+							<span class="helper-text" data-error="&#10006; Password dont't match" data-success="&#10004; Password  match"></span>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a href="#!" id='submit_register' class="waves-effect waves-purple btn-flat">Register</a>
+						<a href="#!" class="modal-close waves-effect waves-purple btn-flat">Cancel</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/function.js"></script>
+	<script type="text/javascript" src="js/register.js"></script>
+	<script type="text/javascript" src="js/login.js"></script>
+</body>
+</html>
