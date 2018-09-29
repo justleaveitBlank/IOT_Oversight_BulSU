@@ -22,6 +22,12 @@ $stmt = $appliance->search($appl_uid);
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
+$appliance_pluggedStatus=array(
+	"plugged" =>$aDevice
+	);
+$json_has_power_data = json_encode($appliance_pluggedStatus, JSON_PRETTY_PRINT);
+//create json file
+file_put_contents('plugged.json',  $json_has_power_data);
 
 if($num>0 && $appl_uid !="NO_UID"){
 
@@ -50,7 +56,7 @@ if($num>0 && $appl_uid !="NO_UID"){
     }
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
-	echo $aDevice."||".$UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
+	echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
 	echo  $json_has_power_data ;
 
 	//create json file
@@ -76,7 +82,7 @@ else if($num>0 && $appl_uid == "NO_UID"){
         );
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
-	echo $aDevice."||".$UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
+	echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
 	echo  $json_has_power_data ;
 
 	//create json file
@@ -96,7 +102,7 @@ else{
 		);
 		$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 		// get from signedPowerData.php since this is impoted
-		echo $aDevice."||".$UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
+		echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
 		echo  $json_has_power_data ;
 
 		//create json file
