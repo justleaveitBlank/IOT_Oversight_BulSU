@@ -20,11 +20,21 @@ $appl_uid=isset($_GET["UID"]) ? $_GET["UID"] : "";
 // query products
 $stmt = $appliance->search($appl_uid);
 $num = $stmt->rowCount();
-
+//echo $aDevice."\r\n";
 // check if more than 0 record found
-$appliance_pluggedStatus=array(
-	"plugged" =>$aDevice
-	);
+
+$appliance_pluggedStatus= new stdClass();
+$appliance_pluggedStatus->plugged = $aDevice;
+$appliance_pluggedStatus->uid = "";
+$appliance_pluggedStatus->registered = false;
+
+if($aDevice=="1" and $num>0){
+	$appliance_pluggedStatus->uid = $appl_uid;
+	$appliance_pluggedStatus->registered = true;
+} else if ($aDevice=="1" and $num<=0){
+	$appliance_pluggedStatus->uid = $appl_uid;
+}
+
 $json_has_power_data = json_encode($appliance_pluggedStatus, JSON_PRETTY_PRINT);
 //create json file
 file_put_contents('plugged.json',  $json_has_power_data);
@@ -56,7 +66,7 @@ if($num>0 && $appl_uid !="NO_UID"){
     }
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
-	echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
+	//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
 	echo  $json_has_power_data ;
 
 	//create json file
@@ -82,7 +92,7 @@ else if($num>0 && $appl_uid == "NO_UID"){
         );
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
-	echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
+	//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
 	echo  $json_has_power_data ;
 
 	//create json file
@@ -96,13 +106,13 @@ else{
 	}
 	else{
 		$appliance_arr=array(
-		"uid" => $appl_uid,
-		"has_power" => "0",//value change depeding on the value of the user select 0/1
-		"status" => "unregistered"
+			"uid" => $appl_uid,
+			"has_power" => "0",//value change depeding on the value of the user select 0/1
+			"status" => "unregistered"
 		);
 		$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 		// get from signedPowerData.php since this is impoted
-		echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
+		//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
 		echo  $json_has_power_data ;
 
 		//create json file

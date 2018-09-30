@@ -285,40 +285,36 @@ function loadinfos() {
 
 function checkPlugged() {
 	$.getJSON('http://' + deviceHost + '/plugged.json', function (data) {
-		//------------------------SAVE TO LOCALSTORAGE ----------------------------
-		window.localStorage.setItem('pluggedDevices',JSON.stringify(data));
-		//-------------------------------------------------------------------------
-		var pluggedDevices = 	window.localStorage.getItem('pluggedDevices');
-		var data_array = JSON.parse(pluggedDevices);
-		$.each(data_array, function (key, val) {
-			if (key == "uid" && val == "") {
+		console.log(data);
+			if(data.plugged=="1"){
+				if (data.registered) {
+					$("#noappnotice").hide();
+					$('#unregisterednotice').hide();
+					$(".appliance-info").each(function () {
+						$(this).appendTo($("#registered-apps"));
+						$(this).find('.switch').hide();
+					});
+					if ($("#plugged-apps").find($(".appliance-info[name='" + data.uid + "']")).length == 0) {
+						$(".appliance-info[name='" + data.uid + "']").appendTo($("#plugged-apps"));
+						$(".appliance-info[name='" + data.uid + "']").find('.switch').show();
+					}
+				} else {
+					$("#noappnotice").hide();
+					$('#unregisterednotice').show();
+					$('.CardMessage').text("Unregistered Appliance: "+data.uid);
+				}
+			} else {
 				$(".appliance-info").each(function () {
 					$(this).appendTo($("#registered-apps"));
 					$(this).find('.switch').hide();
 				});
 				$("#noappnotice").show();
-			} else if (key == "uid" && val != "") {
-				$("#noappnotice").hide();
-				$(".appliance-info").each(function () {
-					$(this).appendTo($("#registered-apps"));
-					$(this).find('.switch').hide();
-				});
-				if ($("#plugged-apps").find($(".appliance-info[name='" + val + "']")).length == 0) {
-					$(".appliance-info[name='" + val + "']").appendTo($("#plugged-apps"));
-					$(".appliance-info[name='" + val + "']").find('.switch').show();
-				}
-				var DefaultData = {
-					"uid": "",
-					"registered": false
-				};
-				var resetData = JSON.stringify(DefaultData);
-				window.localStorage.setItem('pluggedDevices',JSON.stringify(resetData));
+				$('#unregisterednotice').hide();
 			}
-		});
 	});
 }
 checkPlugged();
-setInterval(checkPlugged, 2000);
+setInterval(checkPlugged, 500);
 
 loadapps();
 setInterval(checkapps, 500);

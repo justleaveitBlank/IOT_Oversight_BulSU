@@ -421,17 +421,31 @@
 					<i class="small material-icons icon-grey"> power</i>
 					<span>Currently Unplugged Devices</span>
 					<div class="col s12 m4 l8">
-						<ul class="collapsible" id='registered-apps'>
-							<!-- NEW -->
+						<ul class="collapsible" id='registered-apps'><!-- NEW -->
+							<div class="row">
+								<div class="input-field col s12 m4 l8">
+									<input id='apId' type="text" class="validate border_bottom_green border_bottom_darkgray" min="0"
+									 autocomplete="off" value='NO_UID' /><br>
+									<label for="apId" class="grey-text text-darken-2">Appliance</label>
+									<a href="#updateDevice" class="unplug waves-effect waves-light green white-text btn-flat">Unplug</a>
+									<a href="#updateDevice" class="plug waves-effect waves-light green white-text btn-flat">Plug</a>
+								</div>
+							</div>
 						</ul>
 					</div>
 				</div>
 
 				<script>
+					var arePluggedDevices = 1;
+					var typeUID="NO_UID";
+					var uid = "NO_UID";
+					var intervalfunction;
+
 					function throwDataOnSigned(){
+						console.log(uid);
 						$.ajax({
 							type: "GET",
-							data: "UID=NO_UID&powerdata=ae113a20||224.20||0.01||0.00||0.00&notifStat=1",
+							data: "UID="+uid+"&powerdata=ae113a20||224.20||0.01||0.00||0.00&notifStat=1&aDevice="+arePluggedDevices,
 							url: 'http://' + deviceHost + '/signedPowerData.php',
 							crossDomain: true,
 							contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -479,7 +493,25 @@
 						}); */
 					}
 				//	checkPlugged();
-					setInterval(throwDataOnSigned,3000);
+				$('.plug').click(function(){
+					uid=typeUID;
+					arePluggedDevices = 1;
+					throwDataOnSigned();
+					intervalfunction = setInterval(throwDataOnSigned,3000);
+				});
+
+				$('#apId').keyup(function(){
+					typeUID = $(this).val();
+				});
+
+				$('.unplug').click(function(){
+					clearInterval(intervalfunction);
+					uid="";
+					arePluggedDevices = 0;
+					throwDataOnSigned();
+				});
+
+
 				//	setInterval(checkPlugged,2000);
 				</script>
 

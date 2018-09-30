@@ -326,7 +326,11 @@
 		#noappnotice{
 			padding: 1rem;
 		}
-
+		#unregisterednotice{
+			display: none;
+			padding: 1rem;
+			font-size: 1rem;
+		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
 
@@ -396,11 +400,17 @@
 			<div class="col s12 m4 l8">
 
 				<div class="row">
-					
+
 					<p><i class="small material-icons icon-green">power</i> Plugged Devices</p>
 					<div class="col s12 m4 l8">
 						<ul class="collapsible" id='plugged-apps'>
 							<div id='noappnotice'>No Appliance Plugged!</div>
+							<div class='card' id='unregisterednotice'>
+								<span class="CardMessage"></span>
+								<div class="card-action right-align">
+									<a href='notifications.html' class="btn-small waves-effect waves-light orange white-text sTitle">Resolve</a>
+								</div>
+							</div>
 						</ul>
 					</div>
 				</div>

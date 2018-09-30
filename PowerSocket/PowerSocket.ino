@@ -281,7 +281,7 @@ String sendSignedPowerData(String UID, String volt, String amp, String power, St
 
 void noAppliancePlugged(){
   connectToHost();
-  String message = "NULL||NULL||NULL||NULL";
+  String message = "0||0||0||0";
   String PHPmessage = "GET /signedPowerData.php?UID=NO_UID&powerdata=" + message +"&notifStat=" + notifStat +"&aDevice=" + aDevice +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
   String commandSend = "AT+CIPSEND=1," + String(PHPmessage.length());
   wifiSerial.println(commandSend); //Send to ID 1, length DATALENGTH
@@ -329,7 +329,7 @@ void parseJSON(){
     }
     notifStat = false;
     sendOnceUnplugged = false;
-    if (c.indexOf("1,CLOSED") > 0 || c.indexOf("busy p") > 0 || c.indexOf("SEND FAIL") > 0){
+    if (c.indexOf("1,CLOSED") > 0 || c.indexOf("busy p") > 0 || c.indexOf("SEND FAIL") > 0 || c.indexOf("<b>Warning</b>") > 0){
       relayOff();
       Serial.println("Connection Lost, Reconnecting...");
       connectionError = true;
@@ -494,7 +494,6 @@ void loop() {
         delay(100);
       }
       if(aDevice == true){
-        Serial.print("aDevice setting to FALSE\r\n");
         aDevice=false;
         noAppliancePlugged();
       }

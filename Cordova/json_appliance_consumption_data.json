@@ -1,10 +1,10 @@
 {
-    "uid": "NO_UID",
-    "voltage": "NULL",
-    "ampere": "NULL",
-    "power": "NULL",
-    "watthr": "NULL",
-    "date": "2018-09-29",
-    "time": "17:57:26",
+    "uid": "ae113a20",
+    "voltage": "222.50",
+    "ampere": "0.01",
+    "power": "0.00",
+    "watthr": "0.03",
+    "date": "2018-09-30",
+    "time": "12:18:27",
     "gmt": "+08:00"
 }
