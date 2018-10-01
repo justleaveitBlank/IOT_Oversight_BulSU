@@ -284,9 +284,9 @@ function loadinfos() {
 }
 
 function checkPlugged() {
-	$.getJSON('http://' + deviceHost + '/plugged.json', function (data) {
-		console.log(data);
-			if(data.plugged=="1"){
+	//$.getJSON('http://' + deviceHost + '/plugged.json', function (data) {
+	$.getJSON('http://' + deviceHost + '/plugged.json?ts='+ $.now(), function (data) {
+			if(data.plugged!="0"){
 				if (data.registered) {
 					$("#noappnotice").hide();
 					$('#unregisterednotice').hide();
@@ -299,9 +299,19 @@ function checkPlugged() {
 						$(".appliance-info[name='" + data.uid + "']").find('.switch').show();
 					}
 				} else {
+					$(".appliance-info").each(function () {
+							$(this).appendTo($("#registered-apps"));
+							$(this).find('.switch').hide();
+						});
+					if(data.plugged=="2"){
+						$(".resolve-redirect").attr("disabled","");
+						$(".resolve-redirect").text("RESOLVED");
+					} else {
+						$(".resolve-redirect").removeAttr("disabled");
+					}
+					$('.CardMessage').text("Unregistered Appliance: "+data.uid);
 					$("#noappnotice").hide();
 					$('#unregisterednotice').show();
-					$('.CardMessage').text("Unregistered Appliance: "+data.uid);
 				}
 			} else {
 				$(".appliance-info").each(function () {

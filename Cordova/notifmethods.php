@@ -68,7 +68,7 @@
 		if(mysqli_num_rows($p_result)==1){
 			while($row=mysqli_fetch_assoc($p_result)) {
 				$app_id = $row['appliance_id'];
-				
+
 				$has_power_limit = 0;
 				if($newlimit > 0){
 					$has_power_limit = 1;
@@ -129,15 +129,15 @@
 											</div>
 											<div class="card-action right-align">
 												<a class="consumption_btn btn-small waves-effect waves-light orange white-text modal-trigger sTitle" href='#updateLimit' id='<?php echo $app_id;?>'>Update</a>
-												<a class="ignore btn-small waves-effect waves-light red white-text sTitle" id='<?php echo $id?>'>Ignore</a>
+												<a class="ignore btn-small waves-effect waves-light red white-text sTitle" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
 											</div>
 										</div>
-											
+
 									</div>
 								</div>
 							<?php
 						}
-						
+
 					}
 				}else if(trim($type)=='newapp'){
 				?>
@@ -151,9 +151,9 @@
 								<div class="card-action right-align">
 									<a id='<?php echo $app_id;?>' class="register-trigger modal-trigger btn-small waves-effect waves-light orange white-text sTitle" href="#register_appl">Register</a>
 									<a id='<?php echo $app_id;?>' class="allow-trigger btn-small waves-effect waves-light green white-text modal-trigger sTitle" href='#allowUnregistered'>Allow</a>
-									<a class="ignore btn-small waves-effect waves-light red white-text sTitle" id='<?php echo $id?>'>Ignore</a>
+									<a class="ignore btn-small waves-effect waves-light red white-text sTitle" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
 								</div>
-							</div>	
+							</div>
 						</div>
 					</div>
 				<?php
@@ -169,14 +169,14 @@
 								<div class="card-action right-align">
 									<a id='<?php echo $app_id;?>' class="register-trigger btn-small waves-effect waves-light orange white-text sTitle" href="#register_appl" disabled>Register</a>
 									<a id='<?php echo $app_id;?>' class="allow-trigger btn-small waves-effect waves-light green white-text modal-trigger sTitle" href='#allowUnregistered'>Allow</a>
-									<a class="ignore btn-small waves-effect waves-light red white-text sTitle" id='<?php echo $id?>'>Ignore</a>
+									<a class="ignore btn-small waves-effect waves-light red white-text sTitle" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
 								</div>
-							</div>	
+							</div>
 						</div>
 					</div>
 				<?php
 				}
-				
+
 			}
 		}
 		else{

@@ -1,7 +1,7 @@
 var no_notifs = 0;
 var notif_id = 0;
-var hours = [0, 1, 6, 12];
-var selected_hour = 69;
+var timearray = [0, 5, 15, 30, 60, 360, 720];
+var selected_time = 69;
 var triggered_notif = 0;
 var maxnotif = 0;
 var diff = 0;
@@ -9,8 +9,8 @@ var hourvalue = 0;
 
 $('#Restrictions').change(function() {
 	var value = $(this).find(":selected").attr('value');
-	hourvalue = ($(this).find(":selected").text().match(/No Restrictions/i)) ? "Unlimited Hours" : $(this).find(":selected").text();
-	selected_hour = hours[parseInt(value)];
+	hourvalue = ($(this).find(":selected").text().match(/No Restrictions/i)) ? "Unlimited Time" : $(this).find(":selected").text();
+	selected_time = timearray[parseInt(value)];
 });
 
 $('.consumption_btn').click(function() {
@@ -61,35 +61,19 @@ $('#accept_limit').mouseup(function() {
 });
 
 $('#allow_app_btn').mousedown(function() {
-	if (selected_hour != 69) {
+	if (selected_time != 69) {
 		$(this).addClass('modal-close');
 		//if(data.trim().match(/success/i)){
-			M.Toast.dismissAll();
-			var toastHTML = "<span style='color: white; width: 70%;'>Appliance Granted for " +hourvalue+ "!</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
-			M.toast({
-				html: toastHTML
-			});
-
-			$('.toast-action').click(function() {
-				M.Toast.dismissAll();
-			});
+			SendToastMessage("Appliance Granted for " +hourvalue+ "!");
 		//}
 	} else {
 		$(this).removeClass('modal-close');
-		M.Toast.dismissAll();
-		var toastHTML = "<span style='color: white; width: 70%; font-size:.82em;'>Please Select a Restriction to Allow Appliance Access!</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
-		M.toast({
-			html: toastHTML
-		});
-
-		$('.toast-action').click(function() {
-			M.Toast.dismissAll();
-		});
+		SendToastMessage("Please Select a Restriction to Allow Appliance Access!");
 	}
 });
 
 $('#allow_app_btn').mouseup(function() {
-	if (selected_hour != 69) {
+	if (selected_time != 69) {
 		var app_id = $(this).attr('name');
 		$.ajax({
 			type: "POST",
@@ -98,7 +82,10 @@ $('#allow_app_btn').mouseup(function() {
 			crossDomain: true,
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
 			success: function(data) {
-				console.log(data);
+				console.log(data.trim());
+				if(data.trim().match(/success/i)){
+					throwOnResolved(app_id);
+				}
 			}
 		});
 	}
@@ -108,9 +95,10 @@ $('#allow_app_btn').mouseup(function() {
 function ActivateButtons() {
 	$('.ignore').click(function() {
 		var notif_id = $(this).attr('id');
+		var app = $(this).attr('name');
 		$(this).closest('.row').fadeOut(function() {
 			$(this).remove();
-			ignorenotif(notif_id);
+			ignorenotif(notif_id,app);
 		});
 	});
 
@@ -141,7 +129,7 @@ function ActivateButtons() {
 	});
 }
 
-function ignorenotif(id) {
+function ignorenotif(id,app) {
 	$.ajax({
 		type: "POST",
 		data: "ignorenotif=" + id,
@@ -151,14 +139,35 @@ function ignorenotif(id) {
 		success: function(data) {
 			console.log(data);
 			if(data.trim().match(/success/i)){
-				var toastHTML = "<span style='color: white; width: 70%; font-size:1em;'>Notification Removed!</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
-				M.toast({html: toastHTML});
-
-				$('.toast-action').click(function(){
-					 M.Toast.dismissAll();
-				});
+				SendToastMessage("Notification Removed!");
+				throwOnResolved(app);
 			}
 		}
+	});
+}
+
+function throwOnResolved(id){
+	var arePluggedDevices = 2,
+			ns="false";
+	$.ajax({
+		type: "GET",
+		url: "http://" + deviceHost + "/signedPowerData.php?UID="+id+"&powerdata=ae113a20||224.20||0.01||0.00||0.00&notifStat="+ns+"&aDevice="+arePluggedDevices,
+		crossDomain: true,
+		dataType: "text",
+		success: function (data) {
+			console.log(data.trim());
+			// console.log("http://" + deviceHost + "/signedPowerData.php?UID="+id+"&powerdata=ae113a20||224.20||0.01||0.00||0.00&notifStat="+ns+"&aDevice="+arePluggedDevices);
+		}
+	});
+}
+
+function SendToastMessage(Toasttext){
+	M.Toast.dismissAll();
+	var toastHTML = "<span style='color: white; width: 70%; font-size:1em;'>"+Toasttext+"</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+	M.toast({html: toastHTML});
+
+	$('.toast-action').click(function(){
+		 M.Toast.dismissAll();
 	});
 }
 
@@ -178,6 +187,7 @@ function checknotifs() {
 			}
 			var res = data.trim().split("|");
 			if (data.trim().match(/RELOAD/i)) {
+				$('#nonotifnotice').hide();
 				if(res[0]>no_notifs){
 					diff = res[0] - no_notifs;
 					no_notifs = res[0];

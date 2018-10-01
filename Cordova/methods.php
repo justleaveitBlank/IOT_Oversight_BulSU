@@ -197,17 +197,6 @@
 
 
 //-------------------------------------APPLIANCE RELATED----------------------------------------------------------
-	if(isset($_POST['resetplugged'])){
-		$appliance_plugged=array(
-			"uid" => "",
-			"registered" => false
-		);
-		$json_plugged_data = json_encode($appliance_plugged, JSON_PRETTY_PRINT);
-		if(file_put_contents('plugged.json',  $json_plugged_data)){
-			echo "Reset";
-		}
-	}
-
 	if(isset($_POST['appl_updates'])){
 		$data = $_POST['appl_updates'];
 		$updates = json_decode($data);

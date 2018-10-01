@@ -19,7 +19,7 @@
 	$time = $timeNzone[0];
 	$timezone = "+".$timeNzone[1];
 	$status0 = file_put_contents("txt_has_power.txt",$UID. "||" . $powerdata . "||" . $dateNtimeNzone . "\r\n" , FILE_APPEND);
-	
+
 	$appliance_consumption_data = array(
             "uid" => $UID,
 			"voltage" => $voltage,
@@ -32,11 +32,11 @@
 		);
 	$json_appliance_consumption_data = json_encode($appliance_consumption_data, JSON_PRETTY_PRINT);
 	//echo $json_appliance_consumption_data;
-	
+
 	//create json file
 	$status = file_put_contents('json_appliance_consumption_data.json', $json_appliance_consumption_data);
-	
-	
+
+
 	if ($status && $status0){
 		//echo  $UID. "||" . $powerdata . "||" . $date . "\r\n";
 	}

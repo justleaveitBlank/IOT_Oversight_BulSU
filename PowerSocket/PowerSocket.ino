@@ -73,7 +73,8 @@ boolean setupcomplete = false;
 boolean connectionError = false;
 boolean notifStat = true;
 boolean aDevice = false;
-boolean sendOnceUnplugged = false;
+boolean relayIsOn = true;
+boolean relayIsOff= true;
 
 //Connect to Wifi at Start UP
 //being called at the Setup phase
@@ -317,19 +318,30 @@ void parseJSON(){
     Serial.println(c);
     if (c.indexOf("\"has\_power\"\: \"0\"") > 0){
       //Serial.println("has_power: 0");
+      if(relayIsOff == true){
+        relayIsOff = false;
+        relayIsOn= true;
+        tone(buzzerPin, 500, 100);
+        delay(100);  
+      }
       relayOff();
       powerAnalyzerTurn = true;
       //break;
     }
     if (c.indexOf("\"has\_power\"\: \"1\"") > 0){
       //Serial.println("has_power: 1");
+       if(relayIsOn == true){
+        relayIsOn = false;
+        relayIsOff= true;
+        tone(buzzerPin, 1000, 100);
+        delay(100);  
+      }
       relayOn();
       powerAnalyzerTurn = true;
       //break;
     }
     notifStat = false;
-    sendOnceUnplugged = false;
-    if (c.indexOf("1,CLOSED") > 0 || c.indexOf("busy p") > 0 || c.indexOf("SEND FAIL") > 0 || c.indexOf("<b>Warning</b>") > 0){
+    if (c.indexOf("1,CLOSED") > 0 || c.indexOf("busy p") > 0 || c.indexOf("SEND FAIL") > 0 ){
       relayOff();
       Serial.println("Connection Lost, Reconnecting...");
       connectionError = true;
@@ -418,7 +430,6 @@ void loop() {
     //Serial.println("Appliance Plugged IN");
     //delay(200);
     aDevice=true;
-    //sendOnceUnplugged = true;
     if(currentUID == ""){
       currentUID = getID();     
     }
@@ -487,6 +498,7 @@ void loop() {
   }
   if(isPluggedin()== false){
      //Serial.println("Appliance Unplugged");
+     
      if(notifStat== false){
         tone(buzzerPin, 500, 100);
         delay(100);

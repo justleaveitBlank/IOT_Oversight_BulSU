@@ -16,7 +16,8 @@
 		if(mysqli_num_rows($statusResult) > 0 ){
 			$updateQuery = 'UPDATE t_notification 
 							SET status = "unresolved" 
-							WHERE type="newapp" and (status = "ignored" or status = "allowed") and appliance_id = "' . $appl_uid.'"';
+							WHERE type="newapp" and (status = "ignored" or status = "allowed") and appliance_id = "' . $appl_uid.'"
+							LIMIT 1,1';
 			if($con->query($updateQuery)){
 				echo mysqli_error($con);
 			}
@@ -37,7 +38,7 @@
 	);
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
-	echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
+	//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
 	echo  $json_has_power_data ;
 	
 	//create json file
