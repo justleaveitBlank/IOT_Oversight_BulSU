@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2018 at 04:55 AM
--- Server version: 10.1.29-MariaDB
--- PHP Version: 7.2.0
+-- Generation Time: Oct 05, 2018 at 12:23 PM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `oversight_prd`
 --
+CREATE DATABASE IF NOT EXISTS `oversight_prd` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `oversight_prd`;
 
 -- --------------------------------------------------------
 
@@ -28,6 +30,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `t_appliance`
 --
 
+DROP TABLE IF EXISTS `t_appliance`;
 CREATE TABLE `t_appliance` (
   `uid` varchar(8) NOT NULL,
   `appl_name` varchar(32) NOT NULL,
@@ -49,9 +52,9 @@ CREATE TABLE `t_appliance` (
 --
 
 INSERT INTO `t_appliance` (`uid`, `appl_name`, `has_power`, `has_power_limit`, `has_time_limit`, `current_date_time`, `time_limit_value`, `power_limit_value`, `current_power_usage`, `appl_image`, `avg_watthr`, `estimated_cost`, `description`) VALUES
-('6f63b28', 'Appliance_01', 0, 0, NULL, '2018-09-28 02:53:42', '2018-09-03 13:48:23', 0, 0, NULL, NULL, NULL, NULL),
-('f7ba179', 'Appliance_02', 0, NULL, NULL, '2018-09-27 01:39:21', '2018-09-07 14:11:43', 25, 0, NULL, NULL, NULL, NULL),
-('NO_UID', 'NO_UID_Appliance', 0, 0, NULL, '2018-09-28 02:49:18', '2018-09-03 09:41:25', NULL, NULL, NULL, NULL, NULL, NULL);
+('6f63b28', 'Appliance_01', 1, 0, 0, '2018-10-01 06:59:47', '2018-09-03 13:48:23', 0, 0, NULL, NULL, NULL, NULL),
+('f7ba179', 'Appliance_02', 1, 0, 0, '2018-09-28 03:31:26', '2018-09-07 14:11:43', 0, 0, NULL, NULL, NULL, NULL),
+('NO_UID', 'Anonymous_Appliance', 0, 0, 0, '2018-10-01 07:00:17', '2018-09-03 09:41:25', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -59,21 +62,13 @@ INSERT INTO `t_appliance` (`uid`, `appl_name`, `has_power`, `has_power_limit`, `
 -- Table structure for table `t_history`
 --
 
+DROP TABLE IF EXISTS `t_history`;
 CREATE TABLE `t_history` (
   `uid` varchar(8) NOT NULL,
   `consumed` float DEFAULT NULL,
-  `effective_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `lst_updt_dte` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `effective_date` datetime DEFAULT NULL,
+  `lst_updt_dte` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `t_history`
---
-
-INSERT INTO `t_history` (`uid`, `consumed`, `effective_date`, `lst_updt_dte`) VALUES
-('6f63b28', 1, '2018-09-28 08:54:39', '2018-09-28 08:54:39'),
-('6f63b28', 2, '2018-09-28 08:56:39', '2018-09-28 08:56:39'),
-('6f63b28', 3, '2018-09-28 10:05:43', '2018-09-28 10:05:43');
 
 -- --------------------------------------------------------
 
@@ -81,6 +76,7 @@ INSERT INTO `t_history` (`uid`, `consumed`, `effective_date`, `lst_updt_dte`) VA
 -- Table structure for table `t_notification`
 --
 
+DROP TABLE IF EXISTS `t_notification`;
 CREATE TABLE `t_notification` (
   `notif_id` int(10) NOT NULL,
   `type` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
@@ -93,11 +89,7 @@ CREATE TABLE `t_notification` (
 --
 
 INSERT INTO `t_notification` (`notif_id`, `type`, `status`, `appliance_id`) VALUES
-(282, 'newapp', 'registered', 'ae113a20'),
-(283, 'newapp', 'registered', '1111111'),
-(284, 'newapp', 'registered', '1111111'),
-(285, 'newapp', 'ignored', 'ae113a20'),
-(286, 'newapp', 'ignored', '1111111');
+(288, 'newapp', 'ignored', 'ae113a20');
 
 -- --------------------------------------------------------
 
@@ -105,6 +97,7 @@ INSERT INTO `t_notification` (`notif_id`, `type`, `status`, `appliance_id`) VALU
 -- Table structure for table `t_rate`
 --
 
+DROP TABLE IF EXISTS `t_rate`;
 CREATE TABLE `t_rate` (
   `total_consumed` float DEFAULT NULL,
   `power_rate` float DEFAULT NULL,
@@ -120,6 +113,7 @@ CREATE TABLE `t_rate` (
 -- Table structure for table `t_settings`
 --
 
+DROP TABLE IF EXISTS `t_settings`;
 CREATE TABLE `t_settings` (
   `socket` varchar(5) NOT NULL DEFAULT 'true',
   `limitation` varchar(5) NOT NULL DEFAULT 'true',
@@ -141,6 +135,7 @@ INSERT INTO `t_settings` (`socket`, `limitation`, `authentication`, `price`, `ad
 -- Table structure for table `t_users`
 --
 
+DROP TABLE IF EXISTS `t_users`;
 CREATE TABLE `t_users` (
   `username` varchar(20) NOT NULL,
   `password` varchar(20) DEFAULT NULL,
@@ -158,7 +153,7 @@ CREATE TABLE `t_users` (
 
 INSERT INTO `t_users` (`username`, `password`, `firstname`, `lastname`, `contact`, `email`, `confirm_code`, `admin`) VALUES
 ('admin', 'admin', 'john', 'francisco', '09345678910', 'johnbenedictjb@gmail.com', NULL, '1234'),
-('user01', 'pass', 'user01', 'user01', '09999999999', 'user01@gmail.com', NULL, '1111');
+('user01', 'pass', 'user01', 'user01', '09999999999', 'user01@gmail.com', '11111', '1111');
 
 --
 -- Indexes for dumped tables
@@ -174,7 +169,7 @@ ALTER TABLE `t_appliance`
 -- Indexes for table `t_history`
 --
 ALTER TABLE `t_history`
-  ADD PRIMARY KEY (`uid`,`effective_date`,`lst_updt_dte`);
+  ADD PRIMARY KEY (`uid`);
 
 --
 -- Indexes for table `t_notification`
@@ -197,7 +192,7 @@ ALTER TABLE `t_users`
 -- AUTO_INCREMENT for table `t_notification`
 --
 ALTER TABLE `t_notification`
-  MODIFY `notif_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=287;
+  MODIFY `notif_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=289;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

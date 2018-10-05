@@ -345,6 +345,18 @@
 		.topNbotMarginer{
 			margin:.5rem 0;
 		}
+		.sidenav .collapsible-header, .sidenav.fixed .collapsible-header {
+			background-color: transparent;
+			padding: 0 32px;
+		}
+		.sidenav li > a.subchoice {
+			font-size: 16px;
+			padding-left:90px;
+		}
+		.dropdown-content{
+			width: 160px;
+			top: -62px;
+		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
 
@@ -362,6 +374,10 @@
 		$(document).ready(function(){
 			$('.datepicker').datepicker();
 			$('.tabs').tabs();
+			$('.collapsible').collapsible();
+			$(".dropdown-trigger").dropdown({
+				hover: true, constrainWidth: false 
+			});
 			//setInterval(checkLocal, 500);
 		});
 
@@ -377,7 +393,13 @@
 					<li><a class="waves-effect" href="home.html">Home</a></li>
 					<li class="active"><a class="waves-effect" href="statistic.html">Overall Statistics</a></li>
 					<li><a class="waves-effect" href="notifications.html">Notifications</a></li>
-					<li><a class="waves-effect" href="HowTo.html">How To</a></li>
+					<li><a class=" waves-effect dropdown-trigger" href="#!" data-target="howToOptions">How To<i class="material-icons right">arrow_drop_down</i></a></li>
+					<ul id="howToOptions" class="dropdown-content" style="150px">
+						<li><a class="waves-effect black-text "  href="setUpDevice.html" >Set-up Device</a></li>
+						<li><a class="waves-effect black-text" href="#!">Registration</a></li>
+						<div class="divider"></div>
+						<li><a class="waves-effect black-text" href="#!">Tips</a></li>
+					</ul>
 					<li><a class="waves-effect" href="settings.html">General Settings</a></li>
 					<li><a class="waves-effect" href="accountSettings.html">Accont Settings</a></li>
 					<li><a  class="waves-effect" href="#">Logout</a></li>
@@ -392,7 +414,20 @@
 					<li><a class="waves-effect white-text" href="home.html"><i class="material-icons prefix white-text">home</i><p>Home</p></a></li>
 					<li class="active"><a class="waves-effect white-text" href="statistic.html"><i class="material-icons prefix white-text">pie_chart</i><p> Overall Statistics</p></a></li>
 					<li><a class="waves-effect white-text" href="notifications.html"><i class="material-icons prefix white-text">notifications</i><p>Notifications</p></a></li>
-					<li><a class="waves-effect white-text" href="HowTo.html"><i class="material-icons prefix white-text">lightbulb</i><p>How To</p></a></li>
+					<li>
+						<ul class="collapsible collapsible-accordion">
+							<li class="bold">
+								<a class="collapsible-header waves-effect white-text noborder"><i class="material-icons prefix white-text">lightbulb</i><p>How To</p></a>
+								<div class="collapsible-body" >
+									<ul class="grey darken-2">
+										<li><a class="waves-effect white-text subchoice" href="setUpDevice.html">Set-up Device</a></li>
+										<li><a class="waves-effect white-text subchoice" href="#!">Registration</a></li>
+										<li><a class="waves-effect white-text subchoice" href="#!">Tips</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</li>
 					<li><a class="waves-effect white-text" href="settings.html"><i class="material-icons prefix white-text">settings</i><p>General Settings</p></a></li>
 					<div class="divider"></div>
 					<li><a class="waves-effect white-text" href="accountSettings.html"><i class="material-icons prefix white-text">person</i><p>Account Settings</p></a></li>
