@@ -340,6 +340,37 @@
 			font-size: 1rem;
 			margin:0;
 		}
+		.buttomMarginer{
+			margin-bottom:.5rem;
+		}
+		.pageFooter{
+			position:fixed;
+			bottom:0;
+			left:0;
+			width:100%; 
+			padding:1rem;
+			background:white;
+		}
+		slider .indicators .indicator-item {
+			background-color: #666666;
+			border: 3px solid #ffffff;
+			-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+			-moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+			box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+		}
+		.slider .indicators .indicator-item.active {
+			background-color: #ffffff;
+		}
+		.slider {
+			width: 100%;
+			height:100%;
+			margin: 0 auto;
+		}
+		.slider .indicators {
+			bottom: 60px;
+			z-index: 100;
+			/* text-align: left; */
+		}
 		.sidenav .collapsible-header, .sidenav.fixed .collapsible-header {
 			background-color: transparent;
 			padding: 0 32px;
@@ -352,11 +383,75 @@
 			width: 160px;
 			top: -62px;
 		}
+		.sidenav .collapsible-body > ul:not(.collapsible) > li.active, 
+		.sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
+			background-color: #424242;
+		}
+		.row .col {
+			padding: 0;
+		}
+		.fullH{
+			min-height 100vh;
+		}
+		.pinned{
+			position: fixed !important;
+			top:56px !important;
+			max-width: 59.92rem;
+		}
+		.pin-top {
+			position: relative;
+			z-index:1 !important;
+			max-width: 59.92rem;
+		}
+
+		.pin-bottom {
+			position: relative;
+			display:none;	
+			max-width: 59.92rem;
+		}
+		.pHeader{
+			padding: 1rem;
+			color:#ffffff;
+			font-size:1.2rem;
+		}
+		.pinnedContent{
+			top:112px !important;
+			padding: 1rem 2rem;
+			color:#ffffff;
+			display:block;
+		}
+		.pinnedContent.pinned{
+			z-index:1;
+		}
+		.pinnedContent.pin-top{
+			top:12px !important;
+		}
+		.pinnedContent.pin-bottom{
+			position:fixed;
+		
+		}
+		html, body .block{
+			height:100vh;
+		}
+		.posRel{
+			position: relative;
+			
+		}
+		.viewH{
+			height: 100vh;
+		}
+		.txtjustify{
+			text-align: justify;
+			text-justify: inter-word;
+		}
+		.bbot{
+			border-bottom:solid 1px #616161;
+		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
 
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="js/materialize.js"></script>
+	<script type="text/javascript" src="js/materialize.js"></script>
 	<script type="text/javascript" src="js/sidenav.js"></script>
 	<script type="text/javascript" src="js/transition.js"></script>
 	<script type="text/javascript" src="js/socket.io.js"></script>
@@ -370,15 +465,43 @@
 		$(document).ready(function(){
 			$('.collapsible').collapsible();
 			$(".dropdown-trigger").dropdown({
-				hover: true, constrainWidth: false				
+				hover: true, constrainWidth: false 
 			});
 
 			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
 			$('#updateDevice').modal();
 			$('#adminConfirmUpdate').modal();
-
 			//setInterval(checkLocal, 500);
+			
+			//Slider
+			$('.slider').slider({
+				height: 800,
+				indicators: false,
+				interval: 12000
+			});
 
+			$('.slider').slider('pause');
+			$('.next').click(function() {
+				$('.slider').slider('next');
+			});
+			$('.prev').click(function() {
+				$('.slider').slider('prev');
+			});
+			
+			//Pushpin
+			$('.pushpin').each(function() {
+				var $this = $(this);
+				var $target = $('#' + $(this).attr('data-target'));
+				
+				$this.pushpin({
+					top: $target.offset().top,
+					bottom: $target.offset().top + $target.outerHeight() - $this.height()
+				});
+				
+				
+				
+			});
+			
 		});
 	</script>
 </head>
@@ -387,19 +510,18 @@
 		<nav class="navbg" role="navigation">
 			<div class="nav-wrapper container">
 				<a id="logo-container" href="#" class="brand-logo center-align minFont hide-on-med-and-down"><img src="imgs/logo.png" style="height:70px"></a>
-				<a id="logo-container" href="#" class="brand-logo center-align minFont hide-on-med-and-up">HOME</a>
+				<a id="logo-container" href="#" class="brand-logo center-align minFont hide-on-med-and-up">TIPS</a>
 				<ul class="right hide-on-med-and-down">
-					<li class="active"><a class="waves-effect" href="home.html">Home</a></li>
+					<li><a class="waves-effect" href="home.html">Home</a></li>
 					<li><a class="waves-effect" href="statistic.html">Overall Statistics</a></li>
 					<li><a class="waves-effect" href="notifications.html">Notifications</a></li>
-					<li><a class=" waves-effect dropdown-trigger" href="#!" data-target="howToOptions">How To<i class="material-icons right">arrow_drop_down</i></a></li>
+					<li class="active"><a class=" waves-effect dropdown-trigger" href="#!" data-target="howToOptions">How To<i class="material-icons right">arrow_drop_down</i></a></li>
 					<ul id="howToOptions" class="dropdown-content" style="150px">
-						<li><a class="waves-effect black-text "  href="setUpDevice.html" >Set-up Device</a></li>
+						<li class="active"><a class="waves-effect black-text "  href="setUpDevice.html" >Set-up Device</a></li>
 						<li><a class="waves-effect black-text" href="#!">Registration</a></li>
 						<div class="divider"></div>
 						<li><a class="waves-effect black-text" href="tips.html">Tips</a></li>
 					</ul>
-					<li><a class="waves-effect" href="settings.html">General Settings</a></li>
 					<li><a class="waves-effect" href="accountSettings.html">Accont Settings</a></li>
 					<li><a  class="waves-effect" href="#">Logout</a></li>
 				</ul>
@@ -410,18 +532,18 @@
 						<p class="appName">OVERSIGHT</p>
 						<div class="version">v1.0.0</div>
 					</div>
-					<li class="active"><a class="waves-effect white-text" href="home.html"><i class="material-icons prefix white-text">home</i><p>Home</p></a></li>
+					<li><a class="waves-effect white-text" href="home.html"><i class="material-icons prefix white-text">home</i><p>Home</p></a></li>
 					<li><a class="waves-effect white-text" href="statistic.html"><i class="material-icons prefix white-text">pie_chart</i><p> Overall Statistics</p></a></li>
 					<li><a class="waves-effect white-text" href="notifications.html"><i class="material-icons prefix white-text">notifications</i><p>Notifications</p></a></li>
-					<li>
-						<ul class="collapsible collapsible-accordion">
+					<li class="active">
+						<ul class="collapsible">
 							<li class="bold">
-								<a class="collapsible-header waves-effect white-text noborder"><i class="material-icons prefix white-text">lightbulb</i><p>How To</p></a>
+								<a class="collapsible-header waves-effect white-text"><i class="material-icons prefix white-text">lightbulb</i><p>How To</p></a>
 								<div class="collapsible-body" >
 									<ul class="grey darken-2">
 										<li><a class="waves-effect white-text subchoice" href="setUpDevice.html">Set-up Device</a></li>
 										<li><a class="waves-effect white-text subchoice" href="#!">Registration</a></li>
-										<li><a class="waves-effect white-text subchoice" href="tips.html">Tips</a></li>
+										<li class=" active bbot"><a class="waves-effect white-text subchoice" href="#!">Tips</a></li>
 									</ul>
 								</div>
 							</li>
@@ -436,101 +558,119 @@
 			</div>
 		</nav>
 	</div>
-	
-	<div class="had-container">
+
+	<div class="">
 		<div class="row">
 
 			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
-
-			<div class="col s12 m4 l8">
-
-				<div class="row">
-
-					<p><i class="small material-icons icon-green">power</i> Plugged Devices</p>
-					<div class="col s12 m4 l12">
-						<ul class="collapsible " id='plugged-apps'>
-							<div id='noappnotice'>No Appliance Plugged!</div>
-							<div class='card' id='unregisterednotice'>
-								<span class="CardMessage"></span>
-								<div class="card-action right-align">
-									<a href='notifications.html' class="resolve-redirect btn-small waves-effect waves-light orange white-text sTitle">Resolve</a>
-								</div>
-							</div>
-						</ul>
+			<div class="col s12 m4 l8 viewH">
+				
+				<div id="red" class="posRel block red" style="z-index:10;"><!--Increment z-index-->
+					<nav class="pushpin" data-target="red" style="top: 0px;z-index:10;"><!--Increment z-index-->
+						<div class="nav-wrapper red lighten-1 center tipsheader">Charge efficiently</div>
+					</nav>
+					<div class="pushpin pinnedContent" data-target="red" style="top: 0px; z-index:9;"><!--z-index  minus 1 from parentdiv-->
+						<p class="flow-text txtjustify">
+							Whether it is your tablet or your phone, you want to make sure that you only charge the gadgets when the battery is already 
+							critically low. This allows you to not consume electricity every now and then. This avoids you from plugging the charger even if 
+							there is still sufficient energy on your device. Also, remember to always unplug the charger once you are done. A charger that is 
+							plugged in is still consuming electricity, regardless if it is charging a device or not. Aside from using the chargers in a more 
+							efficient manner, you can also check the chargers operated by solar cells. As long as you have light, you can already charge your 
+							phone through these accessories.
+						</p>
 					</div>
 				</div>
-
-				<!-- UNPLUGGED APPLIANCE -->
-
-				<div class="row">
-					<p><i class="small material-icons icon-grey">power</i> Currently Unplugged Devices</p>
-					<div class="col s12 m4 l12">
-						<ul class="collapsible" id='registered-apps'>
-							<!-- NEW -->
-						</ul>
+				
+				<div id="pink" class="posRel block pink" style="z-index:11;"><!--Increment z-index-->
+					<nav class="pushpin" data-target="pink" style="top: 0px;z-index:11;"><!--Increment z-index-->
+						<div class="nav-wrapper pink lighten-1 center tipsheader">Lighting options</div>
+					</nav>
+					<div class="pushpin pinnedContent" data-target="pink" style="top: 0px; z-index:10;"><!--z-index  minus 1 from parentdiv-->
+						<p class="flow-text txtjustify">
+							One of the things that you can have to save money on electric bills is to use LED lights instead of incandescent bulbs. 
+							Incandescent bulbs are not energy efficient, not to mention they don’t last that long. LED lights last up to 10 times longer 
+							than the incandescent bulbs, not to mention it doesn’t produce heat that much.
+						</p>
 					</div>
 				</div>
+				<div id="purple" class="posRel block purple" style="z-index:12;"><!--Increment z-index-->
+					<nav class="pushpin" data-target="purple" style="top: 0px;z-index:12;"><!--Increment z-index-->
+						<div class="nav-wrapper purple lighten-1 center tipsheader">Timer to shut down air conditioning unit</div>
+					</nav>
+					<div class="pushpin pinnedContent" data-target="purple" style="top: 0px; z-index:11;"><!--z-index  minus 1 from parentdiv-->
+						<p class="flow-text txtjustify">
+							When is the best time to use the air conditioning unit in your room? Most people only use the air conditioning 
+							unit at night to fall asleep comfortably. Why not turn off the air condition unit an hour before you wake up? 
+							Most air conditioning units today have timers which you could set to how many hours should the appliance run. 
+							An hour without the air conditioning unit still allows you to enjoy a cool room. In fact, if you use the air 
+							conditioning unit every night, and go for this option, you could save as much as 30 hours worth of electricity 
+							every month.
+						</p>
+					</div>
+				</div>
+				<div id="indigo" class="posRel block indigo" style="z-index:13;"><!--Increment z-index-->
+					<nav class="pushpin" data-target="indigo" style="top: 0px;z-index:13;"><!--Increment z-index-->
+						<div class="nav-wrapper indigo lighten-1 center tipsheader">Regular monitoring of your electric meter</div>
+					</nav>
+					<div class="pushpin pinnedContent" data-target="indigo" style="top: 0px; z-index:12;"><!--z-index  minus 1 from parentdiv-->
+						<p class="flow-text txtjustify">
+							It is crucial to have an idea if you are already consuming more than your average electrical consumption. Also, 
+							keep in mind that even if you have the same consumption as last month, the current rate still plays a great role to 
+							how much you are paying at the end of the month. The first thing that you need to know is to learn how to read an electric 
+							meter. If you have 2-3 meters in your home, try to have a separate sheet for each of them and monitor them separately. The 
+							cost of electricity has a different rate as your consumption spikes up. The second tip that can be useful in this scenario 
+							is to record your monthly bill. And third, you have to be updated of the current rate.
+						</p>
+					</div>
+				</div>
+				<div id="blue" class="posRel block blue" style="z-index:14;"><!--Increment z-index-->
+					<nav class="pushpin" data-target="blue" style="top: 0px;z-index:14;"><!--Increment z-index-->
+						<div class="nav-wrapper blue lighten-1 center tipsheader">Use curtains and tinted windows</div>
+					</nav>
+					<div class="pushpin pinnedContent" data-target="blue" style="top: 0px; z-index:13;"><!--z-index  minus 1 from parentdiv-->
+						<p class="flow-text txtjustify">
+							If you want to keep the heat to a minimum inside the house, which would eventually decrease your air condition and electric 
+							fan use, then perhaps, you would want to have your windows tinted. If you don’t want a permanent fix on your window, then a 
+							curtain will also be a good alternative. Thick and dark colored windows prevent the heat from penetrating inside the room.
+						</p>
+					</div>
+				</div>
+				<div id="cyan" class="posRel block cyan" style="z-index:15;"><!--Increment z-index-->
+					<nav class="pushpin" data-target="cyan" style="top: 0px;z-index:15;"><!--Increment z-index-->
+						<div class="nav-wrapper cyan lighten-1 center tipsheader">Switch off lights and  electrical appliance</div>
+					</nav>
+					<div class="pushpin pinnedContent" data-target="cyan" style="top: 0px; z-index:14;"><!--z-index  minus 1 from parentdiv-->
+						<p class="flow-text txtjustify">
+							Turn off your heater, cooling units and appliances when you go to bed or leave the house.
+							Turning things off at the powerpoint can save even more power than at the switch or remote control.
+							Switch off your computer and equipment such as printers or wifi routers overnight, or while you're away. Most 
+							computers have energy saving settings which can be activated to turn the computer and screen off after a period 
+							of inactivity.
+						</p>
+					</div>
+				</div>
+				<div id="teal" class="posRel block teal" style="z-index:16;"><!--Increment z-index-->
+					<nav class="pushpin" data-target="teal" style="top: 0px;z-index:16;"><!--Increment z-index-->
+						<div class="nav-wrapper teal lighten-1 center tipsheader">Go cold and wash smarter</div>
+					</nav>
+					<div class="pushpin pinnedContent" data-target="teal" style="top: 0px; z-index:15;"><!--z-index  minus 1 from parentdiv-->
+						<p class="flow-text txtjustify">
+							You can save around $115 per year by washing clothes in cold water.
+							You can also save by making sure you select the shortest appropriate washing cycle. Wait until your machine is 
+							full before starting a washing cycle.
+							Clothes dryers use lots of energy. Hang clothes outside and let them dry naturally or use a fan to help dry them
+							indoors.
+						</p>
+					</div>
+				</div>
+				
 			</div>
 			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
 		</div>
+		
 	</div>
 
-	<!--Modal Structures-->
-	<div class="modalCon">
-		<div class="my-wrapper valign-wrapper">
-			<!-- Modal Structure for Admin Confirmation -->
-			<div id="adminConfirmUpdate" class="modal modal-fixed-footer">
-				<form class="col s12" method="POST" action="">
-					<div class="modal-content">
-						<div class="row">
-							<h5>Admin Confirmation</h5>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
-								<input id="admin_password" type="password" class="border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" />
-								<label for="admin_password" class="grey-text text-darken-2">Admin Password</label>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<a id='pass_accepter' href="#updateDevice" class="modal-action waves-effect waves-light green white-text btn-flat">Accept</a>
-						<a href="#!" class=" modal-action modal-close waves-effect waves-light red white-text btn-flat">Cancel</a>
-					</div>
-				</form>
-			</div>
-			<!-- Modal Structure for Update Device Limit -->
-			<div id="updateDevice" class="modal modal-fixed-footer">
-				<form class="col s12" method="POST" action="">
-					<div class="modal-content">
-						<div class="row">
-							<h5>Update Device</h5>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="d_ID" type="text" class="u_field validate border_bottom_green border_bottom_darkgray" autocomplete="off" required value="qw er ty ui" disabled="">
-								<label for="d_ID" class="u_label grey-text text-darken-2">ID</label>
-							</div>
-							<div class="input-field col s12">
-								<input id="d_NAME" type="text" class="u_field validate border_bottom_green border_bottom_darkgray" autocomplete="off" required value="Appliance Name">
-								<label for="d_NAME" class="u_label grey-text text-darken-2">Name</label>
-							</div>
-							<div class="input-field col s12">
-								<input id="d_LIMIT" type="number" class="u_field validate border_bottom_green border_bottom_darkgray" step="0.0001" min="0" autocomplete="off" required value="0">
-								<label for="d_LIMIT" class="u_label grey-text text-darken-2">Limit (kwh)</label>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<a href="#!" id='d_updater' class=" modal-action waves-effect waves-purple green white-text btn-flat">Accept</a>
-						<a href="#!" class=" modal-action modal-close waves-effect waves-purple red white-text btn-flat">Cancel</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
+	
 	<script type="text/javascript" src="js/function.js"></script>
-	<script type="text/javascript" src="js/home.js"></script>
 </body>
 </html>

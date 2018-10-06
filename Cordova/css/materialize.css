@@ -2841,12 +2841,17 @@ video.responsive-video {
           transform: translateX(-50%);
 }
 
-.pin-top, .pin-bottom {
+.pin-top{
   position: relative;
+}
+.pin-bottom{
+	position: relative;
+	display:none;	
 }
 
 .pinned {
-  position: fixed !important;
+	position: fixed !important;
+	top:56px !important;
 }
 
 /*********************
