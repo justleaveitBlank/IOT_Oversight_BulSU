@@ -24,11 +24,13 @@
 			}
 		}
 		else{
+			$has_power="1";
 			$appliance_arr=array(
-				"has_power" => "1",//value change depeding on the value of the user select 0/1
+				"has_power" => $has_power,//value change depeding on the value of the user select 0/1
 				"socket_status" => "Socket On",
 				"authentication" => $s_authentication
 			);
+			include_once 'insertToHistoryDB.php';
 			$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 			echo  $json_has_power_data ;
 
@@ -37,8 +39,9 @@
 		}
 	}
 	else{
+		$has_power="0";
 		$appliance_arr=array(
-			"has_power" => "0",//value change depeding on the value of the user select 0/1
+			"has_power" => $has_power,//value change depeding on the value of the user select 0/1
 			"socket_status" => "Socket Off",
 			"authentication" => $s_authentication
 		);

@@ -23,6 +23,12 @@ $num = $stmt->rowCount();
 
 include_once 'CheckPlugDevices.php';
 
+if($notifStat=="true"){
+	$notifStat = true;
+} else if ($notifStat == "false"){
+	$notifStat = false;
+}
+
 if($num>0 && $appl_uid !="NO_UID"){
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -48,6 +54,7 @@ if($num>0 && $appl_uid !="NO_UID"){
 
         );
     }
+	include_once 'insertToHistoryDB.php';
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
 	//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
@@ -55,7 +62,7 @@ if($num>0 && $appl_uid !="NO_UID"){
 
 	//create json file
 	file_put_contents('json_has_power_data.json',  $json_has_power_data);
-
+	
 }
 else if($num>0 && $appl_uid == "NO_UID"){
     // retrieve our table contents
@@ -74,6 +81,8 @@ else if($num>0 && $appl_uid == "NO_UID"){
 			"status" => "registered"
 
         );
+	}
+	include_once 'insertToHistoryDB.php';
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
 	//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
@@ -81,15 +90,10 @@ else if($num>0 && $appl_uid == "NO_UID"){
 
 	//create json file
 	file_put_contents('json_has_power_data.json',  $json_has_power_data);
-	}
+	
 }
 else{
 //--------------------------- CHECK DB IF EXISTING NOTIFICATION -----------------
-	if($notifStat=="true"){
-		$notifStat = true;
-	} else if ($notifStat == "false"){
-		$notifStat = false;
-	}
 	if($notifStat == true){
 		include_once 'CheckExistingNotif.php';
 	}
