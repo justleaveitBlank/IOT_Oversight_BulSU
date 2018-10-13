@@ -1,5 +1,5 @@
 {
     "uid": "NO_UID",
-    "has_power": "1",
-    "status": "registered"
+    "has_power": "0",
+    "status": "unregistered"
 }

@@ -16,12 +16,32 @@
 		if($s_authentication == "true"){
 			//------------------------------------- LIMITATION HERE -------------------------------------//
 			if($s_limitation == "true"){
-				// do something here if appliance have a limit value with update value to has_power to database if limit value/time reached 
+				$query ='SELECT * 
+						FROM t_appliance
+						WHERE appl_name="Anonymous_Appliance"';
+				$has_power="0";
+				$result = $con->query($query);
+				$appl_rows = $result->fetch_object();
+				$appl_Auid = $appl_rows->uid;
+				$appl_has_time_limit = $appl_rows->has_time_limit;
+				$appl_time_limit_value = $appl_rows->time_limit_value;
+				
+				if($UID==$appl_Auid){
+					if($appl_has_time_limit == "1"){
+						if(date("Y-m-d h:i:s")<$appl_time_limit_value){
+							$has_power="1";
+						}
+						else{
+							$query ='UPDATE t_appliance set uid="NO_UID"
+									WHERE appl_name="Anonymous_Appliance"';
+							$result = $con->query($query);
+						}
+					}
+				}		
 			}
-			else{
-				include_once 'generate_json_has_power.php';
-				echo "\r\n";
-			}
+			include_once 'generate_json_has_power.php';
+			echo "\r\n";
+		
 		}
 		else{
 			$has_power="1";

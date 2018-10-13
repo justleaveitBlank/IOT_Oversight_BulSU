@@ -25,6 +25,16 @@
   }
 
   //if notification is resolved but still plugged
+  if ($aDevice == "3"){
+    $appliance_pluggedStatus = array(
+      "plugged"=>"1",
+      "uid"=>$appl_uid,
+      "registered"=>true
+    );
+    $json_has_power_data = json_encode($appliance_pluggedStatus, JSON_PRETTY_PRINT);
+    file_put_contents('plugged.json',  $json_has_power_data);
+  }
+
   if ($aDevice == "2"){
     $appliance_pluggedStatus = array(
       "plugged"=>"2",

@@ -3,14 +3,14 @@
 <head>
 	<title>OVERSIGHT</title>
 	<link rel="shortcut icon" href="imgs/Logo3.png">
-	
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	
+
 	<!--Import Google Icon Font-->
 	<link href="css/material+icons.css" rel="stylesheet">
-	
+
 	<!--Import materialize.css-->
 	<link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
 	<style>
@@ -20,7 +20,7 @@
 		}
 		@-ms-viewport {
 		  width: device-width ;
-		} 
+		}
 		*{
 			margin:0;
 			font-family: verdana,arial;
@@ -128,7 +128,7 @@
 			.applianceName {
 				font-size: 1rem;
 				max-width: 50rem;
-			}		
+			}
 		}
 		@media only screen and (min-width: 480px) {
 			.applianceName {
@@ -147,7 +147,7 @@
 			.applianceName {
 				font-size: 1rem;
 				max-width: 50rem;
-			}		
+			}
 		}
 		@media only screen and (min-width: 570px) {
 			.applianceName {
@@ -210,7 +210,7 @@
 				max-width: 50rem;
 			}
 		}
-		
+
 		.collapsible-body {
 			padding: 1rem;
 		}
@@ -232,7 +232,7 @@
 			font-size:1.15rem;
 			min-width: 20rem;
 		}
-		input.border_bottom_green.valid:not([type]), 
+		input.border_bottom_green.valid:not([type]),
 		input.border_bottom_green.valid:not([type]):focus,
 		input[type=text].border_bottom_green.valid:not(.browser-default),
 		input[type=text].border_bottom_green.valid:not(.browser-default):focus,
@@ -257,13 +257,13 @@
 		input[type=search].border_bottom_green.valid:not(.browser-default),
 		input[type=search].border_bottom_green.valid:not(.browser-default):focus,
 		textarea.materialize-textarea.border_bottom_green.valid,
-		textarea.materialize-textarea.border_bottom_green.valid:focus, 
+		textarea.materialize-textarea.border_bottom_green.valid:focus,
 		.select-wrapper.border_bottom_green.valid > input.border_bottom_green.select-dropdown{
 		  border-bottom: 1px solid #4CAF50;
 		  -webkit-box-shadow: 0 1px 0 0 #4CAF50;
 				  box-shadow: 0 1px 0 0 #4CAF50;
 		}
-		
+
 		.text_indent{
 			text-indent:2rem
 		}
@@ -295,7 +295,7 @@
 		  right: auto !important;
 		  bottom: 50%;
 		}
-		
+
 		[type="checkbox"].filled-in:not(:checked) + span:not(.lever):after {
 		  height: 20px;
 		  width: 20px;
@@ -334,18 +334,27 @@
 	<script type="text/javascript" src='js/oversight_dep.js'></script>
 	<!--cordova-->
 	<!--localnotification-->
-	
+
 	<script>
 		$(document).ready(function(){
 			$('.collapsible').collapsible();
 			$(".dropdown-trigger").dropdown({
-				hover: true, constrainWidth: false 
+				hover: true, constrainWidth: false
 			});
-			
-			$('#updateEmail').modal();
-			$('#updateContact').modal();
-			$('#changePass').modal();
-			
+
+			function modalClosed(){
+		    $('.account-inputs').each(function(){
+		      $(this).val("");
+		      $(this).removeClass('invalid');
+		      $(this).removeClass('valid');
+		    });
+				$('.a_label').each(function(){
+					$(this).removeClass('active');
+				})
+		  }
+
+			$('.modal').modal({onCloseEnd: function() { modalClosed(); }});
+
 			//setInterval(checkLocal, 500);
 		});
 	</script>
@@ -358,7 +367,7 @@
 				<a id="logo-container" href="#" class="brand-logo center-align minFont hide-on-med-and-up">ACCOUNT SETTIGS</a>
 				<ul class="right hide-on-med-and-down">
 					<li><a class="waves-effect" href="home.html">Home</a></li>
-					<li><a class="waves-effect" href="statistic.html">Overall Statistics</a></li>
+					<li><a class="waves-effect" href="statistic.html#monthly#monthly">Overall Statistics</a></li>
 					<li><a class="waves-effect" href="notifications.html">Notifications</a></li>
 					<li><a class=" waves-effect dropdown-trigger" href="#!" data-target="howToOptions">How To<i class="material-icons right">arrow_drop_down</i></a></li>
 					<ul id="howToOptions" class="dropdown-content" style="150px">
@@ -378,8 +387,8 @@
 						<p class="appName">OVERSIGHT</p>
 						<div class="version">v1.0.0</div>
 					</div>
-					<li><a class="waves-effect white-text" href="home.html"><i class="material-icons prefix white-text">home</i><p>Home</p></a></li> 
-					<li><a class="waves-effect white-text" href="statistic.html"><i class="material-icons prefix white-text">pie_chart</i><p> Overall Statistics</p></a></li>
+					<li><a class="waves-effect white-text" href="home.html"><i class="material-icons prefix white-text">home</i><p>Home</p></a></li>
+					<li><a class="waves-effect white-text" href="statistic.html#monthly"><i class="material-icons prefix white-text">pie_chart</i><p> Overall Statistics</p></a></li>
 					<li><a class="waves-effect white-text" href="notifications.html"><i class="material-icons prefix white-text">notifications</i><p>Notifications</p></a></li>
 					<li>
 						<ul class="collapsible collapsible-accordion">
@@ -388,7 +397,7 @@
 								<div class="collapsible-body" >
 									<ul class="grey darken-2">
 										<li><a class="waves-effect white-text subchoice" href="setUpDevice.html"><i class="material-icons prefix white-text" style="margin: 0 16px 0 0;">keyboard_arrow_right</i>Set-up Device</a></li>
-										<li><a class="waves-effect white-text subchoice" href="#!"><i class="material-icons prefix white-text" style="margin: 0 16px 0 0;">keyboard_arrow_right</i>Registration</a></li>
+										<li><a class="waves-effect white-text subchoice" href="applianceRegistration.html"><i class="material-icons prefix white-text" style="margin: 0 16px 0 0;">keyboard_arrow_right</i>Registration</a></li>
 										<li><a class="waves-effect white-text subchoice" href="tips.html"><i class="material-icons prefix white-text" style="margin: 0 16px 0 0;">keyboard_arrow_right</i>Tips</a></li>
 									</ul>
 								</div>
@@ -408,26 +417,26 @@
 	<div class="had-container">
 		<div class="row">
 			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
-			
+
 			<div class="col s12 m4 l8 overhidden" >
 				<div class="row">
-					
+
 					<form class="col s12" method="POST"action="">
 						<div class="row">
 							<div class="input-field col s12">
-								<input disabled id="fist_name" type="text" class="validate" id="fullNAme_disabled" value="USERNAME"/>
+								<input disabled id="user_name" type="text" class="validate" id="fullNAme_disabled" value="USERNAME"/>
 								<label for="first_name">USERNAME</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<input disabled id="fist_name" type="text" class="validate" id="fullNAme_disabled" value="ACCOUNT NAME"/>
+								<input disabled id="fullname" type="text" class="validate" id="fullNAme_disabled" value="FULLNAME"/>
 								<label for="first_name">FULL NAME</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field col s8">
-								<input disabled id="password" type="password" class="validate" id="contact_disabled" value="********"/>
+								<input disabled id="password" type="password" class="validate" id="pass_disabled" value="********"/>
 								<label for="email">PASSWORD</label>
 							</div>
 							<div class="input-field col s4">
@@ -436,7 +445,7 @@
 						</div>
 						<div class="row">
 							<div class="input-field col s8">
-								<input disabled id="email" type="email" class="validate" id="email_disabled" value="Email@gmail.com"/>
+								<input disabled id="email" type="email" class="validate" value="Email@gmail.com"/>
 								<label for="email">EMAIL</label>
 							</div>
 							<div class="input-field col s4">
@@ -445,101 +454,107 @@
 						</div>
 						<div class="row">
 							<div class="input-field col s8">
-								<input disabled id="contactNum" type="email" class="validate" id="contact_disabled" value="(+63)9XXXXXXXXX"/>
-								<label for="email">CONTACT NUMBER</label>
+								<input disabled id="contactNumber" type="number" class="validate" value='0'/>
+								<label for="contactNumber">CONTACT NUMBER</label>
 							</div>
 							<div class="input-field col s4">
 								 <a class="waves-effect waves-light btn modal-trigger orange white-text btn-flat" href="#updateContact">Update</a>
 							</div>
 						</div>
-						
+
 					</form>
 				</div>
 			</div>
-			
+
 			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
 		</div>
 	</div>
-	
+
 		<!--Modal Structures-->
 	<div class="modalCon">
 		<div class="my-wrapper valign-wrapper">
 			<!-- Modal Structure for Update Email -->
 			<div id="updateEmail" class="modal modal-fixed-footer">
-				<form class="col s12" method="POST" action="">
+				<form class="input-forms col s12" method="POST" action="">
 					<div class="modal-content">
 						<div class="row">
 							<h5>Update Email</h5>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="txtUpdateEmail" type="email" class="validate" id="email_disabled" value="Email@gmail.com"/>
-								<label for="email" class="u_label grey-text text-darken-2">Email</label>
+								<input id="txtUpdateEmail" type="email" class="account-inputs validate border_bottom_green border_bottom_darkgray" autocomplete="off"/>
+								<label for="txtUpdateEmail" class="a_label grey-text text-darken-2">NEW EMAIL ADDRESS</label>
+								<span class="helper-text" data-error="&#10006; Email Taken / Invalid Email" data-success="&#10004; Validated"></span>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a id='#!' href="#updateDevice" class="modal-action waves-effect waves-light green white-text btn-flat">Accept</a>
-						<a href="#!" class=" modal-action modal-close waves-effect waves-light red white-text btn-flat">Cancel</a>
+						<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+						<a id='#!' href="#updateDevice" class="save-email svbtn modal-action waves-effect waves-light green white-text btn-flat">Save</a>
+						<a href="#!" class="closer modal-action modal-close waves-effect waves-light red white-text btn-flat">Cancel</a>
 					</div>
 				</form>
 			</div>
 			<!-- Modal Structure for Update Contact -->
 			<div id="updateContact" class="modal modal-fixed-footer">
-				<form class="col s12" method="POST" action="">
+				<form class="input-forms col s12" method="POST" action="">
 					<div class="modal-content">
 						<div class="row">
 							<h5>Update Contact</h5>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="txtUpdateEmail" type="email" class="validate" id="email_disabled" value="(+63)9XXXXXXXXX"/>
-								<label for="txtUpdateEmail" class="u_label grey-text text-darken-2">NEW CONTACT NUMBER</label>
+								<input id="txtUpdateContact" type="number" minlength='11' class="account-inputs border_bottom_green border_bottom_darkgray" maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if (this.value.length < this.minLength) { this.classList.remove('valid'); this.classList.add('invalid'); } if (this.value.length == this.minLength){ this.classList.remove('invalid'); this.classList.add('valid'); } " required/>
+								<label for="txtUpdateContact" class="a_label grey-text text-darken-2">NEW CONTACT NUMBER</label>
+								<span class="helper-text" data-error="&#10006; Input 11-digit Number" data-success="&#10004; Validated"></span>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a id='#!' href="#updateDevice" class="modal-action waves-effect waves-light green white-text btn-flat">Accept</a>
-						<a href="#!" class=" modal-action modal-close waves-effect waves-light red white-text btn-flat">Cancel</a>
+						<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+						<a id='#!' href="#updateDevice" class="save-contact svbtn modal-action waves-effect waves-light green white-text btn-flat">Save</a>
+						<a href="#!" class="closer modal-action modal-close waves-effect waves-light red white-text btn-flat">Cancel</a>
 					</div>
 				</form>
 			</div>
 			<div id="changePass" class="modal modal-fixed-footer">
-				<form class="col s12" method="POST" action="">
+				<form class="input-forms col s12" method="POST" action="">
 					<div class="modal-content">
 						<div class="row">
 							<h5>CHANGE PASSWORD</h5>
 						</div>
 						<div class="row">
-							<div class="input-field col s12">			 
-								<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
-								<input id="txtOldPassword" type="password" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-								<label for="txtOldPassword" class="grey-text text-darken-2"> OLD PASSWORD</label>
-								<span class="helper-text" data-error="&#10006; DOESN'T MATCHED" data-success="&#10004; MATCHED"></span>
+							<div class="input-field col s12">
+								<i class="material-icons prefix black-text text-darken-2">lock</i>
+								<input id="txtOldPassword" type="password" class="account-inputs border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+								<label for="txtOldPassword" class="a_label grey-text text-darken-2"> OLD PASSWORD</label>
+								<span class="helper-text" data-error="&#10006; INCORRECT" data-success="&#10004; CORRECT"></span>
 							</div>
 							<div class="input-field col s12">
 								<i class="material-icons prefix grey-text text-darken-2">lock</i>
-								<input id="txtNewPassword" type="password" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-								<label for="txtNewPassword" class="grey-text text-darken-2"> NEW PASSWORD</label>
-								<span class="helper-text" data-error="&#10006;" data-success="&#10004;"></span>
+								<input id="txtNewPassword" type="password" class="account-inputs validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+								<label for="txtNewPassword" class="a_label grey-text text-darken-2"> NEW PASSWORD</label>
+								<span class="helper-text" data-error="&#10006; INVALID" data-success="&#10004; VALID"></span>
 							</div>
 							<div class="input-field col s12">
 								<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
-								<input id="txtOldpassword" type="password" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-								<label for="txtOldpassword" class="grey-text text-darken-2">CONFIRM PASSWORD</label>
+								<input id="txtConfirmPassword" type="password" class="account-inputs border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+								<label for="txtConfirmPassword" class="a_label grey-text text-darken-2">RE-TYPE PASSWORD</label>
 								<span class="helper-text" data-error="&#10006; DOESN'T MATCHED" data-success="&#10004; MATCHED"></span>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a id='#!' href="#updateDevice" class="modal-action waves-effect waves-light green white-text btn-flat">Accept</a>
-						<a href="#!" class=" modal-action modal-close waves-effect waves-light red white-text btn-flat">Cancel</a>
+						<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+						<a id='#!' href="#updateDevice" class="save-password svbtn modal-action waves-effect waves-light green white-text btn-flat">Save</a>
+						<a href="#!" class="closer modal-action modal-close waves-effect waves-light red white-text btn-flat">Cancel</a>
 					</div>
 				</form>
 			</div>
-			
+
 		</div>
 	</div>
 	<script type="text/javascript" src="js/function.js"></script>
+	<script type="text/javascript" src="js/acc.js"></script>
 </body>
 </html>

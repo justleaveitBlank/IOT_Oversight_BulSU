@@ -81,13 +81,13 @@
 		
 		<div class="divider"></div>
 		<div class="section">
-			<a class="black-text modal-trigger sTitle" href="#adminConfirmChangeRate">Price/KwH Rate</a>
+			<a class="black-text modal-trigger sTitle" style="display:block" href="#adminConfirmChangeRate">Price/KwH Rate</a>
 		</div>
 		
 		<div class="divider"></div>
 
 		<div class="section">
-			<a class="black-text modal-trigger sTitle" href="#adminConfirmChangePass">Change Administrator Password</a>
+			<a class="black-text modal-trigger sTitle" style="display:block" href="#adminConfirmChangePass">Change Administrator Password</a>
 		</div>
 		
 		<div class="divider"></div>

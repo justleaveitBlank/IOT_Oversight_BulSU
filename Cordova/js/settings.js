@@ -136,14 +136,14 @@ function initiate_settings() {
 	});
 
 	function inc_error(error) {
-		M.Toast.dismissAll();
-		var toastHTML = "<span style='color: white; width: 70%;'>" + error + "</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
-		M.toast({
-			html: toastHTML
-		});
+		$('.toast').hide();
 
-		$('.toast-action').click(function () {
-			M.Toast.dismissAll();
+		M.Toast.dismissAll();
+		var toastHTML = "<span style='color: white; width: 70%; font-size:1em;'>"+error+"</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+		M.toast({html: toastHTML});
+
+		$('.toast-action').click(function(){
+			 M.Toast.dismissAll();
 		});
 	}
 

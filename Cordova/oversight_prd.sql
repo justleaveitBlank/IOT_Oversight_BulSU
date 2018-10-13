@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2018 at 08:44 AM
+-- Generation Time: Oct 05, 2018 at 12:23 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -54,7 +54,7 @@ CREATE TABLE `t_appliance` (
 INSERT INTO `t_appliance` (`uid`, `appl_name`, `has_power`, `has_power_limit`, `has_time_limit`, `current_date_time`, `time_limit_value`, `power_limit_value`, `current_power_usage`, `appl_image`, `avg_watthr`, `estimated_cost`, `description`) VALUES
 ('6f63b28', 'Appliance_01', 1, 0, 0, '2018-10-01 06:59:47', '2018-09-03 13:48:23', 0, 0, NULL, NULL, NULL, NULL),
 ('f7ba179', 'Appliance_02', 1, 0, 0, '2018-09-28 03:31:26', '2018-09-07 14:11:43', 0, 0, NULL, NULL, NULL, NULL),
-('NO_UID', 'Anonymous_Appliance', 1, 0, 0, '2018-10-11 06:06:23', '2018-09-03 09:41:25', NULL, NULL, NULL, NULL, NULL, NULL);
+('NO_UID', 'Anonymous_Appliance', 0, 0, 0, '2018-10-01 07:00:17', '2018-09-03 09:41:25', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -66,20 +66,9 @@ DROP TABLE IF EXISTS `t_history`;
 CREATE TABLE `t_history` (
   `uid` varchar(8) NOT NULL,
   `consumed` float DEFAULT NULL,
-  `effective_date` datetime NOT NULL,
+  `effective_date` datetime DEFAULT NULL,
   `lst_updt_dte` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `t_history`
---
-
-INSERT INTO `t_history` (`uid`, `consumed`, `effective_date`, `lst_updt_dte`) VALUES
-('NO_UID', 0.1, '2018-10-11 14:06:28', '2018-10-11 14:06:28'),
-('NO_UID', 0.81, '2018-10-11 14:06:33', '2018-10-11 14:06:33'),
-('NO_UID', 1.5, '2018-10-11 14:06:38', '2018-10-11 14:06:38'),
-('NO_UID', 2.21, '2018-10-11 14:06:43', '2018-10-11 14:06:43'),
-('NO_UID', 2.9, '2018-10-11 14:06:48', '2018-10-11 14:06:48');
 
 -- --------------------------------------------------------
 
@@ -180,7 +169,7 @@ ALTER TABLE `t_appliance`
 -- Indexes for table `t_history`
 --
 ALTER TABLE `t_history`
-  ADD PRIMARY KEY (`uid`,`effective_date`);
+  ADD PRIMARY KEY (`uid`);
 
 --
 -- Indexes for table `t_notification`

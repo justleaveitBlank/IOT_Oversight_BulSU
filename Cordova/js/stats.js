@@ -4,6 +4,22 @@ var options  = ["getdaily" , "getweekly" , "getmonthly" , "getyearly"];
 var d = new Date();
 var dayOfWeek = d.getDay()+1;
 
+function getAppliances(type){
+  $.ajax({
+      type: "POST",
+      data: "getconsumers="+selecteddate+"&type="+type,
+      url: 'http://'+deviceHost+'/Stats.php',
+      crossDomain: true,
+      contentType: "application/x-www-form-urlencoded; charset=utf-8",
+      success: function(data) {
+        console.log(data.trim());
+        var appliances = JSON.parse(data.trim());
+        console.log(appliances);
+      }
+  });
+}
+getAppliances("MONTH");
+
 $(function() {
   var instance = M.Datepicker.getInstance(document.getElementById("DateReference"));
   instance.options.autoClose= true;
@@ -28,6 +44,7 @@ $(function() {
       crossDomain: true,
       contentType: "application/x-www-form-urlencoded; charset=utf-8",
       success: function (data) {
+        console.log(data.trim());
         var result = data.trim().split("|");
         var labelset = JSON.parse(result[0].trim());
         var chartset = JSON.parse(result[1].trim());
@@ -43,7 +60,6 @@ $(function() {
           monthchart.config.data.datasets[0].data = chartset;
           monthchart.config.data.labels = labelset;
   				monthchart.update();
-          console.log(monthchart);
         } else if(type==options[3]){
           yearchart.config.data.datasets[0].data = chartset;
           yearchart.config.data.labels = labelset;

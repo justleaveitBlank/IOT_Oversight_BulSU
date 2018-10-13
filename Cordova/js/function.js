@@ -7,6 +7,10 @@ if ((window.location.href.match(/index/i)) || (window.location.href.indexOf("htm
 }
 
 $('#SignOut').click(function() {
+	UserLogOut();
+});
+
+function UserLogOut(){
 	$.ajax({
 		type: "POST",
 		url: "http://" + deviceHost + "/methods.php",
@@ -21,7 +25,7 @@ $('#SignOut').click(function() {
 			SendErrorMessage();
 		}
 	});
-});
+}
 
 function checkifauthorized() {
 	IdentifyUser("index");
@@ -58,8 +62,9 @@ function IdentifyUser(destination){
 }
 
 function SendErrorMessage(){
-	M.Toast.dismissAll();
-	var toastHTML = "<span style='color: white; width: 70%;'>Connection to Server Failed!</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+	$('.toast').hide();
+
+	var toastHTML = "<span style='color: white; width: 70%; font-size: 1em;'>Something Went Wrong!</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
 	M.toast({
 		html: toastHTML
 	});

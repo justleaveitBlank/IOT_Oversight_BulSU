@@ -76,6 +76,38 @@
 		}
 	}
 
+	if(isset($_POST['getUserInfo'])){
+		$username = $_POST['getUserInfo'];
+		$query = "SELECT * from t_users where username = '".$username."'";
+
+		$resultset = array();
+
+		$result = $con->query($query);
+		if(mysqli_num_rows($result)==1){
+			while($row = mysqli_fetch_assoc($result)){
+				$resultset[] = $row;
+			}
+			echo json_encode($resultset);
+		}else{
+			echo "Something is Wrong Here!";
+		}
+	}
+
+	if(isset($_POST['updateAccount'])){
+		$params = json_decode($_POST['updateAccount']);
+		$username = $params->username;
+		$column = $params->column;
+		$value = $params->value;
+
+		$query = "UPDATE t_users SET " .$column. " = '" .$value. "' WHERE username = '" .$username. "'";
+		$result = $con->query($query);
+		if($result){
+			echo "Success";
+		}else{
+			echo "Something is Wrong Here!";
+		}
+	}
+
 	function login($user,$con){
 		$username = $user->username;
 		$password = $user->password;
@@ -116,17 +148,18 @@
 					$flag = 0;
 					foreach ($users as $user) {
 						if($user->nodeValue == $_SERVER['REMOTE_ADDR']){
-							echo "Matched" . $user->nodeValue;
 							$flag = 1;
 						}
 					}
 					if($flag==0){
 						$newuser = $xml->createElement('ip',$_SERVER['REMOTE_ADDR']);
 						$userlist->appendChild($newuser);
-						echo $_SERVER['REMOTE_ADDR'];
 					}
 
-					$xml->save('xml/activeuser.xml');
+					$success = $xml->save('xml/activeuser.xml');
+					if($success){
+						echo "Success";
+					}
 				}
 			}
 		}

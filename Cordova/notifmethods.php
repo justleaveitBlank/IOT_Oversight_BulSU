@@ -5,13 +5,13 @@
 		$num = $_POST['notifs'];
 		$max_id = $_POST['countnotifs'];
 
-		$query = 'SELECT COUNT(notif_id) as notifs ,MAX(notif_id) as MaxId FROM t_notification WHERE Status = "unresolved" ORDER BY notif_id desc';
+		$query = 'SELECT COUNT(notif_id) as notifs , IFNULL(MAX(notif_id),0) as MaxId FROM t_notification WHERE Status = "unresolved" ORDER BY notif_id desc';
 		$result = $con->query($query);
 		if(mysqli_num_rows($result)>0){
 			while($row = mysqli_fetch_assoc($result)){
-				if($row["notifs"] > $num){
+				if($row["notifs"] != $num){
 					echo $row["notifs"] . "|" . $row['MaxId'] . "|RELOAD";
-				} else if ($row["MaxId"] > $max_id){
+				} else if ($row["MaxId"] != $max_id){
 					echo $row["notifs"] . "|" . $row['MaxId'] . "|RELOAD";
 				} else {
 					echo $row["notifs"] . "|" . $row['MaxId'] . "|FINE";
@@ -34,12 +34,19 @@
 	if(isset($_POST['allowapp'])){
 		$app_id = $_POST['allowapp'];
 		$notif_id = $_POST['notif'];
-		$query = 'UPDATE t_notification SET Status="allowed" WHERE notif_id = "' . $notif_id . '"';
-		$result = $con->query($query);
-		if($result){
-			echo 'Success' . mysqli_error($con);
-		}else{
-			echo 'Failed' . mysqli_error($con);
+		$date = $_POST['timelimit'];
+
+		$query = "UPDATE t_appliance SET uid='".$app_id."', has_power=1, has_time_limit=1, time_limit_value = '" .$date. "' WHERE appl_name =	'Anonymous_Appliance'";
+		if($con->query($query)){
+			$query = 'UPDATE t_notification SET Status="allowed" WHERE notif_id = "' . $notif_id . '"';
+			$result = $con->query($query);
+			if($result){
+			  echo 'Success' . mysqli_error($con);
+			}else{
+			  echo 'Failed' . mysqli_error($con);
+			}
+		} else {
+			echo "Something Went Wrong!" . mysqli_error($con);
 		}
 	}
 
@@ -117,7 +124,7 @@
 							$consumption = $row2['current_power_usage'];
 							$limit = $row2['power_limit_value'];
 							?>
-								<div class="row">
+								<div class="row" name='<?php echo $id;?>'>
 									<div class="col s12 m12 center-block">
 										<div class="card" id='<?php echo $id?>' name='<?php echo $limit?>'>
 											<div class="card-content white-text">
@@ -141,7 +148,7 @@
 					}
 				}else if(trim($type)=='newapp'){
 				?>
-					<div class='row'>
+					<div class='row' name='<?php echo $id;?>'>
 						<div class="col s12 m12 center-block">
 							<div class="card" id='<?php echo $id?>'>
 								<div class="card-content white-text">
@@ -159,7 +166,7 @@
 				<?php
 				}else if(trim($type)=='newanoapp'){
 				?>
-					<div class='row'>
+					<div class='row' name='<?php echo $id;?>'>
 						<div class="col s12 m12 center-block">
 							<div class="card" id='<?php echo $id?>'>
 								<div class="card-content white-text">
@@ -178,9 +185,6 @@
 				}
 
 			}
-		}
-		else{
-			echo "No Current Notifications " . mysqli_error($con);
 		}
 	}
 

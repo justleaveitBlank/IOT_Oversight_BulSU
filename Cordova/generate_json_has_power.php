@@ -28,7 +28,7 @@ if($notifStat=="true"){
 } else if ($notifStat == "false"){
 	$notifStat = false;
 }
-
+//------------------------------- t_appliance with id --------------------
 if($num>0 && $appl_uid !="NO_UID"){
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -64,16 +64,22 @@ if($num>0 && $appl_uid !="NO_UID"){
 	file_put_contents('json_has_power_data.json',  $json_has_power_data);
 	
 }
+// ------------------------------- t_appliance with no_uid -------------------------------
 else if($num>0 && $appl_uid == "NO_UID"){
     // retrieve our table contents
     // fetch() is faster than fetchAll()
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-        // extract row
+        
+		if($notifStat == true){
+			$type = "newanoapp";
+			include_once 'CheckExistingNotif.php';
+		}
+		
+		// extract row
         // this will make $row['name'] to
         // just $name only
         extract($row);
-
 		//values get from database
         $appliance_arr=array(
             "uid" => $UID,
@@ -95,13 +101,27 @@ else if($num>0 && $appl_uid == "NO_UID"){
 else{
 //--------------------------- CHECK DB IF EXISTING NOTIFICATION -----------------
 	if($notifStat == true){
+		$type = "newapp";
 		include_once 'CheckExistingNotif.php';
+	
+	$appliance_arr=array(
+			"uid" => $appl_uid,
+			"has_power" => "0",//value change depeding on the value of the user select 0/1
+			"status" => "unregistered"
+		);
+		$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
+		// get from signedPowerData.php since this is impoted
+		//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
+		echo  $json_has_power_data ;
+
+		//create json file
+		file_put_contents('json_has_power_data.json',  $json_has_power_data);
 	}
 	else{
 		$appliance_arr=array(
-		"uid" => $appl_uid,
-		"has_power" => "0",//value change depeding on the value of the user select 0/1
-		"status" => "unregistered"
+			"uid" => $appl_uid,
+			"has_power" => "0",//value change depeding on the value of the user select 0/1
+			"status" => "unregistered"
 		);
 		$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 		// get from signedPowerData.php since this is impoted

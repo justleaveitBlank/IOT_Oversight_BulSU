@@ -112,13 +112,14 @@ function add_jqueries() {
 }
 
 function ToastMessage(message){
-	M.Toast.dismissAll();
-	var toastHTML = "<span style='color: white; width: 70%;'>"+message+"</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+	$('.toast').hide();
+
+	var toastHTML = "<span style='color: white; width: 70%; font-size: 1em;'>" +message+ "</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
 	M.toast({
 		html: toastHTML
 	});
 
-	$('.toast-action').click(function () {
+	$('.toast-action').click(function() {
 		M.Toast.dismissAll();
 	});
 }
@@ -150,19 +151,7 @@ function app_on(app_uid) {
 }
 
 function add_appschart() {
-	var month = new Array();
-	month[0] = "January";
-	month[1] = "February";
-	month[2] = "March";
-	month[3] = "April";
-	month[4] = "May";
-	month[5] = "June";
-	month[6] = "July";
-	month[7] = "August";
-	month[8] = "September";
-	month[9] = "October";
-	month[10] = "November";
-	month[11] = "December";
+	var month = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 	var cur_date = new Date();
 	var n = cur_date.getMonth();
 	var months = [];

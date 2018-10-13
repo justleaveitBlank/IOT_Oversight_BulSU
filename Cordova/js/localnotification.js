@@ -1,5 +1,5 @@
-var no_notifs = 0;
-var maxnotif = 0;
+var no_notifs = window.localStorage.getItem('no_notifs');
+var maxnotif = window.localStorage.getItem('max_notifs');
 var diff = "";
 
 function triggerConsumption(id, app_id) {
@@ -69,14 +69,14 @@ function checkLocal() {
 		success: function(data) {
 			if (data.trim().match(/RELOAD/i)) {
 				var res = data.trim().split("|");
-				if(res[0]>no_notifs){
-					diff = res[0] - no_notifs;
-					identifyNotifs(diff);
+				if(res[0]!=no_notifs){
+					identifyNotifs(res[0]);
 					no_notifs = res[0];
+					window.localStorage.setItem('no_notifs',no_notifs);
 					maxnotif = res[1];
+					window.localStorage.setItem('max_notifs',maxnotif);
 				}
 			}
 		}
 	});
 }
-
