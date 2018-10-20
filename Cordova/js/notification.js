@@ -3,7 +3,7 @@ try {
 	var no_notifs = window.localStorage.getItem('no_notifs');
 	var maxnotif = window.localStorage.getItem('max_notifs');
 	var notif_id = 0;
-	var timearray = [0, 5, 15, 30, 60, 360, 720];
+	var timearray = [0, 5, 15, 30, 60, 360, 720, 1440];
 	var selected_time = 69;
 	var triggered_notif = 0;
 	var diff = 0;
@@ -45,7 +45,7 @@ try {
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
 					success: function(data) {
 						if(data.trim().match(/success/i)){
-							ToastMessage("Limit Updated!");
+							SendToastMessage("Limit Updated!");
 							$(".row[name='"+notif_id+"']").remove();
 						}
 					}
@@ -67,15 +67,21 @@ try {
 	$('#allow_app_btn').mouseup(function() {
 		if (selected_time != 69) {
 			var app_id = $(this).attr('name');
-			var timeLimit = dateAdd($.now(), "minute" ,selected_time);
+			/*var timeLimit = dateAdd($.now(), "minute" ,selected_time);
 			var dateLimit = formatDate(timeLimit);
+			if( selected_time == 0 ){
+				dateLimit = formatDate(new Date("0000-00-00 00:00:00"));
+			} else {
+				dateLimit = formatDate(timeLimit);
+			}*/
 			$.ajax({
 				type: "POST",
-				data: "allowapp=" +app_id+ "&notif=" +notif_id+ "&timelimit=" +dateLimit,
+				data: "allowapp=" +app_id+ "&notif=" +notif_id+ "&timelimit=" +selected_time,
 				url: 'http://'+deviceHost+'/notifmethods.php',
 				crossDomain: true,
 				contentType: "application/x-www-form-urlencoded; charset=utf-8",
 				success: function(data) {
+					console.log(data.trim());
 					if(data.trim().match(/success/i)){
 						throwOnResolved(app_id,"allow");
 					}

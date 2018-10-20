@@ -17,8 +17,8 @@ function triggerAnoApp(id, app_id) {
 	cordova.plugins.notification.local.hasPermission(function(granted) {
 		cordova.plugins.notification.local.schedule({
 			id: 1,
-			title: 'Anonymous Appliance',
-			text: 'An Anonymous Appliance is plugged',
+			title: 'Anonymous Appliance Need Consumption',
+			text: 'An Anonymous Appliance is currently plugged and needs consumption!',
 			badge: 2
 		});
 	});
@@ -28,8 +28,8 @@ function triggerNewApp(id, app_id) {
 	cordova.plugins.notification.local.hasPermission(function(granted) {
 		cordova.plugins.notification.local.schedule({
 			id: 1,
-			title: 'New Unregistered Appliance',
-			text: 'A New Unregistered Appliance Id: ' + app_id + ' is plugged',
+			title: 'Unregistered Appliance Need Consumption',
+			text: 'A New Unregistered Appliance Id: ' + app_id + ' is currently plugged and needs consumption!',
 			badge: 3
 		});
 	});
@@ -46,6 +46,9 @@ function identifyNotifs(num) {
 		success: function(data) {
 			var latest_notif = JSON.parse(data.trim());
 			console.log(data.trim());
+			if(latest_notif.length == 0){
+				ClearNotification();
+			}
 			for (var i = 0; i < latest_notif.length; i++) {
 				if (latest_notif[i].type == 'newanoapp') {
 					triggerAnoApp(latest_notif[i].id, latest_notif[i].app);

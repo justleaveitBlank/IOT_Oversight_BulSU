@@ -34,9 +34,23 @@
 	if(isset($_POST['allowapp'])){
 		$app_id = $_POST['allowapp'];
 		$notif_id = $_POST['notif'];
-		$date = $_POST['timelimit'];
+		$time = $_POST['timelimit'];
+		
+		if($time =="0"){
+			$date="0000-00-00 00:00:00";
+		}
+		else{
+			$datenow = date_create();
+			$addedTime =$time." minutes";
+			$rawdate = date_add($datenow, date_interval_create_from_date_string($addedTime));
+			$date = date_format($rawdate, 'Y-m-d H:i:s');
+		}
+		if($app_id == "NO_UID"){
+			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Anonymous_Appliance',1,0,1,DEFAULT,'" .$date. "',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+		} else {
+			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Unregistered_Appliance',1,0,1,DEFAULT,'" .$date. "',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+		}
 
-		$query = "UPDATE t_appliance SET uid='".$app_id."', has_power=1, has_time_limit=1, time_limit_value = '" .$date. "' WHERE appl_name =	'Anonymous_Appliance'";
 		if($con->query($query)){
 			$query = 'UPDATE t_notification SET Status="allowed" WHERE notif_id = "' . $notif_id . '"';
 			$result = $con->query($query);
@@ -46,7 +60,7 @@
 			  echo 'Failed' . mysqli_error($con);
 			}
 		} else {
-			echo "Something Went Wrong!" . mysqli_error($con);
+			echo "Something Went Wrong!" .$query. mysqli_error($con);
 		}
 	}
 
@@ -136,7 +150,6 @@
 											</div>
 											<div class="card-action right-align">
 												<a class="consumption_btn btn-small waves-effect waves-light orange white-text modal-trigger sTitle" href='#updateLimit' id='<?php echo $app_id;?>'>Update</a>
-												<a class="ignore btn-small waves-effect waves-light red white-text sTitle" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
 											</div>
 										</div>
 

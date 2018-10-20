@@ -283,13 +283,13 @@ String sendSignedPowerData(String UID, String volt, String amp, String power, St
 void noAppliancePlugged(){
   connectToHost();
   String message = "0||0||0||0";
-  String PHPmessage = "GET /signedPowerData.php?UID=NO_UID&powerdata=" + message +"&notifStat=" + notifStat +"&aDevice=" + aDevice +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
+  String PHPmessage = "GET /signedPowerData.php?UID=UNPLUGGED&powerdata=" + message +"&notifStat=" + notifStat +"&aDevice=" + aDevice +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
   String commandSend = "AT+CIPSEND=1," + String(PHPmessage.length());
   wifiSerial.println(commandSend); //Send to ID 1, length DATALENGTH
   delay(200);
   wifiSerial.println(PHPmessage); // Print Data
 
-  String catMessage = "NO_UID||" + message + "||" + aDevice ;
+  String catMessage = "UNPLUGGED||" + message + "||" + aDevice ;
   Serial.println(catMessage);
   powerAnalyzerTurn = false;
   return catMessage;

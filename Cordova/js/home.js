@@ -146,6 +146,9 @@ function app_on(app_uid) {
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function (data) {
 			console.log(data.trim());
+			if(data.trim().match(/Expired/i)){
+				ToastMessage("Access Already Expired!");
+			}
 		}
 	});
 }
@@ -230,7 +233,7 @@ function checkapps() {
 function loadinfos() {
 	$.ajax({
 		type: "POST",
-		data: "loadappinfo=1",
+		data: "loadappinfo=1&ts="+$.now(),
 		url: 'http://' + deviceHost + '/methods.php',
 		crossDomain: true,
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -245,17 +248,29 @@ function loadinfos() {
 				var consump = appinfo[i].current_power_usage;
 				var avg = appinfo[i].avg_watthr;
 				var cost = appinfo[i].estimated_cost;
-				var limit_value = appinfo[i].power_limit_value;
-				var checked = (appinfo[i].has_power == 1) ? $('.switcher[name="' + appuid + '"]').attr("checked", "") : $('.switcher[name="' + appuid + '"]').removeAttr("checked");
+				var limit_value;
+				var unit;
+				if(appname.match(/Anonymous_Appliance/i) || appname.match(/Unregistered_Appliance/i)){
+					limit_value = appinfo[i].time_limit_value;
+					unit = "";
+				} else {
+					limit_value = appinfo[i].power_limit_value;
+					unit = " kwh";
+				}
+				if(appinfo[i].has_power == 1){
+					$('.switcher[name="' + appuid + '"]').attr("checked", "");
+				} else {
+					$('.switcher[name="' + appuid + '"]').prop("checked",false);
+				}
 
 				$('.applianceName[name="' + appuid + '"]').text(appname);
-				$('.kwh[name="' + appuid + '"]').text(consump + " kwh / " + limit_value + " kwh");
+				$('.kwh[name="' + appuid + '"]').text(consump + " kwh / " + limit_value + unit);
 				$('.switcher[name="' + appuid + '"]').attr('id', appuid);
 
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(0).html("UID: <span style='font-weight: normal; font-size: inherit;'>" + appuid + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(1).html("Name: <span style='font-weight: normal; font-size: inherit;'>" + appname + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("Consumption: <span style='font-weight: normal; font-size: inherit;'>" + consump + " kwh" + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("Kilowatt per hour: <span style='font-weight: normal; font-size: inherit;'>" + avg + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("Power Consumption: <span style='font-weight: normal; font-size: inherit;'>" + consump + " kwh" + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("Average Consumption: <span style='font-weight: normal; font-size: inherit;'>" + avg + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(4).html("Price per KWhr: <span style='font-weight: normal; font-size: inherit;'>" + 0 + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(5).html("Estimated Price: <span style='font-weight: normal; font-size: inherit;'>" + cost + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(6).html("Limit: <span style='font-weight: normal; font-size: inherit;'>" + limit_value + "</span>");

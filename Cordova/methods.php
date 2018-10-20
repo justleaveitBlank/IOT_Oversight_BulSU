@@ -282,13 +282,31 @@
 
 	if(isset($_POST['on'])){
 		$uid = $_POST['on'];
-		$query = 'UPDATE t_appliance SET has_power = 1 where uid = "'. $uid .'"';
-
+		$flag=0;
+		$query = "SELECT * FROM t_appliance WHERE uid = '". $uid ."'";
 		$result = $con->query($query);
-		if($result){
-			echo 'Success ' . mysqli_error($con);
+		if(mysqli_num_rows($result) == 1){
+			while($row = mysqli_fetch_assoc($result)){
+				if($row['appl_name']=="Anonymous_Appliance" || $row['appl_name']=="Unregistered_Appliance"){
+					$date = strtotime($row['time_limit_value']);
+					if($row['has_time_limit']==1 && (time()<$date)){
+						$flag = 1;
+					}
+				} else {
+					$flag = 1;
+				}
+			}
+
+			if($flag == 1){
+				$query2 = 'UPDATE t_appliance SET has_power = 1 where uid = "'. $uid .'"';
+				if($con->query($query2)){
+					echo 'Success ' . mysqli_error($con);
+				} else {
+					echo 'Failed ' . mysqli_error($con);
+				}
+			}
 		} else {
-			echo 'Failed ' . mysqli_error($con);
+			echo mysqli_error($con);
 		}
 	}
 
