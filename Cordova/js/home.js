@@ -269,8 +269,8 @@ function loadinfos() {
 
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(0).html("UID: <span style='font-weight: normal; font-size: inherit;'>" + appuid + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(1).html("Name: <span style='font-weight: normal; font-size: inherit;'>" + appname + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("Power Consumption: <span style='font-weight: normal; font-size: inherit;'>" + consump + " kwh" + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("Average Consumption: <span style='font-weight: normal; font-size: inherit;'>" + avg + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("Power Consumption: <span style='font-weight: normal; font-size: inherit;'>" + consump + " watt/s </span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("Average Consumption: <span style='font-weight: normal; font-size: inherit;'>" + avg + " Kwh</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(4).html("Price per KWhr: <span style='font-weight: normal; font-size: inherit;'>" + 0 + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(5).html("Estimated Price: <span style='font-weight: normal; font-size: inherit;'>" + cost + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(6).html("Limit: <span style='font-weight: normal; font-size: inherit;'>" + limit_value + "</span>");

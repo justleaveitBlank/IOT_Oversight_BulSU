@@ -7,6 +7,7 @@
 	$s_socket = $row->socket;
 	$s_limitation = $row->limitation;
 	$s_authentication = $row->authentication;
+	$s_price_rate = $row->price;
 
 	//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."</br>";
 	//echo $s_socket." || ".$s_limitation." || ".$s_authentication."\n\r";

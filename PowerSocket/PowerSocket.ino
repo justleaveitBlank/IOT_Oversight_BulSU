@@ -61,7 +61,7 @@ byte readCard[4]; // MFRC522 has 4 bytes (8 Characters)
 //Wifi Variables
 String wifiSSID = "iot_oversight";
 String wifiPASS = "oversight";
-String raspiIP = "192.168.1.119";
+String raspiIP = "192.168.2.119";
 String raspiPORT = "80";
 
 //WiFi Data to be Sent
@@ -267,7 +267,7 @@ String sendUIDtoServer(String UID){
 String sendSignedPowerData(String UID, String volt, String amp, String power, String watthr){
   connectToHost();
   String message = volt + "||" + amp + "||" + power + "||" + watthr;
-  String PHPmessage = "GET /signedPowerData.php?UID=" + UID + "&powerdata=" + message +"&notifStat=" + notifStat +"&aDevice=" + aDevice +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
+  String PHPmessage = "GET /signedPowerData.php?UID=" + UID + "&unplugged=false&powerdata=" + message +"&notifStat=" + notifStat +"&aDevice=" + aDevice +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
   String commandSend = "AT+CIPSEND=1," + String(PHPmessage.length());
   wifiSerial.println(commandSend); //Send to ID 1, length DATALENGTH
   delay(200);
@@ -283,13 +283,13 @@ String sendSignedPowerData(String UID, String volt, String amp, String power, St
 void noAppliancePlugged(){
   connectToHost();
   String message = "0||0||0||0";
-  String PHPmessage = "GET /signedPowerData.php?UID=UNPLUGGED&powerdata=" + message +"&notifStat=" + notifStat +"&aDevice=" + aDevice +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
+  String PHPmessage = "GET /signedPowerData.php?UID=NO_UID&unplugged=true&powerdata=" + message +"&notifStat=" + notifStat +"&aDevice=" + aDevice +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
   String commandSend = "AT+CIPSEND=1," + String(PHPmessage.length());
   wifiSerial.println(commandSend); //Send to ID 1, length DATALENGTH
   delay(200);
   wifiSerial.println(PHPmessage); // Print Data
 
-  String catMessage = "UNPLUGGED||" + message + "||" + aDevice ;
+  String catMessage = "NO_UID||1||" + message + "||" + aDevice ;
   Serial.println(catMessage);
   powerAnalyzerTurn = false;
   return catMessage;

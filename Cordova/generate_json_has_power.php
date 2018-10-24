@@ -32,7 +32,6 @@ if($notifStat=="true"){
 $appliance_arr = array();
 
 if($num>0 && $appl_uid !="NO_UID"){
-
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         // extract row
         // this will make $row['name'] to
@@ -56,11 +55,9 @@ if($num>0 && $appl_uid !="NO_UID"){
 
         );
     }
-	if($has_power == "1" && $watthr > "0" )
-	{
-		include_once 'insertToHistoryDB.php';
-		include_once 'insertTot_appliance.php';
-	}
+	
+	include_once 'insertToHistoryDB.php';
+	//include_once 'insertTot_appliance.php';
 	
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
@@ -91,12 +88,10 @@ else if($appl_uid == "NO_UID"){
 		"has_power" => $has_power,
 		"status" => "registered"
     );
-
-	if($has_power == "1" && $watthr > "0" )
-	{
-		include_once 'insertToHistoryDB.php';
-		include_once 'insertTot_appliance.php';
-	}
+	
+	include_once 'insertToHistoryDB.php';
+	//include_once 'insertTot_appliance.php';
+	
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
 	//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
@@ -108,7 +103,7 @@ else if($appl_uid == "NO_UID"){
 }
 else{
 //--------------------------- CHECK DB IF EXISTING NOTIFICATION -----------------
-	if($notifStat == true && $UID != "UNPLUGGED"){
+	if($notifStat == true && $unPlugged != "true"){
 		$type = "newapp";
 		include_once 'CheckExistingNotif.php';
 
