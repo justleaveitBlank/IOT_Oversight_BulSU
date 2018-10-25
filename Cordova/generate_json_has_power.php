@@ -40,7 +40,7 @@ if($num>0 && $appl_uid !="NO_UID"){
 
 		//values get from database
         $appliance_arr=array(
-            "uid" => $UID,
+            //"uid" => $UID,
 			//"appl_name" => $appl_name,
 			"has_power" => $has_power,
 			//"has_power_limit" => $has_power_limit,
@@ -51,13 +51,12 @@ if($num>0 && $appl_uid !="NO_UID"){
 			//"current_power_usage" => $current_power_usage,
 			//"avg_watthr" => $avg_watthr,
 			//"estimated_cost" => $estimated_cost
-			"status" => "registered"
-
+			//"status" => "registered"
         );
     }
 	
 	include_once 'insertToHistoryDB.php';
-	//include_once 'insertTot_appliance.php';
+	include_once 'insertTot_appliance.php';
 	
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
@@ -84,13 +83,13 @@ else if($appl_uid == "NO_UID"){
     // extract($row);
 		//values get from database
     $appliance_arr=array(
-        "uid" => $UID,
+        //"uid" => $UID,
 		"has_power" => $has_power,
-		"status" => "registered"
+		//"status" => "registered"
     );
 	
 	include_once 'insertToHistoryDB.php';
-	//include_once 'insertTot_appliance.php';
+	include_once 'insertTot_appliance.php';
 	
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted

@@ -1,1 +1,1 @@
-getCurrentVal=false||currentConsumedVal=21.36
+getCurrentVal=false||currentConsumedVal=0

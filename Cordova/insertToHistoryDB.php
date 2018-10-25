@@ -13,16 +13,16 @@
 			// this will make $row['name'] to
 			// just $name only
 			extract($row);
-			$h_effective_date = explode(" ",$effective_date);
-			$effective_day = date("Y-m-d",strtotime($h_effective_date[0]));
-			echo $watthr."||".$c_consumed."\r\n";
+			//$h_effective_date = explode(" ",$effective_date);
+			//$effective_day = date("Y-m-d",strtotime($h_effective_date[0]));
+			//echo $watthr."||".$c_consumed."\r\n";
+			//echo $current_day."||".$effective_day."\r\n";
 			if($unPlugged = "false" && $getCurrentConsumption == "false"){
 				if($has_power == "1"){
-						
-					echo "UPDATE\r\n";
-					echo $c_consumed+$watthr."\r\n";
-					echo $watthr."\r\n";
-					$upd_q ="UPDATE t_history SET consumed=$watthr+$c_consumed,lst_updt_dte ='$dateTime' WHERE uid='$UID' and DATE(effective_date)='$current_day'";
+					$c_watthr = $watthr+$c_consumed;
+					//echo "UPDATE\r\n";
+					//echo $c_consumed." || ".$c_watthr." || ".$watthr."\r\n";
+					$upd_q ="UPDATE t_history SET consumed=$c_watthr,lst_updt_dte ='$dateTime' WHERE uid='$UID' and DATE(effective_date)='$current_day'";
 					if($con->query($upd_q)){
 						echo mysqli_error($con);
 					}
@@ -35,14 +35,14 @@
 							echo mysqli_error($con);
 						}
 					}
+					file_put_contents("textVariables.txt","getCurrentVal=false||currentConsumedVal=0");
 				}
 			}
 			else if($unPlugged = "false" && $getCurrentConsumption == "true"){
 				$c_consumed = $consumed;
 				file_put_contents("textVariables.txt","getCurrentVal=false||currentConsumedVal=".$c_consumed);
-				echo $watthr."||".$c_consumed."\r\n";
+				//echo $watthr."||".$c_consumed."\r\n";
 			}
-			
 		}
 	}
 	else{
@@ -52,6 +52,7 @@
 			if($con->query($insert_query)){
 				echo mysqli_error($con);
 			}
+			file_put_contents("textVariables.txt","getCurrentVal=false||currentConsumedVal=0");
 		}
 	}
 ?>

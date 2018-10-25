@@ -9,6 +9,10 @@
 	//echo $UID."\r\n".$powerdata."\r\n";
 	$getCurrentConsumption;
 	$c_consumed;
+	$m_consumed = 0;
+	$ctr = 0;
+	$Kwatthr = 0;
+	$e_price =  0;
 	if($unPlugged == "true"){
 		file_put_contents("textVariables.txt","getCurrentVal=true||currentConsumedVal=0");
 	}
@@ -26,8 +30,8 @@
 	
 	//echo "NOTIFSTAT:\t".$notifStat."\r\n";
 	//echo "aDevice\t:\t".$aDevice."\r\n"; 
-	echo "unPlugged:\t".$unPlugged."\r\n";
-	echo "getCurrentConsumption :\t".$getCurrentConsumption."\r\n";
+	//echo "unPlugged:\t".$unPlugged."\r\n";
+	//echo "getCurrentConsumption :\t".$getCurrentConsumption."\r\n";
 	
 
 	$AR_powerdata = explode( "||", $powerdata);
