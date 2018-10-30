@@ -174,7 +174,7 @@ try {
 				ns="false";
 		$.ajax({
 			type: "GET",
-			url: "http://" + deviceHost + "/signedPowerData.php?ts="+$.now()+"&UID="+id+"&powerdata=ae113a20||224.20||0.01||0.00||0.00&notifStat="+ns+"&aDevice="+arePluggedDevices,
+			url: "http://" + deviceHost + "/signedPowerData.php?ts="+$.now()+"&UID="+id+"&powerdata=ae113a20||224.20||0.01||0.00||0.00&notifStat="+ns+"&aDevice="+arePluggedDevices+"&unplugged=false",
 			crossDomain: true,
 			dataType: "text",
 			success: function (data) {
@@ -191,7 +191,7 @@ try {
 		$('.toast').hide();
 
 		M.Toast.dismissAll();
-		var toastHTML = "<span style='color: white; width: 70%; font-size:1em;'>"+Toasttext+"</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+		var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size:1em;'>"+Toasttext+"</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
 		M.toast({html: toastHTML});
 
 		$('.toast-action').click(function(){

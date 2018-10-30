@@ -230,6 +230,7 @@
 
 
 //-------------------------------------APPLIANCE RELATED----------------------------------------------------------
+
 	if(isset($_POST['appl_updates'])){
 		$data = $_POST['appl_updates'];
 		$updates = json_decode($data);
@@ -237,12 +238,16 @@
 		$id = $updates->id;
 		$name = $updates->name;
 		$limit = $updates->limit;
+		$haslimit = 1;
+		if($limit == 0){
+			$haslimit = 0;
+		}
 
-		$query = "UPDATE t_appliance SET appl_name = '".$name."' , appl_name = '".$name."' , power_limit_value = ".$limit." WHERE uid = '".$id."'";
+		$query = "UPDATE t_appliance SET appl_name = '".$name."' , appl_name = '".$name."' , has_power_limit = ".$haslimit." , power_limit_value = ".$limit." WHERE uid = '".$id."'";
 
 		$result = $con->query($query);
 		if($result){
-			echo "Success! " . mysqli_error($con);
+			echo "Success! " . $haslimit . mysqli_error($con);
 		} else {
 			echo "Failed! " . mysqli_error($con);
 		}
@@ -291,9 +296,19 @@
 					$date = strtotime($row['time_limit_value']);
 					if($row['has_time_limit']==1 && (time()<$date)){
 						$flag = 1;
+					} else {
+						$messageToClient = "Expired";
 					}
 				} else {
-					$flag = 1;
+					if($row["has_power_limit"] == 1){
+						if($row['current_power_usage'] >= $row['power_limit_value']){
+							$messageToClient = "Overconsumed";
+						} else {
+							$flag = 1;
+						}
+					} else {
+						$flag = 1;
+					}
 				}
 			}
 
@@ -304,6 +319,8 @@
 				} else {
 					echo 'Failed ' . mysqli_error($con);
 				}
+			} else {
+				echo $messageToClient ;
 			}
 		} else {
 			echo mysqli_error($con);
@@ -341,6 +358,17 @@
 			    $rows[]=$r;
 			}
 			echo json_encode($rows);
+		}
+	}
+
+	if(isset($_POST["getPrice"])){
+		$query = "SELECT price FROM t_settings";
+		$result = $con->query($query);
+
+		if(mysqli_num_rows($result)>0){
+			while($r = mysqli_fetch_assoc($result)) {
+		   echo $r['price'];
+			}
 		}
 	}
 

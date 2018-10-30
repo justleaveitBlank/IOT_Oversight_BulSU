@@ -125,7 +125,7 @@ function register_app() {
 function SendToast(message){
 	$('.toast').hide();
 
-	var toastHTML = "<span style='color: white; width: 70%; font-size: 1em;'>" +message+ "</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+	var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size: 1em;'>" +message+ "</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
 	M.toast({
 		html: toastHTML
 	});

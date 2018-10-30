@@ -64,7 +64,7 @@ function IdentifyUser(destination){
 function SendErrorMessage(){
 	$('.toast').hide();
 
-	var toastHTML = "<span style='color: white; width: 70%; font-size: 1em;'>Something Went Wrong!</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+	var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size: 1em;'>Something Went Wrong!</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
 	M.toast({
 		html: toastHTML
 	});

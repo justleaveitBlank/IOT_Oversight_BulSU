@@ -35,7 +35,7 @@
 		$app_id = $_POST['allowapp'];
 		$notif_id = $_POST['notif'];
 		$time = $_POST['timelimit'];
-		
+
 		if($time =="0"){
 			$date="0000-00-00 00:00:00";
 		}

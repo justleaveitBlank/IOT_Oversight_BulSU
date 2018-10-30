@@ -1,56 +1,6 @@
 <?php
   require_once 'Config.php';
 
-  if(isset($_POST['getdaily'])){
-    $consumptionarray = array();
-    $hoursarray = array();
-    $id = $_POST['uid'];
-    $date = ($_POST['getdaily']=="now")? "NOW()" : "'".$_POST['getdaily']."'";
-
-    //MinHours
-    $select = "IFNULL(MIN(HOUR(effective_date)),(HOUR(NOW()))-8) as MinHours , IFNULL(MAX(HOUR(effective_date)),HOUR(NOW())) as MaxHours";
-    $table = "t_history";
-    $where = "DATE(effective_date) = DATE(".$date.")";
-    $result = processQuery($select,$table,$where);
-
-    if(mysqli_num_rows($result)>0){
-      while($row = mysqli_fetch_assoc($result)){
-        $MinTime = intval($row['MinHours']);
-        $MaxTime = intval($row['MaxHours']);
-      }
-    } else {
-      print mysqli_error($con);
-    }
-
-    for ($i=$MinTime; $i <=$MaxTime; $i++) {
-      array_push($hoursarray,$i.":00");
-      array_push($consumptionarray,0);
-    }
-
-    //Retrieve Consumption
-    $apps = getConsumers(date("Y-m-d h:i:sa"),"MONTH");
-    for ($h=0; $h < sizeof($apps) ; $h++) {
-      $id = $apps[$h]['uid'];
-      $x = 0;
-      for ($i=$MinTime; $i <=$MaxTime; $i++) {
-        $select = "IFNULL(MAX(consumed), (SELECT IFNULL(MAX(th.consumed),0) from t_history as th where uid='$id' and  date(th.effective_date) = date(".$date.") and HOUR(th.effective_date) < $i)) as  consumed";
-        $table = "t_history";
-        $where = "uid='$id' and  DATE(effective_date)=DATE(".$date.") and HOUR(effective_date) = ".$i;
-        $result = processQuery($select,$table,$where);
-
-        if(mysqli_num_rows($result)>0){
-          while($row = mysqli_fetch_assoc($result)){
-            $consumptionarray[$x] += intval($row["consumed"]);
-            $x++;
-          }
-        } else {
-          print mysqli_error($con);
-        }
-      }
-    }
-    echo json_encode($hoursarray)."|".json_encode($consumptionarray);
-  }
-
   if(isset($_POST['getweekly'])){
     $consumptionarray = array();
     $daysarray = array("SUN","MON","TUE","WED","THU","FRI","SAT");
@@ -62,22 +12,25 @@
     $date = date('Y-m-d', strtotime($getdate. ' - ' . $newday . ' days'));
     $apps = getConsumers($date,"MONTH");
     $finalarray = array(0,0,0,0,0,0,0);
-    for ($h=0; $h < sizeof($apps) ; $h++) {
-      $id = $apps[$h]['uid'];
-      $consumptionarray = array();
-      for ($i=0; $i < 7; $i++) {
-        $curdate = date('Y-m-d', strtotime($date. ' + ' . $i . ' days'));
-        $select = "IFNULL(MAX(consumed), (SELECT IFNULL(MAX(th.consumed),0) from t_history as th where uid='$id' and  YEAR(th.effective_date) = YEAR('".$curdate."') and MONTH(th.effective_date) = MONTH('".$curdate."') and DAY(th.effective_date) < DAY('".$curdate."'))) as  consumed";
-        $table = "t_history";
-        $where = "uid='$id' and  DATE(effective_date) = DATE('".$curdate."')";
-        $result = processQuery($select,$table,$where);
+    $valid = checkHistoryData();
+    if($valid){
+      for ($h=0; $h < sizeof($apps) ; $h++) {
+        $id = $apps[$h]['uid'];
+        $consumptionarray = array();
+        for ($i=0; $i < 7; $i++) {
+          $curdate = date('Y-m-d', strtotime($date. ' + ' . $i . ' days'));
+          $select = "IFNULL(SUM(consumed), (SELECT IFNULL(th.consumed,0) from t_history as th where uid='$id' and  YEAR(th.effective_date) = YEAR('".$curdate."') and MONTH(th.effective_date) = MONTH('".$curdate."') and DAY(th.effective_date) = (SELECT MAX(effective_date) FROM t_history WHERE uid='$id' and  YEAR(th.effective_date) = YEAR('".$curdate."') and MONTH(th.effective_date) = MONTH('".$curdate."') and DAY(th.effective_date) < DAY('".$curdate."')))) as  consumed";
+          $table = "t_history";
+          $where = "uid='$id' and  DATE(effective_date) = DATE('".$curdate."')";
+          $result = processQuery($select,$table,$where);
 
-        if(mysqli_num_rows($result)>0){
-          while($row = mysqli_fetch_assoc($result)){
-            $finalarray[$i] += intval($row["consumed"]);
+          if(mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)){
+              $finalarray[$i] += intval($row["consumed"]);
+            }
+          } else {
+            print mysqli_error($con);
           }
-        } else {
-          print mysqli_error($con);
         }
       }
     }
@@ -91,25 +44,28 @@
     $date = ($_POST['getmonthly']=="now")? date("Y-m-d") : $_POST['getmonthly'];
 
     $apps = getConsumers($date,"MONTH");
-    for ($h=0; $h < sizeof($apps) ; $h++) {
-      $id = $apps[$h]['uid'];
-      $consumptionarray = array();
-      for ($i=1; $i <= 12; $i++) {
-        $select = "IFNULL(MAX(consumed), 0) as  consumed";
-        $table = "t_history";
-        $where = "uid='$id' and  YEAR(effective_date) = YEAR('".$date."') and MONTH(effective_date) = " . $i;
-        $result = processQuery($select,$table,$where);
+    $valid = checkHistoryData();
+    if($valid){
+      for ($h=0; $h < sizeof($apps) ; $h++) {
+        $id = $apps[$h]['uid'];
+        $consumptionarray = array();
+        for ($i=1; $i <= 12; $i++) {
+          $select = "IFNULL(SUM(consumed), 0) as  consumed";
+          $table = "t_history";
+          $where = "uid='$id' and  YEAR(effective_date) = YEAR('".$date."') and MONTH(effective_date) = " . $i;
+          $result = processQuery($select,$table,$where);
 
-        if(mysqli_num_rows($result)>0){
-          while($row = mysqli_fetch_assoc($result)){
-            array_push($consumptionarray,intval($row["consumed"]));
+          if(mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)){
+              array_push($consumptionarray,intval($row["consumed"]));
+            }
+          } else {
+            print mysqli_error($con);
           }
-        } else {
-          print mysqli_error($con);
         }
-      }
-      for ($j=0; $j < sizeof($finalarray); $j++) {
-        $finalarray[$j] = $finalarray[$j] + $consumptionarray[$j];
+        for ($j=0; $j < sizeof($finalarray); $j++) {
+          $finalarray[$j] = $finalarray[$j] + $consumptionarray[$j];
+        }
       }
     }
 
@@ -128,10 +84,9 @@
     $yearsarray = array();
     for ($j=$thedate[0]; $j <=$maxdate[0]; $j++) {
       array_push($yearsarray,$j);
-      $query = "SELECT IFNULL(SUM(MAXVAL),0) as consumed FROM (SELECT  uid , MONTH(effective_date) AS DateVal, MAX(t.consumed) AS MaxVal
+      $query = "SELECT IFNULL(SUM(consumed),0) as consumed
       FROM t_history AS t
-      WHERE YEAR(t.effective_date) = $j
-      GROUP BY MONTH(`effective_date`), uid) as historyview";
+      WHERE YEAR(t.effective_date) = $j";
 
       $result = $con->query($query);
 
@@ -165,6 +120,17 @@
         $rows[] = $row;
       }
       return $rows;
+    }
+  }
+
+  function checkHistoryData(){
+    $con = $GLOBALS['con'];
+    $query = "SELECT * FROM t_history";
+    $result = $con->query($query);
+    if(mysqli_num_rows($result)>0){
+      return true;
+    } else {
+      return false;
     }
   }
  ?>

@@ -1,37 +1,29 @@
 <?php
+	require_once 'Config.php';
 	$UID = $_GET["UID"];
 	$powerdata = $_GET["powerdata"];
 	$notifStat = $_GET["notifStat"];
 	$aDevice = $_GET["aDevice"];// value 0/1
 	$unPlugged = $_GET["unplugged"];
+	//echo "<<\r\n";// IMPORTANT
+	//echo "rf\_check\r\n";
 	//echo "UNPLUGGED STATUS : ".$unPlugged."\r\n";
 	//echo "NotifStat : ".$notifStat."\r\n";
 	//echo $UID."\r\n".$powerdata."\r\n";
-	$getCurrentConsumption;
-	$c_consumed;
+	$timeLimiNotif="0";
+	$getCurrenVal;
+	$c_consumed = 0;
 	$m_consumed = 0;
-	$ctr = 0;
-	$Kwatthr = 0;
+	$m_Kwatthr = 0;
 	$e_price =  0;
-	if($unPlugged == "true"){
-		file_put_contents("textVariables.txt","getCurrentVal=true||currentConsumedVal=0");
-	}
+	$m_avg_watthr = 0;
+	$lastUID;
 	
-	if($handle = fopen('textVariables.txt','r')){
-		while(!feof($handle))
-		{
-			$content = fgets($handle);
-			$arraystr = explode("||",$content);
-			$getCurrentConsumption = substr($arraystr[0],14);
-			$c_consumed = (int)trim(substr($arraystr[1],19));
-		}
-	}
-	fclose($handle);
-	
+	//echo $lastUID."\r\n";
 	//echo "NOTIFSTAT:\t".$notifStat."\r\n";
 	//echo "aDevice\t:\t".$aDevice."\r\n"; 
-	//echo "unPlugged:\t".$unPlugged."\r\n";
-	//echo "getCurrentConsumption :\t".$getCurrentConsumption."\r\n";
+	//echo "unPlugged :\t".$unPlugged."\r\n";
+	//echo "getCurrentVal :\t".$getCurrentVal."\r\n";
 	
 
 	$AR_powerdata = explode( "||", $powerdata);
@@ -40,7 +32,7 @@
 	$power = $AR_powerdata[2];
 	$watthr = $AR_powerdata[3];
 	$dateTime = date('Y-m-d H:i:s');
-	$date = date('Y-m-d');
+	$current_date = date('Y-m-d');
 	$time = date('H:i:s');
 	//$status0 = file_put_contents("txt_has_power.txt",$UID. "||" . $powerdata . "||" . $dateTime . "\r\n" , FILE_APPEND);
 	
@@ -67,5 +59,34 @@
 	//else{
 		//echo "Falied to write";
 	//}
+	
+	if($notifStat == "1"){
+		$query = "SELECT * FROM t_history WHERE uid='".$UID."' and DATE(effective_date) ='".$current_date."'";
+		$result = $con->query($query);
+		if($result->num_rows > 0){
+			while($row = $result->fetch_assoc()) {
+				// extract row
+				// this will make $row['name'] to
+				// just $name only
+				extract($row);
+				file_put_contents("textVariables.txt","lastUID=".$uid."||currentConsumedVal=".$consumed);
+			}
+		}
+		else{
+			file_put_contents("textVariables.txt","lastUID=".$UID."||currentConsumedVal=0");
+		}
+	}
+	
+	if($handle = fopen('textVariables.txt','r')){
+		while(!feof($handle))
+		{
+			$content = fgets($handle);
+			$arraystr = explode("||",$content);
+			$lastUID = substr($arraystr[0],8);
+			$c_consumed = (float)trim(substr($arraystr[1],19));
+		}
+	}
+	fclose($handle);
+	//echo $lastUID." || ".$c_consumed."\r\n";
 	include_once 'checkSettings.php';
 ?>

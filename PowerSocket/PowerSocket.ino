@@ -1,8 +1,7 @@
-//#include <SerialESP8266wifi.h>
-#include <deprecated.h>
-#include <MFRC522.h>
-#include <MFRC522Extended.h>
-#include <require_cpp11.h>
+#include <deprecated.h> 
+#include <MFRC522.h> 
+#include <MFRC522Extended.h> 
+#include <require_cpp11.h> 
 #include <SoftwareSerial.h>
 
 //Pin configuration for Internet of Things Project
@@ -70,70 +69,76 @@ String currentUID = "";
 //boolean for switching between Serial ports
 boolean powerAnalyzerTurn = true;
 boolean setupcomplete = false;
-boolean connectionError = false;
 boolean notifStat = true;
 boolean aDevice = false;
 boolean relayIsOn = true;
-boolean relayIsOff= true;
+boolean analyzerReseter = true;
 
 //Connect to Wifi at Start UP
 //being called at the Setup phase
-void ATconnectToWifi(){
+void ATconnectToWifi() {
   //relayOff();
   Serial.println("Connecting to Wifi using AT Commands");
   disconnectToHost();
-  wifiSerial.println("AT+CWMODE=1");//set to STA mode (Station mode); 1 = Station mode, 2= Access Point, 3 = Both
+  wifiSerial.println("AT+CWMODE=1"); //set to STA mode (Station mode); 1 = Station mode, 2= Access Point, 3 = Both
   delay(200);
   // Set SSID and Password
-  String CWJAPString = "AT+CWJAP=\"" + wifiSSID + "\",\"" +wifiPASS+"\"";
+  String CWJAPString = "AT+CWJAP=\"" + wifiSSID + "\",\"" + wifiPASS + "\"";
   Serial.println(CWJAPString);
   wifiSerial.println(CWJAPString);
   delay(7500);
   // Set multiple connections to ON
-  wifiSerial.println("AT+CIPMUX=1"); 
+  wifiSerial.println("AT+CIPMUX=1");
   delay(200);
   // Start connection to Host
   String CIPSTARTString = "AT+CIPSTART=1,\"TCP\",\"" + raspiIP + "\"\," + raspiPORT;
   Serial.println(CIPSTARTString);
   wifiSerial.println(CIPSTARTString);
   delay(300);
-  tone(buzzerPin,50,100);
-  delay(150); 
-  tone(buzzerPin,250,100);
-  delay(150); 
-  tone(buzzerPin,500,100);
+  tone(buzzerPin, 750, 100);
   delay(150);
-  tone(buzzerPin,750,100);
-  delay(150);  
 }
 
-void disconnectToHost(){
+void disconnectToHost() {
   wifiSerial.println("AT+CIPCLOSE");
   delay(200);
 }
 
-void connectToHost(){
+void connectToHost() {
   String CIPSTARTString = "AT+CIPSTART=1,\"TCP\",\"" + raspiIP + "\"\," + raspiPORT;
   Serial.println(CIPSTARTString);
   wifiSerial.println(CIPSTARTString);
   delay(200);
 }
 
+void rf_check(){
+  SPI.begin();
+  mfrc522.PCD_Init(); //Initialize MFRC522 Hardware
+  //mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);
+  if(mfrc522.PCD_PerformSelfTest()){
+    Serial.println("RFID Initialized : SUCCESS");
+    tone(buzzerPin, 700, 100);
+  } else {
+    Serial.println("RFID Initialized : FAILED");
+    tone(buzzerPin, 500, 100);
+  }  
+}
+
 String getID() {
   String nullString = "";
-  if ( ! mfrc522.PICC_IsNewCardPresent()) { //If a new PICC placed to RFID reader continues
+  if (!mfrc522.PICC_IsNewCardPresent()) { //If a new PICC placed to RFID reader continues
     return nullString;
   }
-  if ( ! mfrc522.PICC_ReadCardSerial()) {   //Since a PICC placed get Serial and continue
+  if (!mfrc522.PICC_ReadCardSerial()) { //Since a PICC placed get Serial and continue
     return nullString;
   }
   // There are Mifare PICCs which have 4 byte or 7 byte UID care if you use 7 byte PICC
   // I think we should assume every PICC as they have 4 byte UID
   // Until we support 7 byte PICCs
   UID_card = "";
-  for (int i = 0; i < 4; i++) {  //
+  for (int i = 0; i < 4; i++) { //
     readCard[i] = mfrc522.uid.uidByte[i];
-    stringTemp = String(readCard[i],HEX);
+    stringTemp = String(readCard[i], HEX);
     UID_card = UID_card + stringTemp;
   }
   mfrc522.PICC_HaltA(); // Stop reading
@@ -141,14 +146,14 @@ String getID() {
 }
 
 //send reset signal to Power Analyzer
-void resetWattHour(){
+void resetWattHour() {
   poweranalyzer.print("\002R\003"); //“\002”=STX, “\003”=ETX
   //Serial.println("Power Analyzer Watt-Hr Reset");
   powerAnalyzerTurn = true;
-  notifStat = true; 
+  notifStat = true;
 }
 
-void poweranalyzerfunc(String UID){
+void poweranalyzerfunc(String UID) {
   float watthr;
   float volt;
   float amp;
@@ -156,93 +161,92 @@ void poweranalyzerfunc(String UID){
 
   String voltString, ampString, powerString, watthrString;
   poweranalyzer.listen();
-  if (poweranalyzer.available()>0) {
-    
-      if (poweranalyzer.find("Volt")){
-        if (isPluggedin() == false){
-          return;
-        }
-        volt = poweranalyzer.parseFloat();
-        voltString = String (volt);
-       //Serial.print("Voltage: ");
-        //Serial.println(volt);
-    }
-      if (poweranalyzer.find("Amp")){
-        if (isPluggedin() == false){
-          return;
-        }
-        amp = poweranalyzer.parseFloat();
-        ampString = String (amp);
-        //Serial.print("Current: ");
-        //Serial.println(amp);
-    }
-      if (poweranalyzer.find("Watt")){
-        if (isPluggedin() == false){
-          return;
-        }
-        power = poweranalyzer.parseFloat();
-        powerString = String (power);
-        //Serial.print("Power: ");
-        //Serial.println(power);
-    }
-      if (poweranalyzer.find("Watt-Hr")){
-        if (isPluggedin() == false){
-          return;
-        }
-        watthr = poweranalyzer.parseFloat();
-        watthrString = String (watthr);
-        //Serial.print("Watt Hours: ");
-        //Serial.println(watthr);
-        
-        //convert everything to string
+  if (poweranalyzer.available() > 0) {
 
-        //Uncomment to Send power data only
-        //String message = powersenddata(voltString,ampString,powerString,watthrString);
+    if (poweranalyzer.find("Volt")) {
+      if (isPluggedin() == false) {
+        return;
+      }
+      volt = poweranalyzer.parseFloat();
+      voltString = String(volt);
+      //Serial.print("Voltage: ");
+      //Serial.println(volt);
+    }
+    if (poweranalyzer.find("Amp")) {
+      if (isPluggedin() == false) {
+        return;
+      }
+      amp = poweranalyzer.parseFloat();
+      ampString = String(amp);
+      //Serial.print("Current: ");
+      //Serial.println(amp);
+    }
+    if (poweranalyzer.find("Watt")) {
+      if (isPluggedin() == false) {
+        return;
+      }
+      power = poweranalyzer.parseFloat();
+      powerString = String(power);
+      //Serial.print("Power: ");
+      //Serial.println(power);
+    }
+    if (poweranalyzer.find("Watt-Hr")) {
+      if (isPluggedin() == false) {
+        return;
+      }
+      watthr = poweranalyzer.parseFloat();
+      watthrString = String(watthr);
+      //Serial.print("Watt Hours: ");
+      //Serial.println(watthr);
 
-        //Send power data with UID
-        String message = sendSignedPowerData(UID,voltString,ampString,powerString,watthrString);
-        Serial.println(message);
+      //convert everything to string
+
+      //Uncomment to Send power data only
+      //String message = powersenddata(voltString,ampString,powerString,watthrString);
+
+      //Send power data with UID
+      String message = sendSignedPowerData(UID, voltString, ampString, powerString, watthrString);
+      Serial.println(message);
     }
   }
 }
 
-void clearUIDMemory(){
+void clearUIDMemory() {
   currentUID = "";
 }
 
-boolean isPluggedin(){
-  if(proximitySensor() > proximity_threshold_upper){
+boolean isPluggedin() {
+  if (proximitySensor() > proximity_threshold_upper) {
     //Serial.println("No Appliance");
     relayOff();
-    clearUIDMemory();
+    //clearUIDMemory();
     return false;
-  }
-  else if (proximitySensor() < proximity_threshold_lower){
+  } else if (proximitySensor() < proximity_threshold_lower) {
     //Serial.println("Appliance Plugged IN");
     return true;
   }
 }
 
-int proximitySensor(){
+int proximitySensor() {
   int proximity_value = analogRead(proximityPin);
   return proximity_value;
 }
 
-void relayOn(){
+void relayOn() {
   digitalWrite(relayPin, LOW);
   Serial.println("Relay ON");
 }
 
-void relayOff(){
+void relayOff() {
   digitalWrite(relayPin, HIGH);
   //Serial.println("Relay OFF");
 }
 
 //Legacy Code for Debugging
-String powersenddata(String volt, String amp, String power, String watthr){
+String powersenddata(String volt, String amp, String power, String watthr) {
   connectToHost();
   String message = volt + "||" + amp + "||" + power + "||" + watthr;
-  String PHPmessage = "GET /powerdata.php?powerdata=" + message +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
+  String PHPmessage = "GET /powerdata.php?powerdata=" + message + " HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT + "\r\n\r\n";
   String commandSend = "AT+CIPSEND=1," + String(PHPmessage.length());
   wifiSerial.println(commandSend); //Send to ID 1, length DATALENGTH
   delay(200);
@@ -251,9 +255,9 @@ String powersenddata(String volt, String amp, String power, String watthr){
   return message;
 }
 
-String sendUIDtoServer(String UID){
+String sendUIDtoServer(String UID) {
   connectToHost();
-  String PHPmessage = "GET /getUID.php?UID=" + UID +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
+  String PHPmessage = "GET /getUID.php?UID=" + UID + " HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT + "\r\n\r\n";
   String commandSend = "AT+CIPSEND=1," + String(PHPmessage.length());
   wifiSerial.println(commandSend); //Send to ID 1, length DATALENGTH
   delay(200);
@@ -264,118 +268,127 @@ String sendUIDtoServer(String UID){
 //Legacy Code end
 
 //Send power data together with current UID that uses the power socket
-String sendSignedPowerData(String UID, String volt, String amp, String power, String watthr){
+String sendSignedPowerData(String UID, String volt, String amp, String power, String watthr) {
   connectToHost();
   String message = volt + "||" + amp + "||" + power + "||" + watthr;
-  String PHPmessage = "GET /signedPowerData.php?UID=" + UID + "&unplugged=false&powerdata=" + message +"&notifStat=" + notifStat +"&aDevice=" + aDevice +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
+  String PHPmessage = "GET /signedPowerData.php?UID=" + UID + "&unplugged=false&powerdata=" + message + "&notifStat=" + notifStat + "&aDevice=" + aDevice + " HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT + "\r\n\r\n";
   String commandSend = "AT+CIPSEND=1," + String(PHPmessage.length());
   wifiSerial.println(commandSend); //Send to ID 1, length DATALENGTH
   delay(200);
   wifiSerial.println(PHPmessage); // Print Data
 
-  String catMessage = UID + "||" + message + "||" + aDevice ;
+  String catMessage = UID + "||" + message + "||" + aDevice;
   powerAnalyzerTurn = false;
   return catMessage;
 }
 
 //only useful for node connections
 
-void noAppliancePlugged(){
+void noAppliancePlugged(String UID) {
   connectToHost();
+  if (UID == "") {
+    UID = "NO_UID";
+  }
   String message = "0||0||0||0";
-  String PHPmessage = "GET /signedPowerData.php?UID=NO_UID&unplugged=true&powerdata=" + message +"&notifStat=" + notifStat +"&aDevice=" + aDevice +" HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT+ "\r\n\r\n";
+  String PHPmessage = "GET /signedPowerData.php?UID=" + UID + "&unplugged=true&powerdata=" + message + "&notifStat=" + notifStat + "&aDevice=" + aDevice + " HTTP/1.1\r\nHost: " + raspiIP + ":" + raspiPORT + "\r\n\r\n";
   String commandSend = "AT+CIPSEND=1," + String(PHPmessage.length());
   wifiSerial.println(commandSend); //Send to ID 1, length DATALENGTH
   delay(200);
   wifiSerial.println(PHPmessage); // Print Data
 
-  String catMessage = "NO_UID||1||" + message + "||" + aDevice ;
+  String catMessage = UID + "||1||" + message + "||" + aDevice;
   Serial.println(catMessage);
-  powerAnalyzerTurn = false;
+  powerAnalyzerTurn = true;
   return catMessage;
 }
 
-void findJSON(){
+void findJSON() {
   wifiSerial.listen();
   //Serial.println("wifiSerial is Listening");
   Serial.print(wifiSerial.available());
-  while (wifiSerial.available() == 0 && powerAnalyzerTurn == false){
-     Serial.print(wifiSerial.available());
-      String c = wifiSerial.readString();
-      Serial.print(c);
-      powerAnalyzerTurn = true;
-      Serial.print(powerAnalyzerTurn);
+  while (wifiSerial.available() == 0 && powerAnalyzerTurn == false) {
+    Serial.print(wifiSerial.available());
+    String c = wifiSerial.readString();
+    Serial.print(c);
+    powerAnalyzerTurn = true;
+    Serial.print(powerAnalyzerTurn);
   }
 }
 
-void parseJSON(){
+void parseJSON() {
   int has_power;
   //Serial.println(notifStat);  
   //Serial.print("");
   wifiSerial.listen();
   //while (wifiSerial.available() > 0 && powerAnalyzerTurn == false){
-    String c = wifiSerial.readString();
-    Serial.println(c);
-    if (c.indexOf("\"has\_power\"\: \"0\"") > 0){
-      //Serial.println("has_power: 0");
-      if(relayIsOff == true){
-        relayIsOff = false;
-        relayIsOn= true;
-        tone(buzzerPin, 500, 100);
-        delay(100);  
-      }
-      relayOff();
-      powerAnalyzerTurn = true;
-      //break;
+  String c = wifiSerial.readString();
+  //delay(500);
+  //c = c.substring(c.indexOf("\<<") + 2);
+  //delay(500);
+  Serial.println(c);
+  if (c.indexOf("\"time\_limit\"\: \"1\"") > 0) {
+    for (int i = 500; i < 1000; i++) {
+      tone(buzzerPin, i, 100);
     }
-    if (c.indexOf("\"has\_power\"\: \"1\"") > 0){
-      //Serial.println("has_power: 1");
-       if(relayIsOn == true){
-        relayIsOn = false;
-        relayIsOff= true;
-        tone(buzzerPin, 1000, 100);
-        delay(100);  
-      }
-      relayOn();
-      powerAnalyzerTurn = true;
-      //break;
+  }
+  //if (c.indexOf("\rf\_check") > 0) {
+    //rf_check();
+  //}
+  if (c.indexOf("\"has\_power\"\: \"0\"") > 0) {
+    //Serial.println("has_power: 0");
+    if (relayIsOn == false) {
+      relayIsOn = true;
+      tone(buzzerPin, 500, 100);
+      delay(100);
     }
-    notifStat = false;
-    if (c.indexOf("1,CLOSED") > 0 || c.indexOf("busy p") > 0 || c.indexOf("SEND FAIL") > 0 ){
-      relayOff();
-      Serial.println("Connection Lost, Reconnecting...");
-      connectionError = true;
-      if(connectionError == true){
-         for (int i = 0; i < 1; i++) {
-            tone(buzzerPin, 250, 250); //Middle C 
-            delay(500);
-            tone(buzzerPin, 500, 250); //E 
-            delay(500);
-            tone(buzzerPin, 1000, 250); //A 
-            delay(500);
-      }
-      connectionError = false;
-      setupcomplete= true;
-      }
-      ATconnectToWifi();
-      //resetWattHour();
-      powerAnalyzerTurn = true;
-      //break;
-      
+    relayOff();
+    powerAnalyzerTurn = true;
+    //break;
+  }
+  if (c.indexOf("\"has\_power\"\: \"1\"") > 0) {
+    //Serial.println("has_power: 1");
+    if (relayIsOn == true) {
+      relayIsOn = false;
+      tone(buzzerPin, 1000, 100);
+      delay(100);
     }
-    /*else if(c.indexOf("ERROR") > 0){
-      connectionError = true;
-      if(connectionError == true){
-         for (int i = 0; i < 2; i++) {
-           delay(1000);
-           relayOn();
-           delay(1000);
-           relayOff();
-      }
-      parseJSON();
-      }
-    }*/
+    relayOn();
+    powerAnalyzerTurn = true;
+    //break;
+  }
+  notifStat = false;
+  if (c.indexOf("1,CLOSED") > 0 || c.indexOf("busy p") > 0 || c.indexOf("SEND FAIL") > 0) {
+    relayOff();
+    Serial.println("Connection Lost, Reconnecting...");
+    for (int i = 0; i < 1; i++) {
+      tone(buzzerPin, 250, 250); //Middle C 
+      delay(500);
+      tone(buzzerPin, 500, 250); //E 
+      delay(500);
+      tone(buzzerPin, 1000, 250); //A 
+      delay(500);
+    }
+    setupcomplete = true;
+    ATconnectToWifi();
+    //resetWattHour();
+    //powerAnalyzerTurn = true;
+    //break;
+
+  }
+  /*else if(c.indexOf("ERROR") > 0){
+    connectionError = true;
+    if(connectionError == true){
+       for (int i = 0; i < 2; i++) {
+         delay(1000);
+         relayOn();
+         delay(1000);
+         relayOff();
+    }
+    parseJSON();
+    }
+  }*/
   //} 
+  powerAnalyzerTurn = true;
 }
 
 void setup() {
@@ -384,21 +397,20 @@ void setup() {
   poweranalyzer.begin(9600);
   Serial.begin(19200);
   wifiSerial.begin(4800);
-  
 
   Serial.println("Serial baudrate: SET");
   //Configure to listen to devices
   wifiSerial.listen();
   poweranalyzer.listen();
   Serial.println("Serial listen set to ON");
-  
+
   poweranalyzer.print("\002M4\003"); //“\002”=STX, “\003”=ETX
   Serial.println("Power Analyzer set to MODE 4");
 
   //configure pins for Digital output and analog input
   pinMode(relayPin, OUTPUT);
   pinMode(proximityPin, INPUT);
-  pinMode(buzzerPin,OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
 
   relayOff();
   Serial.println("Relay and Proximity Pins SET");
@@ -406,9 +418,9 @@ void setup() {
   //begin SPI interface for MFRC522
   SPI.begin();
   mfrc522.PCD_Init(); //Initialize MFRC522 Hardware
-  //mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);
-
+  mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);
   Serial.println("RFID Initialized");
+  tone(buzzerPin, 700, 100);
   
   //begin wifi interface for ESP8266/NodeMCU
   ATconnectToWifi();
@@ -417,100 +429,102 @@ void setup() {
 }
 
 void loop() {
- // put your main code here, to run repeatedly:
- 
-  if(setupcomplete == false){
-      tone(buzzerPin, 1000, 100);
-      delay(200);
-      setupcomplete= true;
+  // put your main code here, to run repeatedly:
+
+  if (setupcomplete == false) {
+    tone(buzzerPin, 1000, 100);
+    delay(200);
+    setupcomplete = true;
   }
-  
-  while(isPluggedin()){ 
+
+  while (isPluggedin()) {
     //delay(200);
     //Serial.println("Appliance Plugged IN");
     //delay(200);
-    aDevice=true;
-    if(currentUID == ""){
-      currentUID = getID();     
+    aDevice = true;
+    if (currentUID == "") {
+      currentUID = getID();
     }
-    
-    if(currentUID != ""){
+    if (currentUID != "") {
       // check if UID is allowed to have power
       //Serial.println("Sending to Server: " + pluggedAppliance);
       //sendUIDtoServer(pluggedAppliance);
-      notifStat=true;
-      Serial.println(notifStat); 
-      while(isPluggedin()){
+      notifStat = true;
+      Serial.println(notifStat);
+      while (isPluggedin()) {
         delay(200);
+        if(analyzerReseter == true){
+          Serial.println(" POWER ANALYZER RESET");
+          analyzerReseter = false;
+          resetWattHour(); 
+        }
         Serial.println("UID FOUND");
         //relayOn();
         //send signed powerdata
-        if(powerAnalyzerTurn == true){
+        if (powerAnalyzerTurn == true) {
           //delay(200);
           Serial.print("Power Analyzer Data\r\n");
           //delay(200);
           //Serial.println(notifStat); 
           poweranalyzerfunc(currentUID);
-        }
-        else {
+        } else {
           //delay(200);
           //findJSON();
           Serial.print("Data Send To Server\r\n");
           //delay(200);
-          if(notifStat== true){
+          if (notifStat == true) {
             tone(buzzerPin, 1000, 100);
             delay(100);
           }
           parseJSON();
           //delay(100);
         }
-     }
-     
-    }
-    else {
+      }
+
+    } else {
       delay(200);
       Serial.println("No UID FOUND!");
       //noUIDFoundNotif();
       //currentUID = "NO_UID";
-      //while(isPluggedin()){
-        if(powerAnalyzerTurn == true){
-          //delay(200);
-          Serial.print("Power Analyzer Data\r\n");
-          //delay(200);
-          poweranalyzerfunc("NO_UID");
-        } 
-        else {
-          //delay(200);
-          //findJSON();
-          Serial.print("Data Send To Server\r\n");
-          //delay(200);
-          if(notifStat== true){
-            tone(buzzerPin, 1000, 100);
-            delay(100);
-            tone(buzzerPin, 500, 100);
-            delay(100);
-          }
-          parseJSON();
+
+      if (powerAnalyzerTurn == true) {
+        //delay(200);
+        Serial.print("Power Analyzer Data\r\n");
+        //delay(200);
+        poweranalyzerfunc("NO_UID");
+      } else {
+        //delay(200);
+        //findJSON();
+        Serial.print("Data Send To Server\r\n");
+        //delay(200);
+        if (notifStat == true) {
+          tone(buzzerPin, 1000, 100);
+          delay(100);
+          tone(buzzerPin, 500, 100);
+          delay(100);
         }
-        
-      //}
+        parseJSON();
+      }
+
     }
   }
-  if(isPluggedin()== false){
-     //Serial.println("Appliance Unplugged");
-     
-     if(notifStat== false){
-        tone(buzzerPin, 500, 100);
-        delay(100);
-        tone(buzzerPin, 1000, 100);
-        delay(100);
-      }
-      if(aDevice == true){
-        aDevice=false;
-        noAppliancePlugged();
-      }
-      relayOff();
-      resetWattHour();
+  if (isPluggedin() == false) {
+    //Serial.println("Appliance Unplugged");
+
+    if (notifStat == false) {
+      tone(buzzerPin, 500, 100);
+      delay(100);
+      tone(buzzerPin, 1000, 100);
+      delay(100);
+    }
+    if (aDevice == true) {
+      aDevice = false;
+      noAppliancePlugged(currentUID);
+      //clearUIDMemory();
+    }
+    analyzerReseter = true;
+    relayOff();
+    resetWattHour();
+    clearUIDMemory();
   }
 }
-

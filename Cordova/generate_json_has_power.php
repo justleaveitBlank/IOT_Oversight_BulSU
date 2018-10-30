@@ -37,9 +37,10 @@ if($num>0 && $appl_uid !="NO_UID"){
         // this will make $row['name'] to
         // just $name only
         extract($row);
-
+		
 		//values get from database
         $appliance_arr=array(
+           
             //"uid" => $UID,
 			//"appl_name" => $appl_name,
 			"has_power" => $has_power,
@@ -52,6 +53,7 @@ if($num>0 && $appl_uid !="NO_UID"){
 			//"avg_watthr" => $avg_watthr,
 			//"estimated_cost" => $estimated_cost
 			//"status" => "registered"
+			"time_limit" => $timeLimiNotif
         );
     }
 	
@@ -85,6 +87,7 @@ else if($appl_uid == "NO_UID"){
     $appliance_arr=array(
         //"uid" => $UID,
 		"has_power" => $has_power,
+		"time_limit" => $timeLimiNotif
 		//"status" => "registered"
     );
 	
@@ -107,10 +110,12 @@ else{
 		include_once 'CheckExistingNotif.php';
 
 		$appliance_arr=array(
-			"uid" => $appl_uid,
+			//"uid" => $appl_uid,
 			"has_power" => "0",//value change depeding on the value of the user select 0/1
-			"status" => "unregistered"
+			//"status" => "unregistered"
+			"time_limit" => $timeLimiNotif
 		);
+		
 		$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 		// get from signedPowerData.php since this is impoted
 		//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
@@ -121,7 +126,7 @@ else{
 	}
 	else{
 		$appliance_arr=array(
-			"uid" => $appl_uid,
+			//"uid" => $appl_uid,
 			"has_power" => "0",//value change depeding on the value of the user select 0/1
 			"status" => "unregistered"
 		);

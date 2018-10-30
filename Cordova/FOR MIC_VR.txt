@@ -1,0 +1,30 @@
+--------------------------------------------------------------------------------------------------------------------------------------
+
+          DOCUMENT READY :
+
+          $('.fixed-action-btn').floatingActionButton();
+          var instance = M.FloatingActionButton.getInstance($(".fixed-action-btn"));
+          console.log($("#VR").hasClass("active"));
+          $('.fixed-action-btn').click(function(){
+            setTimeout(function(){
+              if($(".material-icons").hasClass("active")){
+                $("#VR").removeClass("green");
+                $("#VR").addClass("red");
+                $("#VR").html("<i class='material-icons'>mic</i>")
+              } else {
+                $("#VR").removeClass("red");
+                $("#VR").addClass("green");
+                $("#VR").html("<i class='active material-icons'>mic_off</i>")
+              }
+            },500)
+          });
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+          HTML :
+
+          <div class="fixed-action-btn">
+  				  <a id='VR' class="waves-effect waves-light btn-floating btn-large red">
+  				    <i class="waves-effect waves-light large material-icons">mic</i>
+  				  </a>
+  				</div>

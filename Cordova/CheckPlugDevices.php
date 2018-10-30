@@ -49,6 +49,10 @@
 
   //adevice = 0 if device is unplugged
   if ($aDevice == "0"){
+	//delete anonymous and unregistered appliance once unplugged appliance
+	$query = "DELETE FROM t_appliance WHERE appl_name in ('Unregistered_Appliance','Anonymous_Appliance')";
+	$con->query($query);
+	
     $query = "UPDATE t_appliance SET time_limit_value = NOW() WHERE time_limit_value = '0000-00-00 00:00:00'";
     if($con->query($query)){
       //Remove Notices or Notificatons to avoid Confusion ( Notification will occur only when there is plugged devices )
@@ -68,5 +72,6 @@
     } else {
       echo mysqli_error($con);
     }
+	
   }
 ?>
