@@ -337,7 +337,7 @@
 			padding:0 1rem;
 		}
 		.applDetails  div.col.s12,.applDetails div.col.s12 span{
-			font-size: .8rem;
+			font-size: 1rem;
 		}
 		.marginbottomcanceler{
 			margin-bottom:0;
@@ -357,6 +357,21 @@
 			width: 160px;
 			top: -62px;
 		}
+		.datepicker-date-display {
+			background-color: rgba(75,0,130,1);
+		}
+		.datepicker-table td.is-selected {
+			background-color: rgba(75,0,130,1);
+		}
+		.datepicker-table td.is-today {
+			color: rgba(75,0,130,1);
+			border-bottom: solid 1px;
+		}
+		.datepicker-cancel, .datepicker-clear, .datepicker-today, .datepicker-done {
+			color: rgba(75,0,130,1);
+			padding: 0 1rem;
+		}
+
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
 
@@ -502,15 +517,6 @@
 						<div class="row">
 							<div class="divider topNbotMarginer"></div>
 							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								<div class="row marginbottomcanceler">
-									<div class="col s10">
-										<div class="progress">
-											<div class="determinate" style="width: 70%"></div>
-										</div>
-									</div>
-									<div class="col s2">70%</div>
-								</div>
 								<div class="applDetails">
 									<div class="col s12">Average watthr : <span>value here</span></div>
 									<div class="col s12">Total Consumption : <span>value here</span></div>
@@ -519,46 +525,7 @@
 							</div>
 						</div>
 						<!-- END SAMPLE -->
-						<!--FILLER-->
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								<div class="row marginbottomcanceler">
-									<div class="col s10">
-										<div class="progress">
-											<div class="determinate" style="width: 20%"></div>
-										</div>
-									</div>
-									<div class="col s2">20%</div>
-								</div>
-								<div class="applDetails">
-									<div class="col s12">Average watthr : <span>value here</span></div>
-									<div class="col s12">Total Consumption : <span>value here</span></div>
-									<div class="col s12">Estimated Price : <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								<div class="row marginbottomcanceler">
-									<div class="col s10">
-										<div class="progress">
-											<div class="determinate" style="width: 50%"></div>
-										</div>
-									</div>
-									<div class="col s2">50%</div>
-								</div>
-								<div class="applDetails">
-									<div class="col s12">Average watthr : <span>value here</span></div>
-									<div class="col s12">Total Consumption : <span>value here</span></div>
-									<div class="col s12">Estimated Price : <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<!-- END FILLER-->
+						
 					</div>
 					<!-- END WEEKLY-->
 					<!-- MONTHLY-->
@@ -595,15 +562,6 @@
 						<div class="row">
 							<div class="divider topNbotMarginer"></div>
 							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								<div class="row marginbottomcanceler">
-									<div class="col s10">
-										<div class="progress">
-											<div class="determinate" style="width: 70%"></div>
-										</div>
-									</div>
-									<div class="col s2">70%</div>
-								</div>
 								<div class="applDetails">
 									<div class="col s12">Average watthr : <span>value here</span></div>
 									<div class="col s12">Total Consumption : <span>value here</span></div>
@@ -612,49 +570,10 @@
 							</div>
 						</div>
 						<!-- END SAMPLE -->
-						<!--FILLER-->
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								<div class="row marginbottomcanceler">
-									<div class="col s10">
-										<div class="progress">
-											<div class="determinate" style="width: 20%"></div>
-										</div>
-									</div>
-									<div class="col s2">20%</div>
-								</div>
-								<div class="applDetails">
-									<div class="col s12">Average watthr : <span>value here</span></div>
-									<div class="col s12">Total Consumption : <span>value here</span></div>
-									<div class="col s12">Estimated Price : <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								<div class="row marginbottomcanceler">
-									<div class="col s10">
-										<div class="progress">
-											<div class="determinate" style="width: 50%"></div>
-										</div>
-									</div>
-									<div class="col s2">50%</div>
-								</div>
-								<div class="applDetails">
-									<div class="col s12">Average watthr : <span>value here</span></div>
-									<div class="col s12">Total Consumption : <span>value here</span></div>
-									<div class="col s12">Estimated Price : <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<!-- END FILLER-->
+						
 					</div>
 					<!-- END MONTHLY-->
-					<!-- END YEARLY-->
+					<!-- YEARLY-->
 					<div id="yearly" class="col s12">
 						<div class="chartjs-wrapper divpadder">
 							<div class="chartjs-wrapper">
@@ -688,63 +607,16 @@
 						<div class="row">
 							<div class="divider topNbotMarginer"></div>
 							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								<div class="row marginbottomcanceler">
-									<div class="col s10">
-										<div class="progress">
-											<div class="determinate" style="width: 70%"></div>
-										</div>
-									</div>
-									<div class="col s2">70%</div>
-								</div>
 								<div class="applDetails">
 									<div class="col s12">Average watthr : <span>value here</span></div>
 									<div class="col s12">Total Consumption : <span>value here</span></div>
 									<div class="col s12">Estimated Price : <span>value here</span></div>
 								</div>
 							</div>
+							
 						</div>
 						<!-- END SAMPLE -->
-						<!--FILLER-->
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								<div class="row marginbottomcanceler">
-									<div class="col s10">
-										<div class="progress">
-											<div class="determinate" style="width: 20%"></div>
-										</div>
-									</div>
-									<div class="col s2">20%</div>
-								</div>
-								<div class="applDetails">
-									<div class="col s12">Average watthr : <span>value here</span></div>
-									<div class="col s12">Total Consumption : <span>value here</span></div>
-									<div class="col s12">Estimated Price : <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								<div class="row marginbottomcanceler">
-									<div class="col s10">
-										<div class="progress">
-											<div class="determinate" style="width: 50%"></div>
-										</div>
-									</div>
-									<div class="col s2">50%</div>
-								</div>
-								<div class="applDetails">
-									<div class="col s12">Average watthr : <span>value here</span></div>
-									<div class="col s12">Total Consumption : <span>value here</span></div>
-									<div class="col s12">Estimated Price : <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<!-- END FILLER-->
+						
 					</div>
 					<!-- END YEARLY-->
 				</div>

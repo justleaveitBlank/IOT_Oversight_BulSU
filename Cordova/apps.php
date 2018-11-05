@@ -72,14 +72,14 @@
 									<input type="hidden" class='appl_limit' name='<?php echo $row['uid']; ?>' value='<?php echo $row['power_limit_value']; ?>'>
 								</div>
 							</div>
-
-							<div class="divider"></div>
-							<div class="section">
-								<div class="id_holder chartjs-wrapper" id="<?php echo $row['uid']?>">
+							
+							<!--<div class="divider"></div>-->
+							<!--<div class="section">-->
+								<!--<div class="id_holder chartjs-wrapper" id="<php //echo $row['uid']?>">-->
 									<!--Dynamic ID of canvas-->
-									<canvas id="chart<?php echo $c;?>"></canvas>
-								</div>
-							</div>
+									<!--<canvas id="chart<?php echo $c;?>"></canvas>-->
+								<!--</div>-->
+							<!--</div>-->
 						</div>
 					</li>
 				<?php

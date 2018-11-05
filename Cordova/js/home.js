@@ -1,6 +1,6 @@
 var admin_code = "";
 var xmlDoc = "";
-var chartlist = [];
+//var chartlist = [];
 var chartcounter = 0;
 var priceperkwhr = 0;
 
@@ -19,7 +19,7 @@ function loadapps() {
 
 function initiate_functions() {
 	load_xml();
-	add_appschart();
+	//add_appschart();
 	add_jqueries();
 }
 
@@ -163,7 +163,7 @@ function add_appschart() {
 	var month = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 	var cur_date = new Date();
 	var n = cur_date.getMonth();
-	var months = [];
+	//var months = [];
 
 	for (var i = 0; i <= n; i++) {
 		months.push(month[i]);
@@ -191,7 +191,7 @@ function add_appschart() {
 	}
 }
 
-function finalize_charts(dat_array, cur_chart, months, chartcounter, chartlist) {
+/*function finalize_charts(dat_array, cur_chart, months, chartcounter, chartlist) {
 	var graph = new Chart($('#' + cur_chart), {
 		"type": "line",
 		"data": {
@@ -215,7 +215,7 @@ function finalize_charts(dat_array, cur_chart, months, chartcounter, chartlist) 
 		}
 	});
 	chartlist.push(graph);
-}
+}*/
 
 function checkapps() {
 	var numItems = $('.appliance-info').length;
@@ -286,8 +286,8 @@ function loadinfos() {
 				$('.appl_consumption[name="' + appuid + '"]').val(consump);
 				$('.appl_limit[name="' + appuid + '"]').val(limit_value);
 
-				chartlist[i].config.data.datasets[0].data[cur_month] = consump;
-				chartlist[i].update();
+				//chartlist[i].config.data.datasets[0].data[cur_month] = consump;
+				//chartlist[i].update();
 			}
 
 			loadPrice();
