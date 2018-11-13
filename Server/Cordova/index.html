@@ -161,8 +161,19 @@
 	<script>
 		$(document).ready(function(){
 			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
-			$('#forgotPassword').modal();
-			$('#registerForm').modal();
+
+			function modalClosed(){
+		    $('input').each(function(){
+		      $(this).val("");
+		      $(this).removeClass('invalid');
+		      $(this).removeClass('valid');
+		    });
+				$('label').each(function(){
+					$(this).removeClass('active');
+				})
+		  }
+
+			$('.modal').modal({onCloseEnd: function() { modalClosed(); }});
 		});
 	</script>
 </head>
@@ -218,20 +229,20 @@
 				<form class="col s12" method="POST" action="">
 					<div class="modal-content">
 						<div class="row">
-							<h5>Forgot your passoword?</h5>
-							<p class="text_indent">Don't worry. Resseting your password is easy. Just tell us your email address you registered with OverSigth</p>
+							<h5>Forgot Your Password?</h5>
+							<p class="text_indent">Don't worry. Resetting your password is easy. Just tell us the email address you registered with OverSight</p>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
 								<i class="material-icons prefix grey-text text-darken-2">email</i>
-								<input id="email" type="email" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+								<input id="email" type="email" class="border_bottom_green border_bottom_darkgray" autocomplete="off" required>
 								<label for="email" class="grey-text text-darken-2">Email</label>
-								<span class="helper-text" data-error="Invalid email address" data-success="Valid email address"></span>
+								<span class="helper-text" data-error="Email Address may be invalid or Unregistered" data-success="Valid email address"></span>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a href="#!" class=" modal-action modal-close waves-effect waves-purple btn-flat">Send</a>
+						<a href="#!" class=" forgot-btn modal-action waves-effect waves-purple btn-flat">Send</a>
 						<a href="#!" class=" modal-action modal-close waves-effect waves-purple btn-flat">Cancel</a>
 					</div>
 				</form>
@@ -255,13 +266,13 @@
 						</div>
 						<div class="input-field col s12">
 							<i class="material-icons prefix grey-text text-darken-2">account_box</i>
-							<input id="r_username" type="text" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+							<input id="r_username" type="text" class="border_bottom_green border_bottom_darkgray" autocomplete="off" required>
 							<label for="r_username" class="grey-text text-darken-2">Username</label>
 							<span class="helper-text" data-error="Invalid Username" data-success="Valid username"></span>
 						</div>
 						<div class="input-field col s12">
 							<i class="material-icons prefix grey-text text-darken-2">email</i>
-							<input id="r_email" type="email" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+							<input id="r_email" type="email" class="border_bottom_green border_bottom_darkgray" autocomplete="off" required>
 							<label for="r_email" class="grey-text text-darken-2">Email address</label>
 							<span class="helper-text" data-error="Invalid email address" data-success="Valid email address"></span>
 						</div>
@@ -296,5 +307,6 @@
 	<script type="text/javascript" src="js/function.js"></script>
 	<script type="text/javascript" src="js/register.js"></script>
 	<script type="text/javascript" src="js/login.js"></script>
+	<script type="text/javascript" src="js/forgotPassword.js"></script>
 </body>
 </html>

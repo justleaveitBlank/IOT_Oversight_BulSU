@@ -170,8 +170,19 @@ try {
 	}
 
 	function throwOnResolved(id,from){
-		var arePluggedDevices = (from.match(/allow/i))? 3 : 2,
-				ns="false";
+		var arePluggedDevices = 0;
+		if(from.match(/allow/i)){
+			var arePluggedDevices = 3;
+			ns="false";
+		} else if (from.match(/ignore/i)) {
+			var arePluggedDevices = 2;
+			ns="false";
+		} else {
+			var arePluggedDevices = 1;
+			ns="true";
+		}
+
+
 		$.ajax({
 			type: "GET",
 			url: "http://" + deviceHost + "/signedPowerData.php?ts="+$.now()+"&UID="+id+"&powerdata=ae113a20||224.20||0.01||0.00||0.00&notifStat="+ns+"&aDevice="+arePluggedDevices+"&unplugged=false",

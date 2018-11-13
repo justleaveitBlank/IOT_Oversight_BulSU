@@ -1,0 +1,7 @@
+sudo apt-get update
+sudo apt-get dist-upgrade
+sudo aot-get install -y rpi-chromium-mods
+sudo apt-get -y install -y pyton-emu python3-sense-emu
+sudo apt-get -y install -y pyton-emu realvnc-vnc-server
+sudo apt-get -y install -y pyton-emu realvnc-vnc-viewer
+sudo apt-get -y realvnc-vnc-server

@@ -519,9 +519,12 @@ void loop() {
     }
     if (aDevice == true) {
       aDevice = false;
+      //Serial.println("false");
       noAppliancePlugged(currentUID);
       //clearUIDMemory();
     }
+   
+   
     analyzerReseter = true;
     relayOff();
     resetWattHour();

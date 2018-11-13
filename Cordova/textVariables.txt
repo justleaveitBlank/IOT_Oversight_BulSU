@@ -1,1 +1,0 @@
-lastUID=NO_UID||currentConsumedVal=88.93

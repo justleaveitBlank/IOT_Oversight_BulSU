@@ -312,6 +312,20 @@
 			width: 160px;
 			top: -62px;
 		}
+		.sDesc{
+			margin: 0 0 0 15px;
+			font-size: .9rem;
+			color:grey;
+		}
+		.section.row{
+			margin-bottom:0;
+			display: flex;
+			align-items: center;
+		}
+		span.badge {
+			position: relative;
+			top: -.25rem;
+		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
 
@@ -335,7 +349,7 @@
 			$(".dropdown-trigger").dropdown({
 				hover: true, constrainWidth: false
 			});
-
+			$('.tooltipped').tooltip();
 			//setInterval(checkLocal, 500);
 		});
 	</script>

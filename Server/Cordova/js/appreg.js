@@ -116,6 +116,7 @@ function register_app() {
 				console.log();
 				if(data.trim().match(/success/i)){
 					SendToast("Appliance registered!");
+					throwOnResolved(id,"registered");
 				}
 			}
 		});

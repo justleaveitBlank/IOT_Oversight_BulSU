@@ -35,7 +35,7 @@
 						if($appl_has_time_limit == "1"){
 							$dateEx = strtotime($appl_time_limit_value);
 
-							if(time()<$dateEx || $current_date==strtotime("0000-00-00 00:00:00")){
+							if(time()<$dateEx || $current_date==strtotime("0000-00-00 00:00:00") && $aDevice!="0"){
 								$has_power="1";
 								$query = "UPDATE t_appliance SET has_time_limit = 1 WHERE appl_name = '".$nameToCompare."'";
 								$result = $con->query($query);
@@ -125,7 +125,7 @@
 				"socket_status" => "Socket On",
 				"authentication" => $s_authentication
 				);
-			include_once 'insertToHistoryDB.php';
+			//include_once 'insertToHistoryDB.php';
 			$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 			//echo  $json_has_power_data ;
 
@@ -140,11 +140,12 @@
 		$has_power="0";
 		$appliance_arr=array(
 			"has_power" => $has_power,//value change depeding on the value of the user select 0/1
-			"socket_status" => "Socket Off",
+			"socket"  =>$s_socket,
+			"limitation" => $s_limitation,
 			"authentication" => $s_authentication
 		);
 		$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
-		//echo  $json_has_power_data ;
+		echo  $json_has_power_data ;
 
 		//create json file
 		//file_put_contents('json_has_power_data.json',  $json_has_power_data);

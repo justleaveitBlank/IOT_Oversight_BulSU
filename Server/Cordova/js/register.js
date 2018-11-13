@@ -22,16 +22,14 @@ $('#r_username').blur(function() {
 	}
 });
 
-$('#r_email').keyup(function() {
-	if ($(this).val().trim() != "") {
-		validate('email', $('#r_email').val());
-	}
-});
-
-$('#r_email').blur(function() {
-	if ($(this).val().trim() != "") {
-		validate('email', $('#r_email').val());
-	}
+$("#r_email").on('input blur',function(){
+  var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
+  if(!re) {
+    $("#r_email").removeClass("valid");
+    $("#r_email").addClass("invalid");
+  } else {
+    validate('email',this.value);
+  }
 });
 
 var pass_class = $('#r_c_password').attr('class');
@@ -99,6 +97,11 @@ function register() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				console.log("Data Sent Successfully!"); // just for testing
 				console.log((xhr.responseText).trim()); // just for testing
+				if(xhr.responseText.trim().match(/A Message has been Sent to your Email!/i)){
+					SendToast("We have mailed you your confirmation link please confirm using your email!");
+					var registerModal = M.Modal.getInstance($('#registerForm'));
+					registerModal.close();
+				}
 			}
 		}
 		xhr.open("POST", "http://"+deviceHost+"/methods.php", true);
@@ -114,8 +117,6 @@ function validate(type, value) {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
-			console.log("Data Sent Successfully");
-			console.log((xhr.responseText).trim());
 			if (type == 'username') {
 				if (xhr.responseText.trim() == 'valid') {
 					registrant.username = value;
@@ -123,12 +124,14 @@ function validate(type, value) {
 				} else {
 					$('#r_username').attr('class', r_username_class + ' invalid');
 				}
-			} else {
+			} else if (type == 'email'){
 				if (xhr.responseText.trim() == 'valid') {
 					registrant.email = value;
-					$('#r_email').attr('class', r_username_class + ' valid');
+					$("#r_email").removeClass("invalid");
+          $("#r_email").addClass("valid");
 				} else {
-					$('#r_email').attr('class', r_username_class + ' invalid');
+					$("#r_email").removeClass("valid");
+          $("#r_email").addClass("invalid");
 				}
 			}
 		}

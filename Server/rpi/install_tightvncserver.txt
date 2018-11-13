@@ -1,0 +1,6 @@
+sudo apt-get update
+sudo apt-get install tightvncserver
+
+run manualy => /usr/bin/tightvncserver
+run on startup => https://learn.adafruit.com/adafruit-raspberry-pi-lesson-7-remote-control-with-vnc/running-vncserver-at-startup
+other references => https://programmaticponderings.com/2012/12/26/installing-tightvnc-on-the-raspberry-pi/
