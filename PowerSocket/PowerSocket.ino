@@ -524,7 +524,6 @@ void loop() {
       //clearUIDMemory();
     }
    
-   
     analyzerReseter = true;
     relayOff();
     resetWattHour();
