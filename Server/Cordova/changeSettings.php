@@ -1,4 +1,4 @@
-<?php  
+<?php
 	require_once 'Config.php';
 	if(isset($_POST['getSettings'])){
 		$query = "SELECT * from t_settings";
@@ -23,7 +23,6 @@
 		$admin = $settings->admin;
 
 		$query = "UPDATE t_settings SET socket = '$socket', limitation = '$limit' , authentication = '$authenticate' , price = $price, admin = '$admin'";
-		
 		$result = $con->query($query);
 		if($result){
 			$query = "SELECT * from t_settings";
@@ -34,7 +33,7 @@
 					//----------------------------------- GET PASS ---------------------
 					$_SESSION['admin'] = $row['admin'];
 					$xml = new DOMDocument('1.0', 'utf-8');
-					$xml->formatOutput = true; 
+					$xml->formatOutput = true;
 					$xml->preserveWhiteSpace = false;
 					$xml->load('xml/overpass.xml');
 
@@ -48,14 +47,12 @@
 					if($res){
 						echo 'Success!';
 					} else{
-						echo "Failed!" . mysqli_error($con); 
+						echo "Failed!" . mysqli_error($con);
 					}
 				}
 			}
-		}
-		
-		else{
-			echo "Failed!" . mysqli_error($con); 
+		}	else {
+			echo "Failed!" . mysqli_error($con);
 		}
 	}
 ?>

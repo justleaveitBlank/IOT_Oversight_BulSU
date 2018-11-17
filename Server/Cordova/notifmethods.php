@@ -50,7 +50,7 @@
 		} else {
 			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Unregistered_Appliance',1,0,1,DEFAULT,'" .$date. "',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 		}
-
+		echo $query;
 		if($con->query($query)){
 			$query = 'UPDATE t_notification SET Status="allowed" WHERE notif_id = "' . $notif_id . '"';
 			$result = $con->query($query);
@@ -91,11 +91,11 @@
 				$app_id = $row['appliance_id'];
 
 				$has_power_limit = 0;
-				if($newlimit > 0){
+				if($newlimit != 0){
 					$has_power_limit = 1;
 				}
 
-				$query = 'UPDATE t_appliance SET power_limit_value = ' . $newlimit . ', has_power_limit = ' . $has_power_limit . '  WHERE uid = "' . $app_id . '"';
+				$query = 'UPDATE t_appliance SET has_power=1, power_limit_value = ' . $newlimit . ', has_power_limit = ' . $has_power_limit . '  WHERE uid = "' . $app_id . '"';
 
 				$result = $con->query($query);
 				if($result){
@@ -139,14 +139,14 @@
 							$limit = $row2['power_limit_value'];
 							?>
 								<div class="row" name='<?php echo $id;?>'>
-									<div class="col s12 m12 center-block">
-										<div class="card" id='<?php echo $id?>' name='<?php echo $limit?>'>
+									<div class="col s12 m12 center-block consumption_value" name="<?php echo $consumption?>">
+										<div class="card consumption_limit" id='<?php echo $id?>' name='<?php echo $limit?>'>
 											<div class="card-content white-text">
 												<span class="card-title black-text">Consumption on Limit</span>
 												<p class="black-text">ID: <em><?php echo $app_id?></em></p>
 												<p class="black-text">Name: <em><?php echo $name?></em></p>
-												<p class="black-text">Consumption: <em><?php echo $consumption?> kwh</em></p>
-												<p class="black-text">Limit: <em><?php echo $limit?> kwh</em></p>
+												<p class="black-text">Consumption: <em><?php echo $consumption?> whr</em></p>
+												<p class="black-text">Limit: <em><?php echo $limit?> kwhr</em></p>
 											</div>
 											<div class="card-action right-align">
 												<a class="consumption_btn btn-small waves-effect waves-light orange white-text modal-trigger sTitle" href='#updateLimit' id='<?php echo $app_id;?>'>Update</a>

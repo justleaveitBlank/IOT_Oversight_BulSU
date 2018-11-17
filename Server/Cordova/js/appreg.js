@@ -45,7 +45,18 @@ $("#regsub").click(function() {
 
 function reloadvalues() {
 	id = $('#d_id').val().trim();
-	name = $('#d_name').val().trim();
+	var array_type = [
+		"",
+		"General Appliances",
+		"Aircon",
+		"Refrigerator",
+		"Electric Stove",
+		"Fan",
+		"Television"
+	];
+	var selected_type = array_type[parseInt($('#applianceType').find(":selected").attr('value'))];
+	name = $('#d_name').val().trim() + " [ "+selected_type+" ]";
+	console.log(name);
 
 	if (limit == 'hasnolimit' && $('#d_r_limit').val().trim() == "") {
 		limit = 'hasnolimit';

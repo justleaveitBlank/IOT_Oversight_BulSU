@@ -32,6 +32,12 @@
 		}
 		html, body{
 			height: 100%;
+			animation: fadein .7s;
+		}
+
+		@keyframes fadein {
+				from { opacity: 0; }
+				to   { opacity: 1; }
 		}
 		.navbg{
 			background:rgba(75,0,130,1);
@@ -347,7 +353,7 @@
 			position:fixed;
 			bottom:0;
 			left:0;
-			width:100%; 
+			width:100%;
 			padding:1rem;
 			background:white;
 		}
@@ -383,7 +389,7 @@
 			width: 160px;
 			top: -62px;
 		}
-		.sidenav .collapsible-body > ul:not(.collapsible) > li.active, 
+		.sidenav .collapsible-body > ul:not(.collapsible) > li.active,
 		.sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
 			background-color: #424242;
 		}
@@ -405,7 +411,7 @@
 		$(document).ready(function(){
 			$('.collapsible').collapsible();
 			$(".dropdown-trigger").dropdown({
-				hover: true, constrainWidth: false 
+				hover: true, constrainWidth: false
 			});
 
 			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
@@ -413,7 +419,7 @@
 			$('#adminConfirmUpdate').modal();
 
 			//setInterval(checkLocal, 500);
-			
+
 			//Slider
 			$('.slider').slider({
 				height: 800,
@@ -504,17 +510,17 @@
                                                 <img src="imgs/notif_1.PNG" class="responsive-img" style="width:900px; height: 460px;"/>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col m4 s12 l6">
                                             <div class="container">
                                                 <br>
                                                 <p class="left-align flow-text black-text buttomMarginer">After scanning the RFID, a notification will pop-up just tap on "Register" button.</p>
                                             </div>
                                         </div>
-                                    </div>				
-                                </div>			
+                                    </div>
+                                </div>
                             </div>
-                        </li> 
+                        </li>
                         <li>
                             <div class="row">
                                 <div class="col m4 s12">
@@ -525,18 +531,18 @@
                                                 <img src="imgs/notif_2.PNG" class="responsive-img" style="width:900px; height: 460px;"/>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col m4 s12 l6">
                                             <div class="container">
                                                 <br>
                                                 <p class="left-align flow-text black-text buttomMarginer">A window will show, just fill up all fields and click on "Register" and you are done.</p>
                                             </div>
                                         </div>
-                                    </div>				
-                                </div>			
+                                    </div>
+                                </div>
                             </div>
-                        </li>       
-                        
+                        </li>
+
 			        </ul>
 				</div>
 			</div>

@@ -18,6 +18,14 @@ try {
 	$('.consumption_btn').click(function() {
 		var app_id = $(this).attr('id');
 		notif_id = $(this).closest('.card').attr('id');
+		var consumption_limit = $(this).closest('.consumption_limit').attr('name');
+		var consumption_value = $(this).closest('.consumption_value').attr('name');
+		if(parseFloat(consumption_limit) > parseFloat(consumption_value)){
+			$('#d_limit').attr("min",consumption_limit);
+		} else {
+			$('#d_limit').attr("min",consumption_value);
+		}
+
 		$('#accept_limit').attr('name', app_id);
 	});
 

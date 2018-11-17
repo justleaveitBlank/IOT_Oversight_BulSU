@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require 'Config.php';
 
 	if(isset($_POST['valappreg'])){
@@ -24,9 +24,9 @@
 		if($limit>0.0){
 			$haslimit = 1;
 		}
-		
 
-		$query = 'INSERT INTO t_appliance VALUES ("'.$id.'","'.$name.'",0,'.$haslimit.',0,default,default,'.$limit.',0.0,NULL,0.0,0.0,NULL)';
+
+		$query = 'INSERT INTO t_appliance VALUES ("'.$id.'","'.$name.'",1,'.$haslimit.',0,default,default,'.$limit.',0.0,0.0,0.0,NULL)';
 		$result = $con->query($query);
 		if($result){
 			$query = 'UPDATE t_notification SET Status = "registered" WHERE notif_id = "'.$notif_id.'"';

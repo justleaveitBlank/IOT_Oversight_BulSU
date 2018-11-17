@@ -32,6 +32,12 @@
 		}
 		html, body{
 			height: 100%;
+			animation: fadein .7s;
+		}
+
+		@keyframes fadein {
+				from { opacity: 0; }
+				to   { opacity: 1; }
 		}
 		.navbg{
 			background:rgba(75,0,130,1);
@@ -347,7 +353,7 @@
 			position:fixed;
 			bottom:0;
 			left:0;
-			width:100%; 
+			width:100%;
 			padding:1rem;
 			background:white;
 		}
@@ -383,7 +389,7 @@
 			width: 160px;
 			top: -62px;
 		}
-		.sidenav .collapsible-body > ul:not(.collapsible) > li.active, 
+		.sidenav .collapsible-body > ul:not(.collapsible) > li.active,
 		.sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
 			background-color: #424242;
 		}
@@ -406,7 +412,7 @@
 
 		.pin-bottom {
 			position: relative;
-			display:none;	
+			display:none;
 			max-width: 59.92rem;
 		}
 		.pHeader{
@@ -428,14 +434,14 @@
 		}
 		.pinnedContent.pin-bottom{
 			position:fixed;
-		
+
 		}
 		html, body .block{
 			height:100vh;
 		}
 		.posRel{
 			position: relative;
-			
+
 		}
 		.viewH{
 			height: 100vh;
@@ -465,14 +471,14 @@
 		$(document).ready(function(){
 			$('.collapsible').collapsible();
 			$(".dropdown-trigger").dropdown({
-				hover: true, constrainWidth: false 
+				hover: true, constrainWidth: false
 			});
 
 			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
 			$('#updateDevice').modal();
 			$('#adminConfirmUpdate').modal();
 			//setInterval(checkLocal, 500);
-			
+
 			//Slider
 			$('.slider').slider({
 				height: 800,
@@ -487,21 +493,21 @@
 			$('.prev').click(function() {
 				$('.slider').slider('prev');
 			});
-			
+
 			//Pushpin
 			$('.pushpin').each(function() {
 				var $this = $(this);
 				var $target = $('#' + $(this).attr('data-target'));
-				
+
 				$this.pushpin({
 					top: $target.offset().top,
 					bottom: $target.offset().top + $target.outerHeight() - $this.height()
 				});
-				
-				
-				
+
+
+
 			});
-			
+
 		});
 	</script>
 </head>
@@ -564,31 +570,31 @@
 
 			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
 			<div class="col s12 m4 l8 viewH">
-				
+
 				<div id="red" class="posRel block red" style="z-index:10;"><!--Increment z-index-->
 					<nav class="pushpin" data-target="red" style="top: 0px;z-index:10;"><!--Increment z-index-->
 						<div class="nav-wrapper red lighten-1 center tipsheader">Charge efficiently</div>
 					</nav>
 					<div class="pushpin pinnedContent" data-target="red" style="top: 0px; z-index:9;"><!--z-index  minus 1 from parentdiv-->
 						<p class="flow-text txtjustify">
-							Whether it is your tablet or your phone, you want to make sure that you only charge the gadgets when the battery is already 
-							critically low. This allows you to not consume electricity every now and then. This avoids you from plugging the charger even if 
-							there is still sufficient energy on your device. Also, remember to always unplug the charger once you are done. A charger that is 
-							plugged in is still consuming electricity, regardless if it is charging a device or not. Aside from using the chargers in a more 
-							efficient manner, you can also check the chargers operated by solar cells. As long as you have light, you can already charge your 
+							Whether it is your tablet or your phone, you want to make sure that you only charge the gadgets when the battery is already
+							critically low. This allows you to not consume electricity every now and then. This avoids you from plugging the charger even if
+							there is still sufficient energy on your device. Also, remember to always unplug the charger once you are done. A charger that is
+							plugged in is still consuming electricity, regardless if it is charging a device or not. Aside from using the chargers in a more
+							efficient manner, you can also check the chargers operated by solar cells. As long as you have light, you can already charge your
 							phone through these accessories.
 						</p>
 					</div>
 				</div>
-				
+
 				<div id="pink" class="posRel block pink" style="z-index:11;"><!--Increment z-index-->
 					<nav class="pushpin" data-target="pink" style="top: 0px;z-index:11;"><!--Increment z-index-->
 						<div class="nav-wrapper pink lighten-1 center tipsheader">Lighting options</div>
 					</nav>
 					<div class="pushpin pinnedContent" data-target="pink" style="top: 0px; z-index:10;"><!--z-index  minus 1 from parentdiv-->
 						<p class="flow-text txtjustify">
-							One of the things that you can have to save money on electric bills is to use LED lights instead of incandescent bulbs. 
-							Incandescent bulbs are not energy efficient, not to mention they don’t last that long. LED lights last up to 10 times longer 
+							One of the things that you can have to save money on electric bills is to use LED lights instead of incandescent bulbs.
+							Incandescent bulbs are not energy efficient, not to mention they don’t last that long. LED lights last up to 10 times longer
 							than the incandescent bulbs, not to mention it doesn’t produce heat that much.
 						</p>
 					</div>
@@ -599,11 +605,11 @@
 					</nav>
 					<div class="pushpin pinnedContent" data-target="purple" style="top: 0px; z-index:11;"><!--z-index  minus 1 from parentdiv-->
 						<p class="flow-text txtjustify">
-							When is the best time to use the air conditioning unit in your room? Most people only use the air conditioning 
-							unit at night to fall asleep comfortably. Why not turn off the air condition unit an hour before you wake up? 
-							Most air conditioning units today have timers which you could set to how many hours should the appliance run. 
-							An hour without the air conditioning unit still allows you to enjoy a cool room. In fact, if you use the air 
-							conditioning unit every night, and go for this option, you could save as much as 30 hours worth of electricity 
+							When is the best time to use the air conditioning unit in your room? Most people only use the air conditioning
+							unit at night to fall asleep comfortably. Why not turn off the air condition unit an hour before you wake up?
+							Most air conditioning units today have timers which you could set to how many hours should the appliance run.
+							An hour without the air conditioning unit still allows you to enjoy a cool room. In fact, if you use the air
+							conditioning unit every night, and go for this option, you could save as much as 30 hours worth of electricity
 							every month.
 						</p>
 					</div>
@@ -614,11 +620,11 @@
 					</nav>
 					<div class="pushpin pinnedContent" data-target="indigo" style="top: 0px; z-index:12;"><!--z-index  minus 1 from parentdiv-->
 						<p class="flow-text txtjustify">
-							It is crucial to have an idea if you are already consuming more than your average electrical consumption. Also, 
-							keep in mind that even if you have the same consumption as last month, the current rate still plays a great role to 
-							how much you are paying at the end of the month. The first thing that you need to know is to learn how to read an electric 
-							meter. If you have 2-3 meters in your home, try to have a separate sheet for each of them and monitor them separately. The 
-							cost of electricity has a different rate as your consumption spikes up. The second tip that can be useful in this scenario 
+							It is crucial to have an idea if you are already consuming more than your average electrical consumption. Also,
+							keep in mind that even if you have the same consumption as last month, the current rate still plays a great role to
+							how much you are paying at the end of the month. The first thing that you need to know is to learn how to read an electric
+							meter. If you have 2-3 meters in your home, try to have a separate sheet for each of them and monitor them separately. The
+							cost of electricity has a different rate as your consumption spikes up. The second tip that can be useful in this scenario
 							is to record your monthly bill. And third, you have to be updated of the current rate.
 						</p>
 					</div>
@@ -629,8 +635,8 @@
 					</nav>
 					<div class="pushpin pinnedContent" data-target="blue" style="top: 0px; z-index:13;"><!--z-index  minus 1 from parentdiv-->
 						<p class="flow-text txtjustify">
-							If you want to keep the heat to a minimum inside the house, which would eventually decrease your air condition and electric 
-							fan use, then perhaps, you would want to have your windows tinted. If you don’t want a permanent fix on your window, then a 
+							If you want to keep the heat to a minimum inside the house, which would eventually decrease your air condition and electric
+							fan use, then perhaps, you would want to have your windows tinted. If you don’t want a permanent fix on your window, then a
 							curtain will also be a good alternative. Thick and dark colored windows prevent the heat from penetrating inside the room.
 						</p>
 					</div>
@@ -643,8 +649,8 @@
 						<p class="flow-text txtjustify">
 							Turn off your heater, cooling units and appliances when you go to bed or leave the house.
 							Turning things off at the powerpoint can save even more power than at the switch or remote control.
-							Switch off your computer and equipment such as printers or wifi routers overnight, or while you're away. Most 
-							computers have energy saving settings which can be activated to turn the computer and screen off after a period 
+							Switch off your computer and equipment such as printers or wifi routers overnight, or while you're away. Most
+							computers have energy saving settings which can be activated to turn the computer and screen off after a period
 							of inactivity.
 						</p>
 					</div>
@@ -656,7 +662,7 @@
 					<div class="pushpin pinnedContent" data-target="teal" style="top: 0px; z-index:15;"><!--z-index  minus 1 from parentdiv-->
 						<p class="flow-text txtjustify">
 							You can save around $115 per year by washing clothes in cold water.
-							You can also save by making sure you select the shortest appropriate washing cycle. Wait until your machine is 
+							You can also save by making sure you select the shortest appropriate washing cycle. Wait until your machine is
 							full before starting a washing cycle.
 							Clothes dryers use lots of energy. Hang clothes outside and let them dry naturally or use a fan to help dry them
 							indoors.
@@ -669,7 +675,7 @@
 					</nav>
 					<div class="pushpin pinnedContent" data-target="green" style="top: 0px; z-index:16;"><!--z-index  minus 1 from parentdiv-->
 						<p class="flow-text txtjustify">
-							Computers are some of the biggest energy users in office buildings. Turn your monitor off at night and ditch 
+							Computers are some of the biggest energy users in office buildings. Turn your monitor off at night and ditch
 							the screensaver. Today's computers can be turned on and off over 40,000 times. Opting to shut down over using a
 							screensaver does not affect your computer's lifespan. (EnergyStar). So power down!
 						</p>
@@ -681,8 +687,8 @@
 					</nav>
 					<div class="pushpin pinnedContent" data-target="orange" style="top: 0px; z-index:17;"><!--z-index  minus 1 from parentdiv-->
 						<p class="flow-text txtjustify">
-							Devices like televisions, microwaves, scanners, and printers use standby power, even when off. Some chargers continue to 
-							pull small amounts of energy, even when plugged in (a good judge of this is if a charger feels warm to the touch). In 
+							Devices like televisions, microwaves, scanners, and printers use standby power, even when off. Some chargers continue to
+							pull small amounts of energy, even when plugged in (a good judge of this is if a charger feels warm to the touch). In
 							the US, the total electricity consumed by idle electronics equals the annual output of 12 power plants (EPA).
 						</p>
 					</div>
@@ -693,7 +699,7 @@
 					</nav>
 					<div class="pushpin pinnedContent" data-target="brown" style="top: 0px; z-index:18;"><!--z-index  minus 1 from parentdiv-->
 						<p class="flow-text txtjustify">
-							To avoid paying for this "vampire power," use a power strip to turn all devices off at once. Flipping the switch 
+							To avoid paying for this "vampire power," use a power strip to turn all devices off at once. Flipping the switch
 							on your power strip has the same effect as unplugging each socket from the wall, preventing phantom energy loss.
 						</p>
 					</div>
@@ -704,19 +710,19 @@
 					</nav>
 					<div class="pushpin pinnedContent" data-target="blue-grey" style="top: 0px; z-index:19;"><!--z-index  minus 1 from parentdiv-->
 						<p class="flow-text txtjustify">
-							Setting your refrigerator's temperature controls to as close to 37 degrees as possible can reduce the energy this 
-							power-hungry appliance consumes - use a thermometer if the controls don't indicate the temperature. It's also a 
-							good idea to check the gaskets on the fridge and freezer doors to ensure that they seal correctly to prevent cool 
+							Setting your refrigerator's temperature controls to as close to 37 degrees as possible can reduce the energy this
+							power-hungry appliance consumes - use a thermometer if the controls don't indicate the temperature. It's also a
+							good idea to check the gaskets on the fridge and freezer doors to ensure that they seal correctly to prevent cool
 							air from escaping.
 					</div>
 				</div>
 			</div>
 			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
 		</div>
-		
+
 	</div>
 
-	
+
 	<script type="text/javascript" src="js/function.js"></script>
 </body>
 </html>

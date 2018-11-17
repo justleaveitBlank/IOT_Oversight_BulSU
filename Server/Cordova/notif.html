@@ -3,14 +3,14 @@
 <head>
 	<title>OVERSIGHT</title>
 	<link rel="shortcut icon" href="imgs/Logo3.png">
-	
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	
+
 	<!--Import Google Icon Font-->
 	<link href="css/material+icons.css" rel="stylesheet">
-	
+
 	<!--Import materialize.css-->
 	<link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
 	<style>
@@ -20,7 +20,7 @@
 		}
 		@-ms-viewport {
 		  width: device-width ;
-		} 
+		}
 		*{
 			margin:0;
 			font-family: verdana,arial;
@@ -31,6 +31,12 @@
 		}
 		html, body{
 			height: 100%;
+			animation: fadein .7s;
+		}
+
+		@keyframes fadein {
+				from { opacity: 0; }
+				to   { opacity: 1; }
 		}
 		.navbg{
 			background:rgba(75,0,130,1);
@@ -128,7 +134,7 @@
 			.applianceName {
 				font-size: 1rem;
 				max-width: 50rem;
-			}		
+			}
 		}
 		@media only screen and (min-width: 480px) {
 			.applianceName {
@@ -147,7 +153,7 @@
 			.applianceName {
 				font-size: 1rem;
 				max-width: 50rem;
-			}		
+			}
 		}
 		@media only screen and (min-width: 570px) {
 			.applianceName {
@@ -210,7 +216,7 @@
 				max-width: 50rem;
 			}
 		}
-		
+
 		.collapsible-body {
 			padding: 1rem;
 		}
@@ -232,7 +238,7 @@
 			font-size:1.15rem;
 			min-width: 20rem;
 		}
-		input.border_bottom_green.valid:not([type]), 
+		input.border_bottom_green.valid:not([type]),
 		input.border_bottom_green.valid:not([type]):focus,
 		input[type=text].border_bottom_green.valid:not(.browser-default),
 		input[type=text].border_bottom_green.valid:not(.browser-default):focus,
@@ -257,13 +263,13 @@
 		input[type=search].border_bottom_green.valid:not(.browser-default),
 		input[type=search].border_bottom_green.valid:not(.browser-default):focus,
 		textarea.materialize-textarea.border_bottom_green.valid,
-		textarea.materialize-textarea.border_bottom_green.valid:focus, 
+		textarea.materialize-textarea.border_bottom_green.valid:focus,
 		.select-wrapper.border_bottom_green.valid > input.border_bottom_green.select-dropdown{
 		  border-bottom: 1px solid #4CAF50;
 		  -webkit-box-shadow: 0 1px 0 0 #4CAF50;
 				  box-shadow: 0 1px 0 0 #4CAF50;
 		}
-		
+
 		.text_indent{
 			text-indent:2rem
 		}
@@ -304,7 +310,7 @@
 			padding: .7rem .7rem;
 		}
 		.card {
-			margin: 0.1rem 0; 
+			margin: 0.1rem 0;
 		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
@@ -314,14 +320,14 @@
 	<script type="text/javascript" src="js/transition.js"></script>
 	<script type="text/javascript" src="js/socket.io.js"></script>
 	<script type="text/javascript" src='js/oversight_dep.js'></script>
-	
+
 	<script>
 		$(document).ready(function(){
 			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
 			$('#allowUnregistered').modal();
 			$('#updateLimit').modal();
-			
-			
+
+
 			$('select').formSelect();
 		});
 	</script>
@@ -346,7 +352,7 @@
 						<p class="appName center-align">OVERSIGHT</p>
 						<div class="version right-align">v1.0.0</div>
 					</div>
-					<li><a class="waves-effect white-text" href="home.html"><i class="material-icons prefix white-text">home</i><p>Home</p></a></li> 
+					<li><a class="waves-effect white-text" href="home.html"><i class="material-icons prefix white-text">home</i><p>Home</p></a></li>
 					<li><a class="waves-effect white-text" href="registerAppliance.html"><i class="material-icons prefix white-text">dashboard</i><p>Register Appliance</p></a></li>
 					<li><a class="waves-effect white-text" href="statistic.html"><i class="material-icons prefix white-text">pie_chart</i><p> Overall Statistics</p></a></li>
 					<li class="active"><a class="waves-effect white-text" href="notifications.html"><i class="material-icons prefix white-text">notifications</i><p>Notifications</p></a></li>
@@ -357,7 +363,7 @@
 			</div>
 		</nav>
 	</div>
-	
+
 	<div class="had-container">
 		<div class="row">
 			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
@@ -372,15 +378,15 @@
 							<a class="btn-small waves-effect waves-light brown white-text sTitle" id='addnotif_newanoapp'>NEW ANONYMOUS APPL</a>
 							<a class="btn-small waves-effect waves-light red white-text sTitle" id='addnotif_limit'>LIMIT WARNING</a>
 						</div>
-					</div>	
+					</div>
 				</div>
 			</div>
 			<div class="col s12 m4 l8 overhidden" id='notifholder'>
-				
-				
-				
+
+
+
 			</div>
-			
+
 			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
 		</div>
 	</div>
@@ -393,7 +399,7 @@
 					<div class="modal-content">
 						<div class="row">
 							<h5>Allow Restrictions</h5>
-						</div>	
+						</div>
 						<div class="row">
 							<div class="input-field col s12">
 								<select>
@@ -413,14 +419,14 @@
 					</div>
 				</form>
 			</div>
-			
+
 			<!-- Modal Structure for Update Device Limit -->
 			<div id="updateLimit" class="modal modal-fixed-footer">
 				<form class="col s12" method="POST" action="">
 					<div class="modal-content">
 						<div class="row">
 							<h5>Update Limit</h5>
-						</div>	
+						</div>
 						<div class="row">
 							<p class="black-text"><b>ID : </b>qw er ty ui</p>
 							<p class="black-text"><b>Name : </b>Appliance Name</p>
@@ -430,7 +436,7 @@
 								<input id="d_limit" type="number" class="validate border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" required>
 								<label for="d_limit" class="grey-text text-darken-2">Limit (kwh)</label>
 							</div>
-							
+
 							<p class="black-text">Note: Make the value 0 if you want to turn Off its Consumption limit.</p>
 						</div>
 					</div>
@@ -498,7 +504,7 @@
 
 		function consumptionNOTIF() {
 			var app_id = 'asdfghjk'; // put the appliance id here
-			var params = 'app_id='+app_id; 
+			var params = 'app_id='+app_id;
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4 && xhr.status == 200) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2018 at 02:17 PM
+-- Generation Time: Nov 17, 2018 at 03:02 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -51,7 +51,7 @@ CREATE TABLE `t_appliance` (
 --
 
 INSERT INTO `t_appliance` (`uid`, `appl_name`, `has_power`, `has_power_limit`, `has_time_limit`, `current_date_time`, `time_limit_value`, `power_limit_value`, `current_power_usage`, `avg_watthr`, `estimated_cost`, `description`) VALUES
-('6f63b28', 'Appliance_01', 0, 1, 0, '2018-11-08 09:33:27', '2018-09-03 13:48:23', 0.0012, 18.62, 0, 0, NULL),
+('6f63b28', 'Kunwari', 1, 0, 0, '2018-11-17 12:45:37', '2018-09-03 13:48:23', 0, 48.16, 0, 0, NULL),
 ('f7ba179', 'Appliance_02', 0, 0, 0, '2018-10-15 12:32:16', '2018-09-07 14:11:43', 0, 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -79,13 +79,18 @@ INSERT INTO `t_history` (`uid`, `consumed`, `effective_date`, `lst_updt_dte`) VA
 ('6f63b28', 50.76, '2018-10-27 07:44:17', '2018-10-27 07:52:00'),
 ('6f63b28', 57.84, '2018-10-30 12:03:57', '2018-10-30 12:15:29'),
 ('6f63b28', 18.62, '2018-11-08 15:52:59', '2018-11-08 17:33:23'),
+('6f63b28', 1.43, '2018-11-16 15:48:08', '2018-11-16 18:46:56'),
+('6f63b28', 28.11, '2018-11-17 20:17:18', '2018-11-17 20:45:36'),
 ('ae113a20', 0, '2018-11-08 16:02:19', '2018-11-08 16:02:19'),
 ('NO_UID', 37.42, '2018-10-25 12:16:59', '2018-10-25 12:21:55'),
 ('NO_UID', 14.24, '2018-10-26 04:08:37', '2018-10-26 04:27:02'),
 ('NO_UID', 0.01, '2018-10-27 09:00:30', '2018-10-27 09:02:24'),
 ('NO_UID', 7.45, '2018-10-28 04:14:41', '2018-10-28 04:30:51'),
 ('NO_UID', 279.05, '2018-10-30 10:05:15', '2018-10-30 13:58:10'),
-('NO_UID', 0.08, '2018-11-08 16:01:18', '2018-11-08 16:44:06');
+('NO_UID', 0.08, '2018-11-08 16:01:18', '2018-11-08 16:44:06'),
+('NO_UID', 10.4, '2018-11-14 16:29:08', '2018-11-14 16:44:40'),
+('NO_UID', 11.69, '2018-11-16 15:22:18', '2018-11-16 17:20:48'),
+('NO_UID', 42.74, '2018-11-17 20:08:48', '2018-11-17 20:44:20');
 
 -- --------------------------------------------------------
 
@@ -98,21 +103,23 @@ CREATE TABLE `t_notification` (
   `notif_id` int(10) NOT NULL,
   `type` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
   `status` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
-  `appliance_id` varchar(8) CHARACTER SET utf8mb4 NOT NULL
+  `appliance_id` varchar(8) CHARACTER SET utf8mb4 NOT NULL,
+  `date_pop` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `t_notification`
 --
 
-INSERT INTO `t_notification` (`notif_id`, `type`, `status`, `appliance_id`) VALUES
-(1, 'newanoapp', 'ignored', 'NO_UID'),
-(2, 'newapp', 'ignored', 'ae113a20'),
-(3, 'newapp', 'ignored', 'currentU'),
-(4, 'newapp', 'ignored', 'currentU'),
-(5, 'newapp', 'ignored', 'currentU'),
-(6, 'newapp', 'ignored', 'currentU'),
-(7, 'consumption', 'unresolved', '6f63b28');
+INSERT INTO `t_notification` (`notif_id`, `type`, `status`, `appliance_id`, `date_pop`) VALUES
+(1, 'newanoapp', 'ignored', 'NO_UID', '2018-11-17 14:02:22'),
+(2, 'newapp', 'unresolved', 'ae113a20', '2018-11-17 14:02:22'),
+(3, 'newapp', 'ignored', 'currentU', '2018-11-17 14:02:22'),
+(4, 'newapp', 'ignored', 'currentU', '2018-11-17 14:02:22'),
+(5, 'newapp', 'ignored', 'currentU', '2018-11-17 14:02:22'),
+(6, 'newapp', 'ignored', 'currentU', '2018-11-17 14:02:22'),
+(7, 'consumption', 'ignored', '6f63b28', '2018-11-17 14:02:22'),
+(8, 'newapp', 'ignored', '164da4b9', '2018-11-17 14:02:22');
 
 -- --------------------------------------------------------
 
@@ -150,7 +157,7 @@ CREATE TABLE `t_settings` (
 --
 
 INSERT INTO `t_settings` (`socket`, `limitation`, `authentication`, `price`, `admin`) VALUES
-('true', 'true', 'true', 1.5, 'admin');
+('true', 'true', 'true', 1.5, '1234');
 
 -- --------------------------------------------------------
 
@@ -215,7 +222,7 @@ ALTER TABLE `t_users`
 -- AUTO_INCREMENT for table `t_notification`
 --
 ALTER TABLE `t_notification`
-  MODIFY `notif_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `notif_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -253,15 +253,24 @@ function loadinfos() {
 				var appname = appinfo[i].appl_name;
 				var consump = appinfo[i].current_power_usage;
 				var avg = appinfo[i].avg_watthr;
-				var cost = appinfo[i].estimated_cost;
+				var cost = parseFloat(appinfo[i].estimated_cost);
 				var limit_value;
 				var unit;
 				if(appname.match(/Anonymous_Appliance/i) || appname.match(/Unregistered_Appliance/i)){
 					limit_value = appinfo[i].time_limit_value;
+					if(limit_value.match(/0000-00-00 00:00:00/i)){
+						limit_value = "Indefinite Time";
+					}
 					unit = "";
 				} else {
 					limit_value = appinfo[i].power_limit_value;
-					unit = " kwh";
+					if(limit_value == 0){
+						limit_value = "Unlimited";
+						unit = "";
+					} else {
+						unit = " kwh";
+					}
+
 				}
 				if(appinfo[i].has_power == 1){
 					$('.switcher[name="' + appuid + '"]').attr("checked", "");
@@ -270,15 +279,15 @@ function loadinfos() {
 				}
 
 				$('.applianceName[name="' + appuid + '"]').text(appname);
-				$('.kwh[name="' + appuid + '"]').text(consump + " kwh / " + limit_value + unit);
+				$('.kwh[name="' + appuid + '"]').text(consump + " wh / " + limit_value + unit);
 				$('.switcher[name="' + appuid + '"]').attr('id', appuid);
 
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(0).html("UID: <span style='font-weight: normal; font-size: inherit;'>" + appuid + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(1).html("Name: <span style='font-weight: normal; font-size: inherit;'>" + appname + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("Power Consumption: <span style='font-weight: normal; font-size: inherit;'>" + consump + " watt/s </span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("Average Consumption: <span style='font-weight: normal; font-size: inherit;'>" + avg + " Kwh</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(4).html("Price per KWhr: <span style='font-weight: normal; font-size: inherit;'>₱ " + priceperkwhr + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(5).html("Estimated Price: <span style='font-weight: normal; font-size: inherit;'>₱ " + cost + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("Average Consumption: <span style='font-weight: normal; font-size: inherit;'>" + avg + " Kwhr</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(4).html("Price per KWhr: <span style='font-weight: normal; font-size: inherit;'>₱ " + priceperkwhr.toFixed(2) + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(5).html("Estimated Price: <span style='font-weight: normal; font-size: inherit;'>₱ " + cost.toFixed(2) + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(6).html("Limit: <span style='font-weight: normal; font-size: inherit;'>" + limit_value + "</span>");
 
 				$('.appl_id[name="' + appuid + '"]').val(appuid);
@@ -303,7 +312,7 @@ function loadPrice(){
 			crossDomain: true,
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
 			success: function(data) {
-				priceperkwhr = data.trim()
+				priceperkwhr = parseFloat(data.trim());
 			}
 	});
 }

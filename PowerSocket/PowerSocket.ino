@@ -73,6 +73,7 @@ boolean notifStat = true;
 boolean aDevice = false;
 boolean relayIsOn = true;
 boolean analyzerReseter = true;
+boolean relayOnChecker = false;
 
 //Connect to Wifi at Start UP
 //being called at the Setup phase
@@ -235,11 +236,13 @@ int proximitySensor() {
 void relayOn() {
   digitalWrite(relayPin, LOW);
   Serial.println("Relay ON");
+  relayOnChecker = true;
 }
 
 void relayOff() {
   digitalWrite(relayPin, HIGH);
   //Serial.println("Relay OFF");
+  relayOnChecker = false;
 }
 
 //Legacy Code for Debugging
@@ -442,7 +445,7 @@ void loop() {
     //Serial.println("Appliance Plugged IN");
     //delay(200);
     aDevice = true;
-    if (currentUID == "") {
+    if (currentUID == "" && relayOnChecker == false) {
       currentUID = getID();
     }
     if (currentUID != "") {

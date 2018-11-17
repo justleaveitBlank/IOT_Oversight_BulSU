@@ -31,6 +31,12 @@
 		}
 		html, body{
 			height: 100%;
+			animation: fadein .7s;
+		}
+
+		@keyframes fadein {
+				from { opacity: 0; }
+				to   { opacity: 1; }
 		}
 		.navbg{
 			background:rgba(75,0,130,1);
@@ -483,7 +489,7 @@
 							<p class="black-text"><b>Consumption : </b><em>50kwh</em></p>
 							<p class="black-text"><b>Current Limit : </b><em>50kwh</em></p>
 							<div class="input-field col s12">
-								<input id="d_limit" type="number" step='0.01' class="validate border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" required>
+								<input id="d_limit" type="number" step='0.000001' class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
 								<span class="helper-text" data-error="Required! Must be Above Current Limit and Consumption Value" data-success="&#10004;"></span>
 								<label for="d_limit" class="grey-text text-darken-2">Limit (kwh)</label>
 								<br><hr>
@@ -511,15 +517,14 @@
 									<label for="d_id" id='d_id_label' class="grey-text text-darken-2">Appliance ID</label>
 								</div>
 								<div class="input-field col s12">
-									<select class="border_bottom_darkgray grey-text">
-										<option class="grey-text text-darken-2" value="" disabled selected>Choose your option</option>
+									<select id="applianceType" class="border_bottom_darkgray grey-text">
+										<option class="grey-text text-darken-2" value="0" disabled selected>Choose your option</option>
 										<option class="black-text text-darken-2" value="1">General Appliances</option>
 										<option class="black-text text-darken-2" value="2">Aircon</option>
 										<option class="black-text text-darken-2" value="3">Refrigerator</option>
-										<option class="black-text text-darken-2" value="3">Cooking</option>
-										<option class="black-text text-darken-2" value="3">Fan</option>
-										<option class="black-text text-darken-2" value="3">Cooking</option>
-										<option class="black-text text-darken-2" value="3">Entertainment</option>
+										<option class="black-text text-darken-2" value="4">Electric Stove</option>
+										<option class="black-text text-darken-2" value="5">Fan</option>
+										<option class="black-text text-darken-2" value="6">Television</option>
 									</select>
 									<label>Device Type</label>
 								</div>

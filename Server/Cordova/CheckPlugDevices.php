@@ -13,9 +13,21 @@
    // echo $aDevice . $num;
     if($aDevice == "1"){
       //check if plugged device is registered then set id and register status
-      if($num>0){
+      $applianceQuery = "SELECT * FROM t_appliance WHERE appl_name NOT IN ('Unregistered_Appliance','Anonymous_Appliance') AND uid='".$UID."'";
+      $applianceResult = $con->query($applianceQuery);
+      $numROWS = mysqli_num_rows($applianceResult);
+      if($numROWS==1){
         $appliance_pluggedStatus->uid = $appl_uid;
         $appliance_pluggedStatus->registered = true;
+        //remove any unregistered and anonymous appliance in t_appliance and t_notifications ( for rfid issues )
+
+        $query = "DELETE FROM t_appliance WHERE appl_name in ('Unregistered_Appliance','Anonymous_Appliance')";
+      	$con->query($query);
+
+        //remove any unregistered and anonymous appliance in t_notifications ( for rfid issues )
+  			$Notifquery = "UPDATE t_notification SET status='ignored' WHERE type IN ('newanoapp','newapp') and status='unresolved'";
+  			$con->query($Notifquery);
+
       } else {
         $appliance_pluggedStatus->uid = $appl_uid;
         $appliance_pluggedStatus->registered = false;
@@ -57,7 +69,7 @@
     $query = "UPDATE t_appliance SET time_limit_value = NOW() WHERE time_limit_value = '0000-00-00 00:00:00'";
     if($con->query($query)){
       //Remove Notices or Notificatons to avoid Confusion ( Notification will occur only when there is plugged devices )
-      $Notifquery = "UPDATE t_notification SET status='ignored' WHERE status='unresolved' ";
+      $Notifquery = "UPDATE t_notification SET status='ignored' WHERE status='unresolved'";
       if($con->query($Notifquery)){
         //Set value 0 in plugged devices to denote no appliance is currently plugged in
         $appliance_pluggedStatus = array(

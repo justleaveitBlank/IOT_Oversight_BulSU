@@ -37,10 +37,10 @@ if($num>0 && $appl_uid !="NO_UID"){
         // this will make $row['name'] to
         // just $name only
         extract($row);
-		
+
 		//values get from database
         $appliance_arr=array(
-           
+
             //"uid" => $UID,
 			//"appl_name" => $appl_name,
 			"has_power" => $has_power,
@@ -56,10 +56,10 @@ if($num>0 && $appl_uid !="NO_UID"){
 			"time_limit" => $timeLimiNotif
         );
     }
-	
+
 	include_once 'insertToHistoryDB.php';
 	include_once 'insertTot_appliance.php';
-	
+
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
 	//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
@@ -90,10 +90,10 @@ else if($appl_uid == "NO_UID"){
 		"time_limit" => $timeLimiNotif
 		//"status" => "registered"
     );
-	
+
 	include_once 'insertToHistoryDB.php';
 	include_once 'insertTot_appliance.php';
-	
+
 	$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 	// get from signedPowerData.php since this is impoted
 	//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";
@@ -115,7 +115,7 @@ else{
 			//"status" => "unregistered"
 			"time_limit" => $timeLimiNotif
 		);
-		
+
 		$json_has_power_data = json_encode($appliance_arr, JSON_PRETTY_PRINT);
 		// get from signedPowerData.php since this is impoted
 		//echo $UID."||". $voltage."||".$ampere."||". $power."||".$watthr."||".$date."||".$time."||".$timezone."\n\r";

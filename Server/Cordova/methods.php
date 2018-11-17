@@ -632,7 +632,17 @@ if(isset($_POST['forgotPassword'])){
 		echo "Something Went Wrong..." . mysqli_error($con);
 	}
 }
+//-------------------------------------SETTINGS RELATED-----------------------------------------------------------
 
+if(isset($_POST['getPrice'])){
+	$priceQuery = "SELECT * FROM t_settings";
+	$priceResult = $con->query($priceQuery);
+	if(mysqli_num_rows($priceResult)==1){
+		while($priceRow = mysqli_fetch_assoc($priceResult)){
+			echo $priceRow["price"];
+		}
+	}
+}
 
 //-------------------------------------APPLIANCE RELATED----------------------------------------------------------
 
@@ -693,42 +703,58 @@ if(isset($_POST['forgotPassword'])){
 	if(isset($_POST['on'])){
 		$uid = $_POST['on'];
 		$flag=0;
-		$query = "SELECT * FROM t_appliance WHERE uid = '". $uid ."'";
-		$result = $con->query($query);
-		if(mysqli_num_rows($result) == 1){
-			while($row = mysqli_fetch_assoc($result)){
-				if($row['appl_name']=="Anonymous_Appliance" || $row['appl_name']=="Unregistered_Appliance"){
-					$date = strtotime($row['time_limit_value']);
-					if($row['has_time_limit']==1 && (time()<$date)){
-						$flag = 1;
-					} else {
-						$messageToClient = "Expired";
-					}
-				} else {
-					if($row["has_power_limit"] == 1){
-						if($row['current_power_usage'] >= $row['power_limit_value']){
-							$messageToClient = "Overconsumed";
+		$settingsQuery = "SELECT * FROM t_settings";
+		$settingsResult = $con->query($settingsQuery);
+		if(mysqli_num_rows($settingsResult)==1){
+			while($settingsRow = mysqli_fetch_assoc($settingsResult)){
+				if($settingsRow["socket"]=="true"){
+					if($settingsRow["limitation"]=="true"){
+						$query = "SELECT * FROM t_appliance WHERE uid = '". $uid ."'";
+						$result = $con->query($query);
+						if(mysqli_num_rows($result) == 1){
+							while($row = mysqli_fetch_assoc($result)){
+								if($row['appl_name']=="Anonymous_Appliance" || $row['appl_name']=="Unregistered_Appliance"){
+									$date = strtotime($row['time_limit_value']);
+									if(($row['has_time_limit']==1 && (time()<$date)) || ($row['time_limit_value'] == "0000-00-00 00:00:00")){
+										$flag = 1;
+									} else {
+										$messageToClient = "Expired";
+									}
+								} else {
+									if($row["has_power_limit"] == 1){
+										if($row['current_power_usage'] >= $row['power_limit_value']){
+											$messageToClient = "Overconsumed";
+										} else {
+											$flag = 1;
+										}
+									} else {
+										$flag = 1;
+									}
+								}
+							}
 						} else {
-							$flag = 1;
+							echo mysqli_error($con);
 						}
 					} else {
 						$flag = 1;
 					}
+				} else {
+					$messageToClient = "Socket is Off! Check Settings!";
 				}
 			}
+		}
 
-			if($flag == 1){
-				$query2 = 'UPDATE t_appliance SET has_power = 1 where uid = "'. $uid .'"';
-				if($con->query($query2)){
-					echo 'Success ' . mysqli_error($con);
-				} else {
-					echo 'Failed ' . mysqli_error($con);
-				}
+
+
+		if($flag == 1){
+			$query2 = 'UPDATE t_appliance SET has_power = 1 where uid = "'. $uid .'"';
+			if($con->query($query2)){
+				echo 'Success ' . mysqli_error($con);
 			} else {
-				echo $messageToClient ;
+				echo 'Failed ' . mysqli_error($con);
 			}
 		} else {
-			echo mysqli_error($con);
+			echo $messageToClient ;
 		}
 	}
 

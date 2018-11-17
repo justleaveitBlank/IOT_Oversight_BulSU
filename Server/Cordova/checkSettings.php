@@ -23,10 +23,11 @@
 				$query ='SELECT *
 						FROM t_appliance
 						WHERE appl_name="' .$nameToCompare. '"';
-				$has_power="0";
+				$has_power = "0";
 				$result = $con->query($query);
 				if(mysqli_num_rows($result)>0){
 					$appl_rows = $result->fetch_object();
+					$has_power= $appl_rows->has_power;
 					$appl_Auid = $appl_rows->uid;
 					$appl_has_time_limit = $appl_rows->has_time_limit;
 					$appl_time_limit_value = $appl_rows->time_limit_value;
@@ -35,18 +36,18 @@
 						if($appl_has_time_limit == "1"){
 							$dateEx = strtotime($appl_time_limit_value);
 
-							if(time()<$dateEx || $current_date==strtotime("0000-00-00 00:00:00") && $aDevice!="0"){
-								$has_power="1";
+							if(time()<$dateEx || $dateEx==strtotime("0000-00-00 00:00:00") && $aDevice!="0"){
 								$query = "UPDATE t_appliance SET has_time_limit = 1 WHERE appl_name = '".$nameToCompare."'";
 								$result = $con->query($query);
 								$notifStat = "false";
 								$aDevice = "3";
 								$flag = 1;
-							} if(time() > strtotime("-1 minutes", $dateEx)){
+							} if(time() > strtotime("-1 minutes", $dateEx) && $dateEx!=strtotime("0000-00-00 00:00:00")){
 								$timeLimiNotif = "1";
 							}
 						}
 						if($flag == 0){
+							$has_power="0";
 							if($UID != "NO_UID"){
 								$notifStat = "true";
 								$aDevice = "1";
@@ -65,12 +66,16 @@
 					}
 				}
 				//Check consumption vs limit take id if appliance exceed warning level
-				$query = "SELECT IF(current_power_usage < (power_limit_value*0.85),'NORMAL', IF(current_power_usage >= power_limit_value,'STOP','OVERCONSUMING')) as ConsumptionStatus FROM t_appliance WHERE power_limit_value>0 and uid = '".$UID."'";
+				$query = "SELECT IF(current_power_usage/1000 < (power_limit_value*0.85),'NORMAL', IF(current_power_usage >= power_limit_value,'STOP','OVERCONSUMING')) as ConsumptionStatus FROM t_appliance WHERE power_limit_value>0 and uid = '".$UID."'";
 				$result = $con->query($query);
 				if(mysqli_num_rows($result)==1){
 					while ($row = mysqli_fetch_assoc($result)) {
 						$consumer_status = $row['ConsumptionStatus'];
-						if($consumer_status != "NORMAL"){
+						if($consumer_status == "NORMAL"){
+							$query = "UPDATE t_notification set status = 'ignored' WHERE type = 'consumption'";
+							$con->query($query);
+							$has_power = 1;
+						} else {
 							$query = "SELECT IFNULL(MAX(notif_id),'NULL') as notif_id FROM t_notification WHERE type = 'consumption' and appliance_id = '".$UID."'";
 							$notif_results = $con->query($query);
 							if(mysqli_num_rows($notif_results)>0){
@@ -104,9 +109,9 @@
 			$appQuery ='SELECT *
 					FROM t_appliance
 					WHERE uid="' .$UID. '"';
-					
+
 			$appResult = $con->query($appQuery);
-			
+
 			if(mysqli_num_rows($appResult)<1){
 				if($UID == "NO_UID"){
 					$query = "INSERT INTO t_appliance VALUES('".$UID."','Anonymous_Appliance',1,0,0,DEFAULT,DEFAULT,DEFAULT,DEFAULT,0,0,0,DEFAULT)";
