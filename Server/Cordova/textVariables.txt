@@ -1,1 +1,1 @@
-lastUID=ae113a20||currentConsumedVal=0
+lastUID=NO_UID||currentConsumedVal=0
