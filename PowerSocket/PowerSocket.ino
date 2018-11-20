@@ -58,9 +58,9 @@ byte readCard[4]; // MFRC522 has 4 bytes (8 Characters)
 
 //Change this to Raspberry Pi configuration
 //Wifi Variables
-String wifiSSID = "iot_oversight";
-String wifiPASS = "oversight";
-String raspiIP = "192.168.2.119";
+String wifiSSID = "DANGER!!! HIGH VOLTAGE";
+String wifiPASS = "delacruzclanonly";
+String raspiIP = "192.168.1.10";
 String raspiPORT = "80";
 
 //WiFi Data to be Sent
@@ -453,11 +453,10 @@ void loop() {
       //Serial.println("Sending to Server: " + pluggedAppliance);
       //sendUIDtoServer(pluggedAppliance);
       notifStat = true;
-      Serial.println(notifStat);
+      //Serial.println(notifStat);
       while (isPluggedin()) {
         delay(200);
         if(analyzerReseter == true){
-          Serial.println(" POWER ANALYZER RESET");
           analyzerReseter = false;
           resetWattHour(); 
         }

@@ -25,7 +25,7 @@ function initiate_functions() {
 
 function load_xml() {
 	$.ajax({
-		url: "http://" + deviceHost + "/xml/overpass.xml",
+		url: "pathtoOverpassXML.php",
 		dataType: "xml",
 		crossDomain: true,
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -319,7 +319,7 @@ function loadPrice(){
 
 function checkPlugged() {
 	//$.getJSON('http://' + deviceHost + '/plugged.json', function (data) {
-	$.getJSON('http://' + deviceHost + '/plugged.json?ts='+ $.now(), function (data) {
+	$.getJSON('pathtopluggedJSON.php', function (data) {
 			if(data.plugged!="0"){
 				if (data.registered) {
 					$("#noappnotice").hide();
