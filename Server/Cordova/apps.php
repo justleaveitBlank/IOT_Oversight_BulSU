@@ -52,6 +52,7 @@
 							<div style="margin-bottom:1rem;" class="actualbody" name='<?php echo $row['uid']; ?>'>
 								<p class="fullinfo"> UID: <span> <?php echo $row['uid']; ?> </span></p>
 								<p class="fullinfo"> Name: <span> <?php echo $row['appl_name']; ?> </span></p>
+								<p class="fullinfo"> Type: <span> <?php echo $row['appl_type']; ?> </span></p>
 								<p class="fullinfo"> Power Consumption: <span> <?php echo $row['current_power_usage']; ?> watt(s) </span></p>
 								<p class="fullinfo"> Average Consumption: <span> <?php echo $row['avg_watthr']; ?> </span></p>
 								<p class="fullinfo pricekwhr"> Price per kWhr: <span> 0 </span></p>

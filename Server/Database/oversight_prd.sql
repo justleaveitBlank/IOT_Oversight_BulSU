@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2018 at 03:02 PM
+-- Generation Time: Nov 23, 2018 at 02:23 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -34,15 +34,16 @@ DROP TABLE IF EXISTS `t_appliance`;
 CREATE TABLE `t_appliance` (
   `uid` varchar(8) NOT NULL,
   `appl_name` varchar(32) NOT NULL,
+  `appl_type` varchar(32) NOT NULL,
   `has_power` tinyint(1) NOT NULL,
   `has_power_limit` tinyint(1) DEFAULT NULL,
   `has_time_limit` tinyint(1) DEFAULT NULL,
   `current_date_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `time_limit_value` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `power_limit_value` double DEFAULT NULL,
-  `current_power_usage` double DEFAULT NULL,
-  `avg_watthr` double DEFAULT NULL,
-  `estimated_cost` double DEFAULT NULL,
+  `power_limit_value` double NOT NULL,
+  `current_power_usage` double NOT NULL,
+  `avg_watthr` double NOT NULL,
+  `estimated_cost` double NOT NULL,
   `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -50,9 +51,9 @@ CREATE TABLE `t_appliance` (
 -- Dumping data for table `t_appliance`
 --
 
-INSERT INTO `t_appliance` (`uid`, `appl_name`, `has_power`, `has_power_limit`, `has_time_limit`, `current_date_time`, `time_limit_value`, `power_limit_value`, `current_power_usage`, `avg_watthr`, `estimated_cost`, `description`) VALUES
-('6f63b28', 'Kunwari', 1, 0, 0, '2018-11-17 12:45:37', '2018-09-03 13:48:23', 0, 48.16, 0, 0, NULL),
-('f7ba179', 'Appliance_02', 0, 0, 0, '2018-10-15 12:32:16', '2018-09-07 14:11:43', 0, 0, NULL, NULL, NULL);
+INSERT INTO `t_appliance` (`uid`, `appl_name`, `appl_type`, `has_power`, `has_power_limit`, `has_time_limit`, `current_date_time`, `time_limit_value`, `power_limit_value`, `current_power_usage`, `avg_watthr`, `estimated_cost`, `description`) VALUES
+('6f63b28', 'Promac', 'Television', 0, 1, 0, '2018-11-23 12:36:53', '2018-09-02 21:48:23', 0.05, 65, 0, 0, NULL),
+('f7ba179', 'Standard', 'Electric Stove', 0, 0, 0, '2018-11-23 12:36:58', '2018-09-07 06:11:43', 0, 0, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -112,30 +113,8 @@ CREATE TABLE `t_notification` (
 --
 
 INSERT INTO `t_notification` (`notif_id`, `type`, `status`, `appliance_id`, `date_pop`) VALUES
-(1, 'newanoapp', 'ignored', 'NO_UID', '2018-11-17 14:02:22'),
-(2, 'newapp', 'unresolved', 'ae113a20', '2018-11-17 14:02:22'),
-(3, 'newapp', 'ignored', 'currentU', '2018-11-17 14:02:22'),
-(4, 'newapp', 'ignored', 'currentU', '2018-11-17 14:02:22'),
-(5, 'newapp', 'ignored', 'currentU', '2018-11-17 14:02:22'),
-(6, 'newapp', 'ignored', 'currentU', '2018-11-17 14:02:22'),
-(7, 'consumption', 'ignored', '6f63b28', '2018-11-17 14:02:22'),
-(8, 'newapp', 'ignored', '164da4b9', '2018-11-17 14:02:22');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `t_rate`
---
-
-DROP TABLE IF EXISTS `t_rate`;
-CREATE TABLE `t_rate` (
-  `total_consumed` float DEFAULT NULL,
-  `power_rate` float DEFAULT NULL,
-  `total_price` float DEFAULT NULL,
-  `effective_date` float DEFAULT NULL,
-  `lst_updt_dte` date DEFAULT NULL,
-  `lst_updt_id` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(21, 'newanoapp', 'ignored', 'NO_UID', '2018-11-23 13:03:35'),
+(22, 'consumption', 'unresolved', '6f63b28', '2018-11-23 13:02:20');
 
 -- --------------------------------------------------------
 
@@ -157,7 +136,7 @@ CREATE TABLE `t_settings` (
 --
 
 INSERT INTO `t_settings` (`socket`, `limitation`, `authentication`, `price`, `admin`) VALUES
-('true', 'true', 'true', 1.5, '1234');
+('true', 'true', 'false', 11.25112, 'admin');
 
 -- --------------------------------------------------------
 
@@ -183,7 +162,7 @@ CREATE TABLE `t_users` (
 
 INSERT INTO `t_users` (`username`, `password`, `firstname`, `lastname`, `contact`, `email`, `confirm_code`, `admin`) VALUES
 ('admin', 'admin', 'john', 'francisco', '09345678910', 'johnbenedictjb@gmail.com', NULL, '1234'),
-('user01', 'pass', 'user01', 'user01', '09999999999', 'user01@gmail.com', '11111', '1111');
+('user01', 'pass', 'user01', 'user01', '09999999999', 'user01@gmail.com', NULL, '1111');
 
 --
 -- Indexes for dumped tables
@@ -222,7 +201,7 @@ ALTER TABLE `t_users`
 -- AUTO_INCREMENT for table `t_notification`
 --
 ALTER TABLE `t_notification`
-  MODIFY `notif_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `notif_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

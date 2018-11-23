@@ -358,6 +358,25 @@
 			width: 160px;
 			top: -62px;
 		}
+		blockquote {
+			border-left: 5px solid rgba(75,0,130,1);
+		}
+		blockquote.margindenser{
+			margin:.5rem 0;
+		}
+		.DAnotes{
+			padding: 1rem;
+			color:#616161 ;
+		}
+		.notes{
+			font-size:1.1em;
+		}
+		.plsacan{
+			padding: 0 1rem ;
+			color:#616161 ;
+			font-size:.9em;
+			margin-bottom: 1rem;
+		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
 
@@ -375,6 +394,7 @@
 	<script>
 		$(document).ready(function(){
 			$('.collapsible').collapsible();
+			
 			$(".dropdown-trigger").dropdown({
 				hover: true, constrainWidth: false
 			});
@@ -451,17 +471,29 @@
 			<div class="col s12 m4 l8">
 
 				<div class="row">
-
-					<p><i class="small material-icons icon-green">power</i> Plugged Devices</p>
+					<p style="padding:10px"><i class="small material-icons icon-green">power</i> Plugged Devices</p>
 					<div class="col s12 m4 l12">
 						<ul class="collapsible " id='plugged-apps'>
 							<div id='noappnotice'>No Appliance Plugged!</div>
+							<!-- Message when device plugged is unregistered includes authentication message-->
+							<div class="divider"></div>
 							<div class='card' id='unregisterednotice'>
-								<span class="CardMessage"></span>
+								<div class="CardMessage card-title"  style="padding:.5rem 1rem; font-size: 1.1em; font-weight: 550;"></div>
+								<div class="additional-note">
+									<p class="plsacan">Please Scan you appliance Access Pass</p>		
+									<div class="divider"></div>
+									<div class="DAnotes">
+										<p class="notes"><b>NOTES :</b><br>
+											<blockquote class="margindenser">Device Authentication is Currently On ( Strictly registered appliance are allowed )</blockquote> 
+											<blockquote class="margindenser">To register new appliance please turn of Device Authentication and plugged your new appliance with new Access Pass. </blockquote>
+										</p>
+									</div>
+								</div>
 								<div class="card-action right-align">
 									<a href='notifications.html' class="resolve-redirect btn-small waves-effect waves-light orange white-text sTitle">Resolve</a>
 								</div>
 							</div>
+							<!-- End of Message -->
 						</ul>
 					</div>
 				</div>
@@ -469,7 +501,7 @@
 				<!-- UNPLUGGED APPLIANCE -->
 
 				<div class="row">
-					<p><i class="small material-icons icon-grey">power</i> Currently Unplugged Devices</p>
+					<p style="padding:10px"><i class="small material-icons icon-grey">power</i> Currently Unplugged Devices</p>
 					<div class="col s12 m4 l12">
 						<ul class="collapsible" id='registered-apps'>
 							<!-- NEW -->
@@ -522,7 +554,8 @@
 								<label for="d_NAME" class="u_label grey-text text-darken-2">Name</label>
 							</div>
 							<div class="input-field col s12">
-								<input id="d_LIMIT" type="number" class="u_field validate border_bottom_green border_bottom_darkgray" step="0.0001" min="0" autocomplete="off" required value="0">
+								<input id="d_LIMIT" type="number" class="u_field validate border_bottom_green border_bottom_darkgray" step="0.0001" min="0" autocomplete="off" required value="0" max="9999999" min="0.0000001">
+								<span class="helper-text" data-error="&#10006; Limited To 7 Digits (including decimal)" data-success=""></span>
 								<label for="d_LIMIT" class="u_label grey-text text-darken-2">Limit (kwh)</label>
 							</div>
 						</div>

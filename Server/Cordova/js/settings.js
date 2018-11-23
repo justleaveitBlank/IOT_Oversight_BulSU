@@ -88,28 +88,50 @@ function initiate_settings() {
 		inputpass = "";
 	});
 
-	$('.admin-changepass-confirm').mousedown(function () {
-		if ($('#old_password').val() == admin_code) {
-			$('#old_password').val("");
-			$(this).addClass("modal-close modal-trigger");
-		} else {
-			$(this).removeClass("modal-close modal-trigger");
-			inc_error("Invalid Pass!");
-		}
-	});
+	
+//------------------------------------- PASSWORD -----------------------------------------------------------
 
-	$('.changepass-save').mousedown(function () {
-		if ($('#new_password').val().trim() != "") {
-			$('#new_password').val("");
-			$(this).addClass("modal-close");
-			settings.admin = inputpass;
-			updateSettings();
-		} else {
-			$(this).removeClass("modal-close");
-			inc_error("Invalid Pass!");
-		}
+	$('input').on('input',function(){
+		$(this).removeClass('valid');
+		$(this).removeClass('invalid');
 	});
+	
+	$("#txtOldPassword").on('input',function(){
+	if(this.value == admin_code){
+	  $(this).addClass('valid');
+	} else {
+	  $(this).addClass('invalid');
+	}
+  });
 
+  $("#txtNewPassword").on('input',function(){
+	$("#txtConfirmPassword").removeClass('valid');
+	if(this.value==$("#txtConfirmPassword").val()){
+	  $("#txtConfirmPassword").addClass('valid');
+	  inputpass = $(this).val();
+	}
+  });
+
+  $("#txtConfirmPassword").on('input',function(){
+	if(this.value==$("#txtNewPassword").val()){
+	  $("#txtConfirmPassword").addClass('valid');
+	  inputpass = $(this).val();
+	} else {
+	  $("#txtConfirmPassword").addClass('invalid');
+	}
+  });
+
+  $(".save-password").focus(function(){
+	if($("#txtOldPassword").hasClass("valid") &&  $("#txtNewPassword").hasClass("valid") && $("#txtConfirmPassword").hasClass("valid")){
+	  $(this).addClass("modal-close");
+	  settings.admin = inputpass;
+	  updateSettings();
+	} else {
+	  inc_error("Invalid / Missing Field");
+	  $(this).removeClass("modal-close");
+	}
+  });
+  
 	admin_password_class = $('#admin_password').attr('class');
 	$('#validation_status').attr('data-error', "This Field is Required");
 	$('#confirm_admin').click(function () {
@@ -134,17 +156,12 @@ function initiate_settings() {
 			}
 		}
 	});
-
-	function inc_error(error) {
-		$('.toast').hide();
-
-		M.Toast.dismissAll();
-		var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size:1em;'>"+error+"</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
-		M.toast({html: toastHTML});
-
-		$('.toast-action').click(function(){
-			 M.Toast.dismissAll();
-		});
+	
+	function admin_pass_reset() {
+		$('#passlabel').removeClass("active");
+		$('#admin_password').val("");
+		$('#admin_password').attr('class', admin_password_class);
+		$('#admin_password').removeClass("invalid");
 	}
 
 	function checkSettings() {
@@ -194,13 +211,6 @@ function initiate_settings() {
 	setInterval(checkSettings, 500);
 }
 
-function admin_pass_reset() {
-	$('#passlabel').removeClass("active");
-	$('#admin_password').val("");
-	$('#admin_password').attr('class', admin_password_class);
-	$('#admin_password').removeClass("invalid");
-}
-
 function updateSettings() {
 	var string = JSON.stringify(settings);
 	var params = "settings=" + string;
@@ -208,10 +218,10 @@ function updateSettings() {
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			console.log("Data Sent Successfully!");
-			console.log((xhr.responseText).trim());
 			$('#confirm_admin').attr('class', class_value);
-			load_xml();
 			$('#price_label').text("Price (₱ " + settings.price + ")");
+			resetAllInputs();
+			load_xml(); 
 		}
 	}
 	xhr.open("POST", "http://" + deviceHost + "/changeSettings.php", true);
@@ -219,3 +229,29 @@ function updateSettings() {
 	xhr.send(params);
 	return false;
 }
+
+//-------------------------------------MINOR FUNCTIONS------------------------------------------------
+
+	function inc_error(error) {
+		$('.toast').hide();
+
+		M.Toast.dismissAll();
+		var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size:1em;'>"+error+"</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+		M.toast({html: toastHTML});
+
+		$('.toast-action').click(function(){
+			 M.Toast.dismissAll();
+		});
+	}
+	
+	function resetAllInputs(){
+		$('input').each(function(){
+			$(this).val("");
+			$(this).removeClass('valid');
+			$(this).removeClass('invalid');
+		});
+		$('label').each(function(){
+			$(this).removeClass('active');
+		});
+	}
+//-------------------------------------------------------------------------------------------

@@ -332,6 +332,10 @@
 			position: relative;
 			top: -.25rem;
 		}
+		#adminConfirmChangeRate{
+			top: 20% !important; 
+			height: 40%;
+		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
 
@@ -426,91 +430,88 @@
 	<!--Modal Structures-->
 	<div class="modalCon">
 		<!-- Modal Structure for Admin Change Multiplyer Rate -->
-			<div id="adminConfirmChangeRate" class="modal modal-fixed-footer">
-				<form class="col s12" method="POST" action="">
-					<div class="modal-content">
-						<div class="row">
-							<h5>Admin Confirmation</h5>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
-								<input id="admin_password" type="password" class="border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" required />
-								<label for="admin_password" id='passlabel' class="grey-text text-darken-2">Admin Password</label>
-							</div>
+		<div id="adminConfirmChangeRate" class="modal modal-fixed-footer">
+			<form class="col s12" method="POST" action="">
+				<div class="modal-content">
+					<div class="row">
+						<h6 style="text-align:center; font-weight:600; line-height: 30px;">ADMIN CONFIRMATION</h6>
+						<hr>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
+							<input id="admin_password" type="password" class="border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" required />
+							<label for="admin_password" id='passlabel' class="grey-text text-darken-2">Admin Password</label>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<a id='confirm_admin' class="col s6 submitbtn btn-flat white-text waves-effect waves-light light-blue accent-4 white-text sTitle" href="#ChangeMultiplyerRate">Confirm</a>
-						<button id='cancel' class="col s6 submitbtn btn-flat white-text waves-effect waves-light red modal-close" type="button" name="action">Cancel</button>
-					</div>
-				</form>
-			</div>
+				</div>
+				<div class="modal-footer">
+					<a id='confirm_admin' class="col s6 submitbtn btn-flat white-text waves-effect waves-light light-blue accent-4 white-text sTitle" href="#ChangeMultiplyerRate">Confirm</a>
+					<button id='cancel' class="col s6 submitbtn btn-flat white-text waves-effect waves-light red modal-close" type="button" name="action">Cancel</button>
+				</div>
+			</form>
+		</div>
 
-		<!-- Modal Structure for Change Multiplyer Rate -->
-			<div id="ChangeMultiplyerRate" class="modal modal-fixed-footer">
-				<form class="col s12" method="POST" action="">
-					<div class="modal-content">
-						<div class="row">
-							<h5>Price per KwH Rate</h5>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="s_price" type="number" step='0.00001' class="border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" required />
-								<label for="s_price" id='price_label' class="grey-text text-darken-2"></label>
-							</div>
+	<!-- Modal Structure for Change Multiplyer Rate -->
+		<div id="ChangeMultiplyerRate" class="modal modal-fixed-footer">
+			<form class="col s12" method="POST" action="">
+				<div class="modal-content">
+					<div class="row">
+						<h6 style="text-align:center; font-weight:600; line-height: 30px;">CHANGE KWH PRICE RATING</h6>
+						<hr>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input id="s_price" type="number" step='0.00001' class="border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" required />
+							<label for="s_price" id='price_label' class="grey-text text-darken-2"></label>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<a id='btn_price' class="col s6 submitbtn btn-flat white-text waves-effect waves-light light-blue accent-4 white-text sTitle" name="action">save</a>
-						<button class="col s6 submitbtn btn-flat white-text waves-effect waves-light red modal-close" type="button" name="action">Cancel</button>
-					</div>
-				</form>
-			</div>
+				</div>
+				<div class="modal-footer">
+					<a id='btn_price' class="col s6 submitbtn btn-flat white-text waves-effect waves-light light-blue accent-4 white-text sTitle" name="action">save</a>
+					<button class="col s6 submitbtn btn-flat white-text waves-effect waves-light red modal-close" type="button" name="action">Cancel</button>
+				</div>
+			</form>
+		</div>
 
-		<!-- Modal Structure for Admin Change Change Admin Pass -->
-			<div id="adminConfirmChangePass" class="modal modal-fixed-footer">
-				<form class="col s12" method="POST" action="">
-					<div class="modal-content">
-						<div class="row">
-							<h6>Input Old Administrator Password</h6>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
-								<input id="old_password" type="password" class="p-fields border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" required />
-								<label for="old_password" class="f-label grey-text text-darken-2">Old Password</label>
-							</div>
-						</div>
+	<!-- Modal Structure for Admin Change Change Admin Pass -->
+	
+		<div id="adminConfirmChangePass" class="modal modal-fixed-footer">
+			<form class="input-forms col s12" method="POST" action="">
+				<div class="modal-content">
+					<div class="row">
+						<h6 style="text-align:center; font-weight:600; line-height: 30px;">CHANGE ADMINISTRATOR PASSWORD</h6>
+						<hr>
 					</div>
-					<div class="modal-footer">
-						<a class="admin-changepass-confirm col s6 submitbtn btn-flat white-text waves-effect waves-light light-blue accent-4 white-text sTitle" href="#ChangePass">Confirm</a>
-						<button class="cancel-btns col s6 submitbtn btn-flat white-text waves-effect waves-light red modal-close" type="button" name="action">Cancel</button>
-					</div>
-				</form>
-			</div>
-
-		<!-- Modal Structure for Change Admin Pass -->
-			<div id="ChangePass" class="modal modal-fixed-footer">
-				<form class="col s12" method="POST" action="">
-					<div class="modal-content">
-						<div class="row">
-							<h6>Input New Administrator Password</h6>
+					
+					<div class="row">
+						<div class="input-field col s12">
+							<i class="material-icons prefix black-text text-darken-2">lock</i>
+							<input id="txtOldPassword" type="password" class="account-inputs border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+							<label for="txtOldPassword" class="a_label grey-text text-darken-2"> OLD PASSWORD</label>
+							<span class="helper-text" data-error="&#10006; INCORRECT" data-success="&#10004; CORRECT"></span>
 						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
-								<input id="new_password" type="password" class="p-fields border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" />
-								<label for="new_password" class="f-label grey-text text-darken-2">New Password</label>
-							</div>
+						<div class="input-field col s12">
+							<i class="material-icons prefix grey-text text-darken-2">lock</i>
+							<input id="txtNewPassword" type="password" class="account-inputs validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+							<label for="txtNewPassword" class="a_label grey-text text-darken-2"> NEW PASSWORD</label>
+							<span class="helper-text" data-error="&#10006; INVALID" data-success="&#10004; VALID"></span>
+						</div>
+						<div class="input-field col s12">
+							<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
+							<input id="txtConfirmPassword" type="password" class="account-inputs border_bottom_green border_bottom_darkgray" autocomplete="off" required>
+							<label for="txtConfirmPassword" class="a_label grey-text text-darken-2">RE-TYPE PASSWORD</label>
+							<span class="helper-text" data-error="&#10006; DOESN'T MATCHED" data-success="&#10004; MATCHED"></span>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<a class="changepass-save col s6 submitbtn btn-flat white-text waves-effect waves-light light-blue accent-4 white-text sTitle" href="#SavePass">Save</a>
-						<button class="cancel-btns col s6 submitbtn btn-flat white-text waves-effect waves-light red modal-close" type="button" name="action">Cancel</button>
-					</div>
-				</form>
-			</div>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+					<a id='#!' href="#updateDevice" class="save-password svbtn modal-action waves-effect waves-light green white-text btn-flat">Save</a>
+					<a href="#!" class="closer modal-action modal-close waves-effect waves-light red white-text btn-flat">Cancel</a>
+				</div>
+			</form>
+		</div>
 	</div>
 	<script type="text/javascript" src='js/function.js'></script>
 	<script type="text/javascript">

@@ -1,0 +1,7 @@
+ sudo service --status-all
+ sudo update-rc.d shh enable
+ sudo bash
+ sudo netstat -tulpn
+ sudo chmod -R 777 var/www/html
+ sudo mysql --user:root --password:phpmyadmiin
+ 

@@ -1,8 +1,9 @@
 <?php
   require_once 'Config.php';
-
+  
   if(isset($_POST['getweekly'])){
     $consumptionarray = array();
+	$singleAppArray = array();
     $daysarray = array("SUN","MON","TUE","WED","THU","FRI","SAT");
     $id = $_POST['uid'];
     $day = intval($_POST['Day']);
@@ -13,28 +14,58 @@
     $finalarray = array(0,0,0,0,0,0,0);
     $valid = checkHistoryData();
     if($valid){
-      $consumptionarray = array();
+	  //------------------------------OVERALL WEEKLY--------------------------
       for ($i=0; $i < 7; $i++) {
         $curdate = date('Y-m-d', strtotime($date. ' + ' . $i . ' days'));
-        $select = "IFNULL(SUM(consumed), (SELECT IFNULL(th.consumed,0) from t_history as th where uid='$id' and  YEAR(th.effective_date) = YEAR('".$curdate."') and MONTH(th.effective_date) = MONTH('".$curdate."') and DAY(th.effective_date) = (SELECT MAX(effective_date) FROM t_history WHERE uid='$id' and  YEAR(th.effective_date) = YEAR('".$curdate."') and MONTH(th.effective_date) = MONTH('".$curdate."') and DAY(th.effective_date) < DAY('".$curdate."')))) as  consumed";
+        $select = "IFNULL(SUM(consumed),0)  as  consumed";
         $table = "t_history";
         $where = "DATE(effective_date) = DATE('".$curdate."')";
         $result = processQuery($select,$table,$where);
-
         if(mysqli_num_rows($result)>0){
           while($row = mysqli_fetch_assoc($result)){
-            $finalarray[$i] = intval($row["consumed"]);
+            $finalarray[$i] = $row["consumed"];
           }
         } else {
           print mysqli_error($con);
         }
       }
+	  
+	//------------------------------SINGLE APP WEEKLY-----------------------
+	$startDate = $date;
+	$endDate = date('Y-m-d', strtotime($date. ' + 6 days'));
+	$applianceQuery = "SELECT DISTINCT(uid) as uid FROM t_history WHERE DATE(effective_date) between DATE('".$startDate."') and DATE('".$endDate."')";
+	$applianceResults = $con->query($applianceQuery);
+	if(mysqli_num_rows($applianceResults)>0){
+	  while($appRow = mysqli_fetch_assoc($applianceResults)){
+		$currentUID = $appRow['uid'];
+		$singleAppConsumption = array();
+		//$curdateArray = array();
+		for ($i=0; $i < 7; $i++) {
+			$curdate = date('Y-m-d', strtotime($date. ' + ' . $i . ' days'));
+			$consumptionQuery = "SELECT IFNULL((SELECT consumed FROM t_history WHERE uid='".$currentUID."' and DATE(effective_date) = DATE('".$curdate."')),0) as consumed";
+			//array_push($curdateArray,$consumptionQuery);
+			$consumptionResults = $con->query($consumptionQuery);
+			if(mysqli_num_rows($consumptionResults)>0){
+			  while($conRow = mysqli_fetch_assoc($consumptionResults)){
+				  $currentConsumption = $conRow['consumed'];
+				  array_push($singleAppConsumption,$currentConsumption);
+			  }
+			} else {
+				print mysqli_error($con);
+			}
+		}
+		array_push($singleAppArray, array($currentUID => $singleAppConsumption));
+	  }
+	}
+	  
+	  
     }
-    echo json_encode($daysarray)."|".json_encode($finalarray);
+    echo json_encode($daysarray)."|".json_encode($finalarray)."|".json_encode($singleAppArray);
   }
 
   if(isset($_POST['getmonthly'])){
     $finalarray = array(0,0,0,0,0,0,0,0,0,0,0,0);
+	$singleAppArray = array();
     $monthsarray = array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
     $id = $_POST['uid'];
     $date = ($_POST['getmonthly']=="now")? date("Y-m-d") : $_POST['getmonthly'];
@@ -42,6 +73,7 @@
 
     $valid = checkHistoryData();
     if($valid){
+		//------------------------------OVERALL MONTHLY--------------------------
       $consumptionarray = array();
       for ($i=1; $i <= 12; $i++) {
         $select = "IFNULL(SUM(consumed), 0) as  consumed";
@@ -60,13 +92,37 @@
       for ($j=0; $j < sizeof($finalarray); $j++) {
         $finalarray[$j] = $consumptionarray[$j];
       }
+	  
+	  //------------------------------SINGLE APP MONTHLY--------------------------
+		$applianceQuery = "SELECT DISTINCT(uid) as uid FROM t_history WHERE YEAR(effective_date) = YEAR('".$date."')";
+		$applianceResults = $con->query($applianceQuery);
+		if(mysqli_num_rows($applianceResults)>0){
+		  while($appRow = mysqli_fetch_assoc($applianceResults)){
+			$currentUID = $appRow['uid'];
+			$singleAppConsumption = array();
+			for ($i=1; $i <=12; $i++) {
+				$consumptionQuery = "SELECT IFNULL((SELECT IFNULL(SUM(consumed),0) FROM t_history WHERE uid='".$currentUID."' and YEAR(effective_date) = YEAR('".$date."') and MONTH(effective_date) = ".$i."),0) as consumed";
+				$consumptionResults = $con->query($consumptionQuery);
+				if(mysqli_num_rows($consumptionResults)>0){
+				  while($conRow = mysqli_fetch_assoc($consumptionResults)){
+					  $currentConsumption = $conRow['consumed'];
+					  array_push($singleAppConsumption,$currentConsumption);
+				  }
+				} else {
+					print mysqli_error($con);
+				}
+				
+			}
+			array_push($singleAppArray, array($currentUID => $singleAppConsumption));
+		  }
+		}
+	  
     }
-
-    echo json_encode($monthsarray)."|".json_encode($finalarray);
+    echo json_encode($monthsarray)."|".json_encode($finalarray)."|".json_encode($singleAppArray);
   }
 
   if(isset($_POST['getyearly'])){
-    $id = $_POST['uid'];
+	//------------------------------OVERALL YEARLY-----------------------------------
     $date = ($_POST['getyearly']=="now")? date("Y-m-d") : $_POST['getyearly'];
     $thedate = explode('-',$date);
     $maxdate = explode('-',date("Y-m-d"));
@@ -91,7 +147,32 @@
         print mysqli_error($con);
       }
     }
-    echo json_encode($yearsarray)."|".json_encode($consumptionarray);
+	//------------------------------SINGLE APP YEARLY-----------------------------------
+	$singleAppArray = array();
+	$applianceQuery = "SELECT DISTINCT(uid) as uid FROM t_history WHERE YEAR(effective_date) BETWEEN ".$thedate[0]." AND ".$maxdate[0];
+	$applianceResults = $con->query($applianceQuery);
+	if(mysqli_num_rows($applianceResults)>0){
+	  while($appRow = mysqli_fetch_assoc($applianceResults)){
+		$currentUID = $appRow['uid'];
+		$singleAppConsumption = array();
+		for ($i=$thedate[0]; $i <=$maxdate[0]; $i++) {
+			$consumptionQuery = "SELECT IFNULL((SELECT IFNULL(SUM(consumed),0) FROM t_history WHERE uid='".$currentUID."' and YEAR(effective_date) = ".$i."),0) as consumed";
+			$consumptionResults = $con->query($consumptionQuery);
+			if(mysqli_num_rows($consumptionResults)>0){
+			  while($conRow = mysqli_fetch_assoc($consumptionResults)){
+				  $currentConsumption = $conRow['consumed'];
+				  array_push($singleAppConsumption,$currentConsumption);
+			  }
+			} else {
+				print mysqli_error($con);
+			}
+			
+		}
+		array_push($singleAppArray, array($currentUID => $singleAppConsumption));
+	  }
+	}
+	
+    echo json_encode($yearsarray)."|".json_encode($consumptionarray)."|".json_encode($singleAppArray);
   }
 
   if(isset($_POST['getconsumers'])){
@@ -100,6 +181,41 @@
     $datetime = ($selectedDate == "now")? date("Y-m-d") : $selectedDate;
     $result = getConsumers($datetime,$type);
     echo json_encode($result);
+  }
+  
+  if(isset($_POST['applianceSummary'])){
+	  $uid = $_POST['applianceSummary'];
+	  $chartSet = $_POST['chartSet'];
+	  $price = $_POST['price'];
+	  $color = $_POST['color'];
+	  $consumptions = json_decode($chartSet);
+	  $sum = (array_sum($consumptions))/1000;
+	  
+	  $avg = $sum/1000 / count($consumptions);
+	  $ep = $sum*$price;
+	  
+	  $query = "SELECT IFNULL((SELECT appl_name FROM t_appliance WHERE uid = '".$uid."'),'UNREGISTERED APPLIANCE') as appl_name";
+	  $result = $con->query($query);
+	  if(mysqli_num_rows($result)>0){
+		  while($row = mysqli_fetch_assoc($result)){
+			  $AppName = $row['appl_name'];
+			  ?>
+				<div class="row" name="<?php echo $uid;?>">
+					<div class="divider topNbotMarginer"></div>
+					<div class="col s12">
+						<div class="applName" style="background-color:<?php echo $color?>;"><?php echo $AppName;?></div>
+						
+						<div class="applDetails">
+							<div class="col s12"><b>Average Kwatthr :</b> <span><?php echo  number_format($avg,7) . " Kwhr";?></span></div>
+							<div class="col s12"><b>Total Consumption :</b> <span><?php echo number_format($sum,7). " Kwhr";?></span></div>
+							<div class="col s12"><b>Estimated Price :</b> <span><?php echo "₱ " .number_format($ep,5);?></span></div>
+						</div>
+					</div>
+				</div>
+			  <?php
+		  }
+	  }
+	
   }
 
   function getConsumers($datetime,$type){

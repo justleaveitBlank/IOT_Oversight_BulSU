@@ -69,12 +69,12 @@
     $query = "UPDATE t_appliance SET time_limit_value = NOW() WHERE time_limit_value = '0000-00-00 00:00:00'";
     if($con->query($query)){
       //Remove Notices or Notificatons to avoid Confusion ( Notification will occur only when there is plugged devices )
-      $Notifquery = "UPDATE t_notification SET status='ignored' WHERE status='unresolved'";
+      $Notifquery = "UPDATE t_notification SET status='ignored' WHERE status='unresolved' and type IN('newapp','newanoapp')";
       if($con->query($Notifquery)){
         //Set value 0 in plugged devices to denote no appliance is currently plugged in
         $appliance_pluggedStatus = array(
           "plugged"=>"0",
-          "uid"=>"",
+          "uid"=>$UID,
           "registered"=>false
         );
         $json_has_power_data = json_encode($appliance_pluggedStatus, JSON_PRETTY_PRINT);

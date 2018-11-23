@@ -3,6 +3,8 @@ var xmlDoc = "";
 //var chartlist = [];
 var chartcounter = 0;
 var priceperkwhr = 0;
+var numNotifs = "0";
+var tries = 0;
 
 function loadapps() {
 	$.ajax({
@@ -251,6 +253,7 @@ function loadinfos() {
 			for (var i = 0; i < appinfo.length; i++) {
 				var appuid = appinfo[i].uid;
 				var appname = appinfo[i].appl_name;
+				var apptype = appinfo[i].appl_type;
 				var consump = appinfo[i].current_power_usage;
 				var avg = appinfo[i].avg_watthr;
 				var cost = parseFloat(appinfo[i].estimated_cost);
@@ -279,16 +282,17 @@ function loadinfos() {
 				}
 
 				$('.applianceName[name="' + appuid + '"]').text(appname);
-				$('.kwh[name="' + appuid + '"]').text(consump + " wh / " + limit_value + unit);
+				$('.kwh[name="' + appuid + '"]').text((consump/1000).toFixed(3) + " kwh / " + limit_value + unit);
 				$('.switcher[name="' + appuid + '"]').attr('id', appuid);
 
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(0).html("UID: <span style='font-weight: normal; font-size: inherit;'>" + appuid + "</span>");
 				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(1).html("Name: <span style='font-weight: normal; font-size: inherit;'>" + appname + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("Power Consumption: <span style='font-weight: normal; font-size: inherit;'>" + consump + " watt/s </span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("Average Consumption: <span style='font-weight: normal; font-size: inherit;'>" + avg + " Kwhr</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(4).html("Price per KWhr: <span style='font-weight: normal; font-size: inherit;'>₱ " + priceperkwhr.toFixed(2) + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(5).html("Estimated Price: <span style='font-weight: normal; font-size: inherit;'>₱ " + cost.toFixed(2) + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(6).html("Limit: <span style='font-weight: normal; font-size: inherit;'>" + limit_value + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("Type: <span style='font-weight: normal; font-size: inherit;'>" + apptype + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("Power Consumption: <span style='font-weight: normal; font-size: inherit;'>" + consump + " watt/s </span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(4).html("Average Consumption: <span style='font-weight: normal; font-size: inherit;'>" + avg + " Kwhr</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(5).html("Price per KWhr: <span style='font-weight: normal; font-size: inherit;'>₱ " + priceperkwhr.toFixed(2) + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(6).html("Estimated Price: <span style='font-weight: normal; font-size: inherit;'>₱ " + cost.toFixed(2) + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(7).html("Limit: <span style='font-weight: normal; font-size: inherit;'>" + limit_value + unit + "</span>");
 
 				$('.appl_id[name="' + appuid + '"]').val(appuid);
 				$('.appl_name[name="' + appuid + '"]').val(appname);
@@ -317,9 +321,26 @@ function loadPrice(){
 	});
 }
 
+function checkNoNotifs(){
+	//cordova.plugins.notification.local.cancelAll(function() {console.log("done");	}, this);
+	$.ajax({
+		type: "POST",
+		data: "ts="+$.now()+"&countAppNotifs=1",
+		url: 'http://'+deviceHost+'/notifmethods.php',
+		crossDomain: true,
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		success: function(data) {
+			numNotifs = data.trim();
+			checkPlugged();
+		}
+	});
+}
+var jsonFormer = {};
 function checkPlugged() {
 	//$.getJSON('http://' + deviceHost + '/plugged.json', function (data) {
-	$.getJSON('pathtopluggedJSON.php', function (data) {
+	$.getJSON('pathtoPluggedJSON.php', function (data) {
+		//if((!isEqual(jsonFormer, data)) || (tries==1)){
+		//	tries++;
 			if(data.plugged!="0"){
 				if (data.registered) {
 					$("#noappnotice").hide();
@@ -334,16 +355,32 @@ function checkPlugged() {
 					}
 				} else {
 					$(".appliance-info").each(function () {
-							$(this).appendTo($("#registered-apps"));
-							$(this).find('.switch').hide();
-						});
-					if(data.plugged=="2"){
-						$(".resolve-redirect").attr("disabled","");
-						$(".resolve-redirect").text("RESOLVED");
-					} else {
+						$(this).appendTo($("#registered-apps"));
+						$(this).find('.switch').hide();
+					});
+					if(data.plugged=="1"){
+						$('.additional-note').hide();
+						$('.resolve-redirect').attr("href","notifications.html")
+						if (numNotifs == "0"){
+							$(".resolve-redirect").attr("disabled","");
+							$(".resolve-redirect").text("IGNORED");
+						} else {
+							$(".resolve-redirect").removeAttr("disabled");
+							$(".resolve-redirect").text("CHECK NOTIFICATION");
+						}
+					} else if(data.plugged=="4"){
+						$('.additional-note').show();
 						$(".resolve-redirect").removeAttr("disabled");
+						$(".resolve-redirect").text("CHECK SETTINGS");
+						$(".resolve-redirect").attr("href","settings.html");
 					}
-					$('.CardMessage').text("Unregistered Appliance: "+data.uid);
+					var cardTitle = "";
+					if(data.uid.match(/NO_UID/i)){
+						cardTitle = "Anonymous_Appliance: ";
+					} else {
+						cardTitle = "Unregistered Appliance: ";
+					}
+					$('.CardMessage').text(cardTitle + data.uid);
 					$("#noappnotice").hide();
 					$('#unregisterednotice').show();
 				}
@@ -355,11 +392,37 @@ function checkPlugged() {
 				$("#noappnotice").show();
 				$('#unregisterednotice').hide();
 			}
+			jsonFormer = data;
+	//	}
 	});
 }
-checkPlugged();
-setInterval(checkPlugged, 500);
 
+function isEqual(jsonFormer,jsonToCompare){
+	var obj1 = jsonFormer;
+	var obj2 = jsonToCompare;
+
+	var flag = true;
+
+	if(Object.keys(obj1).length==Object.keys(obj2).length){
+		for(key in obj1) { 
+			if(obj1[key] == obj2[key]) {
+				continue;
+			}
+			else {
+				flag = false;
+				break;
+			}
+		}
+	} else {
+		flag = false;
+	}
+	return flag;
+}
+
+checkNoNotifs();
+checkPlugged();
 loadapps();
+
 setInterval(checkapps, 500);
+setInterval(checkNoNotifs, 500);
 setInterval(load_xml, 500);

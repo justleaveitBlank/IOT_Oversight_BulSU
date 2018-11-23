@@ -58,10 +58,13 @@ byte readCard[4]; // MFRC522 has 4 bytes (8 Characters)
 
 //Change this to Raspberry Pi configuration
 //Wifi Variables
-String wifiSSID = "DANGER!!! HIGH VOLTAGE";
-String wifiPASS = "delacruzclanonly";
-String raspiIP = "192.168.1.10";
+//String wifiSSID = "iot_oversight";
+//String raspiIP = "192.168.2.119";
+String wifiPASS = "oversight";
 String raspiPORT = "80";
+
+String wifiSSID = "home_oversight";
+String raspiIP = "192.168.2.101";
 
 //WiFi Data to be Sent
 String currentUID = "";

@@ -20,13 +20,14 @@
 		$notif_id = $data->notif;
 		$name = $data->name;
 		$limit = $data->limit;
+		$type = $data->type;
 		$haslimit = 0;
 		if($limit>0.0){
 			$haslimit = 1;
 		}
 
 
-		$query = 'INSERT INTO t_appliance VALUES ("'.$id.'","'.$name.'",1,'.$haslimit.',0,default,default,'.$limit.',0.0,0.0,0.0,NULL)';
+		$query = 'INSERT INTO t_appliance VALUES ("'.$id.'","'.$name.'","'.$type.'",1,'.$haslimit.',0,default,default,'.$limit.',0.0,0.0,0.0,NULL)';
 		$result = $con->query($query);
 		if($result){
 			$query = 'UPDATE t_notification SET Status = "registered" WHERE notif_id = "'.$notif_id.'"';

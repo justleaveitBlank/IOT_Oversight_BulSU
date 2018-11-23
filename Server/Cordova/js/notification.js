@@ -260,7 +260,27 @@ try {
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
 			success: function(data) {
 				$('#notifholder').html(data);
+				loadresolvednotifs();
 				ActivateButtons();
+			}
+		});
+	}
+	
+	function loadresolvednotifs(){
+		$.ajax({
+			type: "POST",
+			data: "loadresolvednotifs=1",
+			url: 'http://'+deviceHost+'/notifmethods.php',
+			crossDomain: true,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				if(data.trim()==""){
+					$('#noresolvednotifnotice').show();
+				} else {
+					$('#noresolvednotifnotice').hide();
+					$('#resolvednotifholder').html(data);
+				}
+				
 			}
 		});
 	}

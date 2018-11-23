@@ -18,9 +18,9 @@
 							WHERE type="'.$type.'" (status = "ignored" or status = "allowed") and appliance_id = "' . $appl_uid.'"';
 			$statusResult = $con->query($query);
 			if(mysqli_num_rows($statusResult) > 0 ){
-				$updateQuery = "UPDATE t_notification ".
-												"SET status = 'unresolved' ".
-												"WHERE notif_id = (SELECT MAX(tn.notif_id) from (select * from t_notification) as tn WHERE tn.type='".$type."' and (tn.status = 'ignored' or tn.status = 'allowed') and tn.appliance_id = '" . $appl_uid . "') and type='".$type."' and (status = 'ignored' or status = 'allowed') and appliance_id = '" . $appl_uid. "'";
+				$updateQuery = "UPDATE t_notification 
+								SET status = 'unresolved' , date_pop = '".date("y-m-d H:i:s")."'
+								WHERE notif_id = (SELECT MAX(tn.notif_id) from (select * from t_notification) as tn WHERE tn.type='".$type."' and (tn.status = 'ignored' or tn.status = 'allowed') and tn.appliance_id = '" . $appl_uid . "') and type='".$type."' and (status = 'ignored' or status = 'allowed') and appliance_id = '" . $appl_uid. "'";
 
 				//echo "query: " . $updateQuery;
 				if($con->query($updateQuery)){
@@ -29,7 +29,7 @@
 			}
 		}
 		else{
-			$query = "INSERT INTO t_notification values ('','".$type."','unresolved','".$appl_uid."')";
+			$query = "INSERT INTO t_notification values ('','".$type."','unresolved','".$appl_uid."','".date("y-m-d H:i:s")."')";
 			if($con->query($query)){
 				echo mysqli_error($con);
 			}

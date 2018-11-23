@@ -1,12 +1,14 @@
 var appl = {
 	id: '',
 	name: '',
+	type: '',
 	limit: 0.0,
 	notif : 0,
 	valid: 'no'
 }
 var id = "";
 var name = "";
+var type = "";
 var limit = 'unlimited';
 var name_validity = "";
 var regclass = $('#regsub').attr('class');
@@ -55,8 +57,8 @@ function reloadvalues() {
 		"Television"
 	];
 	var selected_type = array_type[parseInt($('#applianceType').find(":selected").attr('value'))];
-	name = $('#d_name').val().trim() + " [ "+selected_type+" ]";
-	console.log(name);
+	type = selected_type;
+	name = $('#d_name').val().trim();
 
 	if (limit == 'hasnolimit' && $('#d_r_limit').val().trim() == "") {
 		limit = 'hasnolimit';
@@ -71,10 +73,11 @@ function reloadvalues() {
 	appl.name = name;
 	appl.limit = (limit == 'unlimited') ? 0.0 : parseFloat($('#d_r_limit').val().trim());
 	appl.notif = notif_id;
+	appl.type = type;
 
 //------------------------------------------------------------------------------------------------------
 
-	if ((id == '') || (name == '') || (limit == 'hasnolimit' || $('#d_name').hasClass('invalid'))) {
+	if ((id == '') || (name == '') || (limit == 'hasnolimit') || $('#d_name').hasClass('invalid') || !($('#d_name').hasClass('valid')) || (type=="")) {
 		appl.valid = 'no';
 		$('#regsub').attr('class', regclass);
 	} else {
@@ -131,6 +134,8 @@ function register_app() {
 				}
 			}
 		});
+	} else {
+		SendToast("Invalid / Missing Inputs");
 	}
 }
 

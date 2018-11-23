@@ -300,9 +300,19 @@
 			padding: .6rem;
 			border-radius: 0 0 2px 2px;
 		}
+		
+		.card .card-title {
+			font-size: 16px;
+			margin: 10px;
+			font-weight: 600;
+		}
 		.card .card-content p{
 			margin: 0 1rem;
 		}
+		.card .card-content p, .card .card-content em{
+			font-size: 14px;
+		}
+		
 		.card .card-action {
 			background-color: inherit;
 			border-top: 1px solid rgba(160, 160, 160, 0.2);
@@ -335,6 +345,10 @@
 			display:none;
 			padding: 1rem;
 		}
+		#noresolvednotifnotice{
+			display:none;
+			padding: 1rem;
+		}
 		.sidenav .collapsible-header, .sidenav.fixed .collapsible-header {
 			background-color: transparent;
 			padding: 0 32px;
@@ -346,6 +360,16 @@
 		.dropdown-content{
 			width: 160px;
 			top: -62px;
+		}
+		.notif-margin{
+			margin: 10px;
+		}
+		.icon-green{
+			color: green;
+			vertical-align: bottom;
+		}
+		.icon-normal{
+			vertical-align: bottom;
 		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
@@ -435,10 +459,25 @@
 	<div class="had-container">
 		<div class="row">
 			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
-			<div class="collapsible col s12 m4" id='nonotifnotice'>
-				<div>No Current Notification!</div>
+			
+			<!-- FOR UNRESOLVED -->
+			<p style="padding:5px; font-size: 1em; font-weight: 600; color: green;"><i class="small material-icons icon-green">fiber_new</i> NEW NOTIFICATIONS </p>
+			<div class="card s12 m4" style='border: solid 1px grey;' id='nonotifnotice'>
+				<div style="font-size: 1em; font-weight: 500;">No New Notifications</div>
 			</div>
-			<div class="col s12 m4 l8 overhidden" id='notifholder'><!-- HERES THE NOTIFICATION HOLDER --></div>
+			<ul class='collapsible notif-margin' id='notifholder' style="border-radius:3px;">
+				
+			</ul>
+			
+			<!-- FOR RESOLVED -->
+			<p style="padding:5px; font-size: 1em; font-weight: 600;"><i class="small material-icons icon-normal">notifications_none</i> EARLIER NOTIFICATIONS </p>
+			<div class="card s12 m4" style='border: solid 1px grey;' id='noresolvednotifnotice'>
+				<div style="font-size: 1em; font-weight: 500;">No Earlier Notifications</div>
+			</div>
+			<ul class='collapsible notif-margin' id='resolvednotifholder' style="border-radius:3px;">
+				
+			</ul>
+		<!--	<div class="col s12 m4 l8 overhidden" id='notifholder'></div>-->
 
 			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
 		</div>

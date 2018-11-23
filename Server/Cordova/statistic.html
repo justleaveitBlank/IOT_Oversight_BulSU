@@ -344,6 +344,7 @@
 			background: rgba(75,0,130,1);
 			color: #FFFFFF;
 			border-radius: 3px 3px 0 0;
+			border: solid black 1px;
 		}
 		.applDetails  div.col.s12,.applDetails div.col.s12 span{
 			font-size: 1rem;
@@ -381,7 +382,7 @@
 			padding: 0 1rem;
 		}
 		.overallstat{
-			border: solid 1px rgba(75,0,130,1);
+			border: solid 1px #00ffff;
 			border-radius: 0 0 3px 3px;
 			display:inline-block;
 		}
@@ -506,10 +507,7 @@
 										"type":"line",
 										"data":{
 											"labels":["MON","TUE","WED","THU","FRI","SAT","SUN"],
-											"datasets":[{"label":"Graph",
-											"data":[0,1,3,2,0,1,7],
-											"fill":false,"borderColor":" rgba(75,0,130,1)",
-											"lineTension":0.1}]
+											"datasets":[]
 										},
 										"options":{
 											animation: {
@@ -527,10 +525,10 @@
 							</div>
 						</div>
 						<!--SAMPLE -->
-						<div class="row">
+						<div class="row OVERALL">
 							<div class="divider topNbotMarginer"></div>
 							<div class="col s12">
-								<div class="applName">Weekly Statistics :</div>
+								<div class="applName" style="background-color:#00ffff; color: black;">Weekly Statistics :</div>
 								<div class="applDetails  overallstat">
 									<div class="col s12"><b>Average Kwatthr :</b> <span id='weekly_avg'>value here</span></div>
 									<div class="col s12"><b>Total Consumption :</b> <span id='weekly_sum'>value here</span></div>
@@ -541,42 +539,7 @@
 						<!-- END SAMPLE -->
 						
 						<!--SAMPLE APPLIANCE-->
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								
-								<div class="applDetails">
-									<div class="col s12"><b>Average Kwatthr :</b> <span>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								
-								<div class="applDetails">
-									<div class="col s12"><b>Average Kwatthr :</b> <span>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								
-								<div class="applDetails">
-									<div class="col s12"><b>Average Kwatthr :</b> <span>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span>value here</span></div>
-								</div>
-							</div>
-						</div>
+						<div class="WeeklyAppliances"></div>
 						<!-- END SAMPLE APPLIANCE -->
 
 					</div>
@@ -591,10 +554,7 @@
 										"type":"line",
 										"data":{
 											"labels":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
-											"datasets":[{"label":"Graph",
-											"data":[0,1,3,2,0,1,7,1,6,7,8,9],
-											"fill":false, "borderColor":" rgba(75,0,130,1)",
-											"lineTension":0.1}]
+											"datasets":[]
 										},
 										"options":{
 											animation: {
@@ -612,10 +572,10 @@
 							</div>
 						</div>
 						<!--SAMPLE -->
-						<div class="row">
+						<div class="row OVERALL">
 							<div class="divider topNbotMarginer"></div>
 							<div class="col s12">
-								<div class="applName">Monthly Statistics :</div>
+								<div class="applName" style="background-color:#00ffff; color: black;">Monthly Statistics :</div>
 								<div class="applDetails  overallstat">
 									<div class="col s12"><b>Average watthr :</b> <span id='monthly_avg'>value here</span></div>
 									<div class="col s12"><b>Total Consumption :</b> <span id='monthly_sum'>value here</span></div>
@@ -625,42 +585,7 @@
 						</div>
 						<!-- END SAMPLE -->
 						<!--SAMPLE APPLIANCE-->
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								
-								<div class="applDetails">
-									<div class="col s12"><b>Average Kwatthr :</b> <span>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								
-								<div class="applDetails">
-									<div class="col s12"><b>Average Kwatthr :</b> <span>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								
-								<div class="applDetails">
-									<div class="col s12"><b>Average Kwatthr :</b> <span>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span>value here</span></div>
-								</div>
-							</div>
-						</div>
+						<div class="MonthlyAppliances"></div>
 						<!-- END SAMPLE APPLIANCE -->
 
 					</div>
@@ -675,10 +600,7 @@
 										"type":"line",
 										"data":{
 											"labels":["2016","2017","2019","2020"],
-											"datasets":[{"label":"Graph",
-											"data":[0,1,3,5],
-											"fill":false,"borderColor":" rgba(75,0,130,1)",
-											"lineTension":0.1}]
+											"datasets":[]
 										},
 										"options":{
 											animation: {
@@ -697,10 +619,10 @@
 						</div>
 						
 						<!-- Overall -->
-						<div class="row">
+						<div class="row OVERALL">
 							<div class="divider topNbotMarginer"></div>
 							<div class="col s12">
-								<div class="applName">Yearly Statistics :</div>
+								<div class="applName" style="background-color:#00ffff; color: black;">Yearly Statistics :</div>
 								<div class="applDetails  overallstat">
 									<div class="col s12"><b>Average watthr :</b> <span id='yearly_avg'>value here</span></div>
 									<div class="col s12"><b>Total Consumption :</b> <span id='yearly_sum'>value here</span></div>
@@ -711,42 +633,7 @@
 						</div>
 						<!-- OverAll -->
 						<!--SAMPLE APPLIANCE-->
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								
-								<div class="applDetails">
-									<div class="col s12"><b>Average Kwatthr :</b> <span>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								
-								<div class="applDetails">
-									<div class="col s12"><b>Average Kwatthr :</b> <span>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span>value here</span></div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="divider topNbotMarginer"></div>
-							<div class="col s12">
-								<div class="applName">APPLIANCE NAME</div>
-								
-								<div class="applDetails">
-									<div class="col s12"><b>Average Kwatthr :</b> <span>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span>value here</span></div>
-								</div>
-							</div>
-						</div>
+						<div class="YearlyAppliances"></div>
 						<!-- END SAMPLE APPLIANCE -->
 
 					</div>

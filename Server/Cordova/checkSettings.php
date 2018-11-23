@@ -20,18 +20,18 @@
 					WHERE uid="' .$UID. '"';
 			$appResult = $con->query($appQuery);
 			if($appResult->num_rows > 0){
-				echo "\r\n REGISTERED \r\n";
+				//echo "\r\n REGISTERED \r\n";
 				if($s_limitation == "true"){
 					//Check consumption vs limit take id if appliance exceed warning level
-					$query = "SELECT IF(current_power_usage/1000 < (power_limit_value*0.85),'NORMAL', IF(current_power_usage >= power_limit_value,'STOP','OVERCONSUMING')) as ConsumptionStatus FROM t_appliance WHERE power_limit_value>0 and uid = '".$UID."'";
+					$query = "SELECT IF(current_power_usage/1000 < (power_limit_value*0.85),'NORMAL', IF(current_power_usage/1000 >= power_limit_value,'STOP','OVERCONSUMING')) as ConsumptionStatus FROM t_appliance WHERE power_limit_value>0 and uid = '".$UID."'";
 					$result = $con->query($query);
 					if(mysqli_num_rows($result)==1){
 						while ($row = mysqli_fetch_assoc($result)) {
 							$consumer_status = $row['ConsumptionStatus'];
+							$has_power = 1;
 							if($consumer_status == "NORMAL"){
 								$query = "UPDATE t_notification set status = 'ignored' WHERE type = 'consumption'";
 								$con->query($query);
-								$has_power = 1;
 							} else {
 								$query = "SELECT IFNULL(MAX(notif_id),'NULL') as notif_id FROM t_notification WHERE type = 'consumption' and appliance_id = '".$UID."'";
 								$notif_results = $con->query($query);
@@ -62,10 +62,31 @@
 				echo "\r\n";
 			}
 			else{
-				echo "\r\n UNREGISTERED \r\n";
+				echo "UNREGISTERED \r\n";
 				//output that is something on front end that is something is plugged 
 				//authentication is on unregistered and anonymous appliance access grant denied or something 
 				//please turn of  autentication on setting or rather register this appliance
+				if($unPlugged == "true"){
+					$appliance_pluggedStatus = array(
+					  "plugged"=>"0",
+					  "uid"=>$UID,
+					  "registered"=>false
+					);
+					$json_has_power_data = json_encode($appliance_pluggedStatus, JSON_PRETTY_PRINT);
+					//echo  $json_has_power_data ;
+					file_put_contents('plugged.json',  $json_has_power_data);
+				} else {
+					$appliance_pluggedStatus = array(
+					  "plugged"=>"4",
+					  "uid"=>$UID,
+					  "registered"=>false
+					);
+					$json_has_power_data = json_encode($appliance_pluggedStatus, JSON_PRETTY_PRINT);
+					//echo  $json_has_power_data ;
+					file_put_contents('plugged.json',  $json_has_power_data);
+				}
+				
+				
 			}
 			
 		}
@@ -120,15 +141,15 @@
 					}
 				}
 				//Check consumption vs limit take id if appliance exceed warning level
-				$query = "SELECT IF(current_power_usage/1000 < (power_limit_value*0.85),'NORMAL', IF(current_power_usage >= power_limit_value,'STOP','OVERCONSUMING')) as ConsumptionStatus FROM t_appliance WHERE power_limit_value>0 and uid = '".$UID."'";
+				$query = "SELECT IF(current_power_usage/1000 < (power_limit_value*0.85),'NORMAL', IF(current_power_usage/1000 >= power_limit_value,'STOP','OVERCONSUMING')) as ConsumptionStatus FROM t_appliance WHERE power_limit_value>0 and uid = '".$UID."'";
 				$result = $con->query($query);
 				if(mysqli_num_rows($result)==1){
 					while ($row = mysqli_fetch_assoc($result)) {
 						$consumer_status = $row['ConsumptionStatus'];
+						$has_power = 1;
 						if($consumer_status == "NORMAL"){
 							$query = "UPDATE t_notification set status = 'ignored' WHERE type = 'consumption'";
 							$con->query($query);
-							$has_power = 1;
 						} else {
 							$query = "SELECT IFNULL(MAX(notif_id),'NULL') as notif_id FROM t_notification WHERE type = 'consumption' and appliance_id = '".$UID."'";
 							$notif_results = $con->query($query);
