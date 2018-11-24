@@ -59,9 +59,9 @@
 			$date = date_format($rawdate, 'Y-m-d H:i:s');
 		}
 		if($app_id == "NO_UID"){
-			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Anonymous_Appliance',1,0,1,DEFAULT,'" .$date. "',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Anonymous_Appliance','Others',1,0,1,DEFAULT,'" .$date. "',0,0,0,0,DEFAULT)";
 		} else {
-			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Unregistered_Appliance',1,0,1,DEFAULT,'" .$date. "',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Unregistered_Appliance','Others',1,0,1,DEFAULT,'" .$date. "',0,0,0,0,DEFAULT)";
 		}
 		if($con->query($query)){
 			$query = 'UPDATE t_notification SET Status="allowed" WHERE notif_id = "' . $notif_id . '"';
@@ -131,7 +131,7 @@
 	}
 	
 	if(isset($_POST['loadresolvednotifs'])){
-		$query = 'SELECT * FROM t_notification WHERE Not Status = "unresolved"';
+		$query = 'SELECT * FROM t_notification WHERE Not Status = "unresolved" ORDER BY date_pop DESC';
 
 		$result = $con->query($query);
 		if(mysqli_num_rows($result)>0)
@@ -253,7 +253,7 @@
 	}
 
 	if(isset($_POST['loadnotifs'])){
-		$query = 'SELECT * FROM t_notification WHERE Status = "unresolved"';
+		$query = 'SELECT * FROM t_notification WHERE Status = "unresolved" ORDER BY date_pop DESC';
 
 		$result = $con->query($query);
 		if(mysqli_num_rows($result)>0)
@@ -302,7 +302,7 @@
 														<p class="black-text">Consumption: <em><?php echo $consumption?> whr</em></p>
 														<p class="black-text">Limit: <em><?php echo $limit?> kwhr</em></p>
 													</div>
-													<div class="card-action right-align">
+													<div class="card-action right-align" name="<?php echo $name?>">
 														<a class="consumption_btn btn-small waves-effect waves-light orange white-text modal-trigger sTitle" href='#updateLimit' id='<?php echo $app_id;?>'>Update</a>
 													</div>
 												</div>

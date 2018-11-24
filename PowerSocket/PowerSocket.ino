@@ -64,7 +64,7 @@ String wifiPASS = "oversight";
 String raspiPORT = "80";
 
 String wifiSSID = "home_oversight";
-String raspiIP = "192.168.2.101";
+String raspiIP = "192.168.2.100";
 
 //WiFi Data to be Sent
 String currentUID = "";

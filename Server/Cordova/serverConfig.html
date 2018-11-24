@@ -167,26 +167,29 @@
 	<script>
 		$(document).ready(function(){
 			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
-			var NumClicks = 0;
-			$('.appLogo').click(function(){
-				NumClicks++;
-				if(NumClicks == 10){
-					window.location.href = "serverConfig.html";
-				}
-			});
-			
+
 			function modalClosed(){
-		    $('input').each(function(){
-		      $(this).val("");
-		      $(this).removeClass('invalid');
-		      $(this).removeClass('valid');
-		    });
+				$('input').each(function(){
+				  $(this).val("");
+				  $(this).removeClass('invalid');
+				  $(this).removeClass('valid');
+				});
+				
 				$('label').each(function(){
 					$(this).removeClass('active');
 				})
-		  }
+			}
 
 			$('.modal').modal({onCloseEnd: function() { modalClosed(); }});
+			
+			$('#saveConfig').click(function(){
+				if($('#serverAddress').val().trim()!=""){
+					deviceHost = $('#serverAddress').val().trim();
+					window.localStorage.setItem('I-O-T',deviceHost);
+					window.location.href = "index.html";
+				}
+			});
+			
 		});
 	</script>
 </head>
@@ -204,26 +207,15 @@
 						<div class="row">
 								<div class="appLogo"></div>
 								<p class="appName ">OVERSIGHT</p>
-							<form class="col s12" method="POST" action="" id='loginForm'>
+							<form class="col s12" method="POST" action="index.html" id='loginForm'>
 								<div class="input-field col s12">
-									<i class="material-icons prefix">account_box</i>
-									<input id="user_name" type="text" class="validate white-text" autocomplete="off" required/>
+									<i class="material-icons prefix">insert_link</i>
+									<input id="serverAddress" type="text" class="validate white-text" autocomplete="off" required/>
 									<span class="helper-text" data-error="&#10006;" data-success=""></span>
-									<label for="user_name">User Name</label>
+									<label for="serverAddress">SERVER ADDRESS</label>
 								</div>
-								<div class="input-field col s12">
-									<i class="material-icons prefix">lock</i>
-									<input id="password" type="password" class="validate white-text" autocomplete="off" required/>
-									<span class="helper-text" data-error="&#10006;" data-success=""></span>
-									<label for="password">Password</label>
-								</div>
-								<button id='btnlogin' class="submitbtn btn waves-effect waves-light light-blue accent-4" type="submit" name="action">Log In</button>
-
-								<!-- Modal Trigger -->
-								<a class=" grey-text darken-4 spacing1 modal-trigger center-align" href="#forgotPassword">Forgot password?</a>
-
-								<!-- Modal Trigger -->
-								<a class="waves-effect waves-light btn modal-trigger submitbtn yellow darken-4" href="#registerForm">Register</a>
+								<button id='saveConfig' class="submitbtn btn waves-effect waves-light green" type="submit" name="action">SAVE CONFIG</button>
+								<a class="submitbtn btn waves-effect waves-light  red" href="index.html">BACK</a>
 							</form>
 
 							<div id='sampleholder'></div>
@@ -234,92 +226,6 @@
 		</div>
 	</div>
 
-	<!--Modal Structures-->
-	<div class="modalCon">
-		<div class="my-wrapper valign-wrapper">
-			<!-- Modal Structure for forgot password-->
-			<div id="forgotPassword" class="modal modal-fixed-footer">
-				<form class="col s12" method="POST" action="">
-					<div class="modal-content">
-						<div class="row">
-							<h5>Forgot Your Password?</h5>
-							<p class="text_indent">Don't worry. Resetting your password is easy. Just tell us the email address you registered with OverSight</p>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<i class="material-icons prefix grey-text text-darken-2">email</i>
-								<input id="email" type="email" class="border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-								<label for="email" class="grey-text text-darken-2">Email</label>
-								<span class="helper-text" data-error="Email Address may be invalid or Unregistered" data-success="Valid email address"></span>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<a href="#!" class=" forgot-btn modal-action waves-effect waves-purple btn-flat">Send</a>
-						<a href="#!" class=" modal-action modal-close waves-effect waves-purple btn-flat">Cancel</a>
-					</div>
-				</form>
-			</div>
-
-			<!-- Modal Structure for register form-->
-			<div id="registerForm" class="modal bottom-sheet modal-limits">
-				<form class="col s12" method="POST" action="">
-					<div class="modal-content">
-						<h5>Register</h5>
-						<br>
-						<div class="row">
-							<div class="input-field col s6">
-								<input id="r_firstName" type="text" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-								<label for="r_firstName" class="grey-text text-darken-2">First name</label>
-							</div>
-							<div class="input-field col s6">
-								<input id="r_lastName" type="text" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-								<label for="r_lastName" class="grey-text text-darken-2">Last name</label>
-							</div>
-						</div>
-						<div class="input-field col s12">
-							<i class="material-icons prefix grey-text text-darken-2">account_box</i>
-							<input id="r_username" type="text" class="border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-							<label for="r_username" class="grey-text text-darken-2">Username</label>
-							<span class="helper-text" data-error="Invalid Username" data-success="Valid username"></span>
-						</div>
-						<div class="input-field col s12">
-							<i class="material-icons prefix grey-text text-darken-2">email</i>
-							<input id="r_email" type="email" class="border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-							<label for="r_email" class="grey-text text-darken-2">Email address</label>
-							<span class="helper-text" data-error="Invalid email address" data-success="Valid email address"></span>
-						</div>
-						<div class="input-field col s12">
-							<i class="material-icons prefix grey-text text-darken-2">contact_phone</i>
-							<input id="r_contact" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "11" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-							<label for="r_contact" class="grey-text text-darken-2">Contact Number</label>
-							<span class="helper-text" data-error="&#10006;" data-success="&#10004;"></span>
-						</div>
-						<div class="input-field col s12">
-							<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
-							<input id="r_password" type="password" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-							<label for="r_password" class="grey-text text-darken-2">Password</label>
-							<span class="helper-text" data-error="&#10006; 8 characters or longer" data-success="&#10004;"></span>
-						</div>
-						<div class="input-field col s12">
-							<i class="material-icons prefix grey-text text-darken-2">lock</i>
-							<input id="r_c_password" type="password" class="border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-							<label for="r_c_password" class="grey-text text-darken-2">Confirm password</label>
-							<span class="helper-text" data-error="&#10006; Password dont't match" data-success="&#10004; Password  match"></span>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<a href="#!" id='submit_register' class="waves-effect waves-purple btn-flat">Register</a>
-						<a href="#!" class="modal-close waves-effect waves-purple btn-flat">Cancel</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<script type="text/javascript" src="js/function.js"></script>
-	<script type="text/javascript" src="js/register.js"></script>
-	<script type="text/javascript" src="js/login.js"></script>
-	<script type="text/javascript" src="js/forgotPassword.js"></script>
+	
 </body>
 </html>

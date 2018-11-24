@@ -15,20 +15,6 @@ try {
 		selected_time = timearray[parseInt(value)];
 	});
 
-	$('.consumption_btn').click(function() {
-		var app_id = $(this).attr('id');
-		notif_id = $(this).closest('.card').attr('id');
-		var consumption_limit = $(this).closest('.consumption_limit').attr('name');
-		var consumption_value = $(this).closest('.consumption_value').attr('name');
-		if(parseFloat(consumption_limit) > parseFloat(consumption_value)){
-			$('#d_limit').attr("min",consumption_limit);
-		} else {
-			$('#d_limit').attr("min",consumption_value);
-		}
-
-		$('#accept_limit').attr('name', app_id);
-	});
-
 	$('#d_limit').blur(function() {
 		if ($(this).val().trim() == "0") {
 			$(this).removeClass("invalid");
@@ -114,14 +100,22 @@ try {
 
 		$('.consumption_btn').click(function() {
 			var app_id = $(this).attr('id');
-			notif_id = $(this).closest('.card').attr('id');
-			var minimum = $(this).closest('.card').attr('name');
-			$('#d_limit').attr('min', parseFloat(minimum));
+			var app_name = $(this).closest('card-action').attr('name');
+			notif_id = $(this).closest('.consumption_limit').attr('id');
+			var consumption_limit = $(this).closest('.consumption_limit').attr('name');
+			var consumption_value = $(this).closest('.consumption_value').attr('name');
+			if(parseFloat(consumption_limit) > (parseFloat(consumption_value)/1000)){
+				$('#d_limit').attr("min",consumption_limit);
+			} else {
+				$('#d_limit').attr("min",(parseFloat(consumption_value)/1000));
+			}
+
 			$('#accept_limit').attr('name', app_id);
 
-			for (var i = 0; i < 4; i++) {
-				$('#updateLimit').find('em').eq(i).text($(this).closest('.card').find('em').eq(i).text());
-			}
+			$('#updateLimit').find('em').eq(0).text(app_id);
+			$('#updateLimit').find('em').eq(1).text(app_name);
+			$('#updateLimit').find('em').eq(2).text(consumption_value + " whr");
+			$('#updateLimit').find('em').eq(3).text(consumption_limit + " kwhr");	
 		});
 
 		$('.allow-trigger').click(function() {

@@ -198,7 +198,7 @@
 	  $result = $con->query($query);
 	  if(mysqli_num_rows($result)>0){
 		  while($row = mysqli_fetch_assoc($result)){
-			  $AppName = $row['appl_name'];
+			  $AppName = ($uid == "NO_UID")? 'ANONYMOUS APPLIANCE' : $row['appl_name'];
 			  ?>
 				<div class="row" name="<?php echo $uid;?>">
 					<div class="divider topNbotMarginer"></div>
@@ -206,9 +206,10 @@
 						<div class="applName" style="background-color:<?php echo $color?>;"><?php echo $AppName;?></div>
 						
 						<div class="applDetails">
+							<div class="col s12"><b>Appliance ID: </b> <span><?php echo $uid;?></span></div>
 							<div class="col s12"><b>Average Kwatthr :</b> <span><?php echo  number_format($avg,7) . " Kwhr";?></span></div>
 							<div class="col s12"><b>Total Consumption :</b> <span><?php echo number_format($sum,7). " Kwhr";?></span></div>
-							<div class="col s12"><b>Estimated Price :</b> <span><?php echo "₱ " .number_format($ep,5);?></span></div>
+							<div class="col s12"><b>Estimated Price :</b> <span><?php echo "₱ " .number_format($ep,2);?></span></div>
 						</div>
 					</div>
 				</div>
