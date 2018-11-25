@@ -14,10 +14,10 @@
 			extract($row);
 			$m_consumed = $m_consumed + $consumed; // watts
 			$m_avg_watthr = $m_consumed/30;
-			$m_Kwatthr = $m_avg_watthr/1000;
+			$m_Kwatthr = $m_avg_watthr;
 			$e_price = $m_Kwatthr * $s_price_rate;
 			$e_price = round($e_price,2);
-			//echo $e_price."\r\n";
+			//echo $m_Kwatthr."\r\n";
 			
 			if($has_power =="1"){
 				

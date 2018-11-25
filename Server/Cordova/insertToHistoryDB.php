@@ -28,7 +28,7 @@
 	else{
 		//echo "02\r\n";
 		if($has_power == "1"){
-			echo "INSERT CODE_1\r\n";
+			//echo "INSERT CODE_1\r\n";
 			$insert_query = "INSERT INTO t_history VALUES ('$UID', '$watthr','$dateTime','$dateTime')";
 			if($con->query($insert_query)){
 				echo mysqli_error($con);
