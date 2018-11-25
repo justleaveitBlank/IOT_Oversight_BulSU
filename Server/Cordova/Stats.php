@@ -23,7 +23,7 @@
         $result = processQuery($select,$table,$where);
         if(mysqli_num_rows($result)>0){
           while($row = mysqli_fetch_assoc($result)){
-            $finalarray[$i] = $row["consumed"];
+            $finalarray[$i] = sprintf('%0.2f',$row["consumed"]);
           }
         } else {
           print mysqli_error($con);
@@ -47,8 +47,8 @@
 			$consumptionResults = $con->query($consumptionQuery);
 			if(mysqli_num_rows($consumptionResults)>0){
 			  while($conRow = mysqli_fetch_assoc($consumptionResults)){
-				  $currentConsumption = $conRow['consumed'];
-				  array_push($singleAppConsumption,$currentConsumption);
+				  $currentConsumption = sprintf('%0.2f',$conRow['consumed']);
+				  array_push($singleAppConsumption, sprintf('%0.2f', $currentConsumption));
 			  }
 			} else {
 				print mysqli_error($con);
@@ -83,7 +83,7 @@
 
         if(mysqli_num_rows($result)>0){
           while($row = mysqli_fetch_assoc($result)){
-            array_push($consumptionarray,intval($row["consumed"]));
+            array_push($consumptionarray,intval(sprintf('%0.2f', $row["consumed"])));
           }
         } else {
           print mysqli_error($con);
@@ -106,7 +106,7 @@
 				if(mysqli_num_rows($consumptionResults)>0){
 				  while($conRow = mysqli_fetch_assoc($consumptionResults)){
 					  $currentConsumption = $conRow['consumed'];
-					  array_push($singleAppConsumption,$currentConsumption);
+					  array_push($singleAppConsumption,sprintf('%0.2f',$currentConsumption));
 				  }
 				} else {
 					print mysqli_error($con);
@@ -141,7 +141,7 @@
 
       if(mysqli_num_rows($result)>0){
         while($row = mysqli_fetch_assoc($result)){
-          array_push($consumptionarray,$row["consumed"]);
+          array_push($consumptionarray, sprintf('%0.2f',$row["consumed"]));
         }
       } else {
         print mysqli_error($con);
@@ -161,7 +161,7 @@
 			if(mysqli_num_rows($consumptionResults)>0){
 			  while($conRow = mysqli_fetch_assoc($consumptionResults)){
 				  $currentConsumption = $conRow['consumed'];
-				  array_push($singleAppConsumption,$currentConsumption);
+				  array_push($singleAppConsumption, sprintf('%0.2f',$currentConsumption,2));
 			  }
 			} else {
 				print mysqli_error($con);
@@ -189,27 +189,42 @@
 	  $price = $_POST['price'];
 	  $color = $_POST['color'];
 	  $consumptions = json_decode($chartSet);
-	  $sum = (array_sum($consumptions))/1000;
+	  $sum = (array_sum($consumptions));
 	  
-	  $avg = $sum/1000 / count($consumptions);
-	  $ep = $sum*$price;
-	  
+	  $avg = $sum/count($consumptions);
+	  $ep = $sum/1000*$price;
+	  //echo number_format($sum,2)." = ".number_format($sum/1000,2);
 	  $query = "SELECT IFNULL((SELECT appl_name FROM t_appliance WHERE uid = '".$uid."'),'UNREGISTERED APPLIANCE') as appl_name";
 	  $result = $con->query($query);
 	  if(mysqli_num_rows($result)>0){
 		  while($row = mysqli_fetch_assoc($result)){
 			  $AppName = ($uid == "NO_UID")? 'ANONYMOUS APPLIANCE' : $row['appl_name'];
+			 if(number_format($sum/1000,2) == 0.00){
+				$sum_out = number_format($sum,2)." whr";
+			  }
+			  else{
+				$sum_out = number_format($sum/1000,2)." Kwhr";
+			  }
+			  
+			  if(number_format($avg/1000,2) == 0.00){
+				$avg_out = (number_format($avg,2))." whr";
+			  }
+			  else{
+				$avg_out = (number_format($avg/1000,2))." Kwhr";
+			  }
+			  
 			  ?>
-				<div class="row" name="<?php echo $uid;?>">
+				
+				<div class="row" name="<?php echo $uid;?>" style="margin-bottom:0">
 					<div class="divider topNbotMarginer"></div>
 					<div class="col s12">
 						<div class="applName" style="background-color:<?php echo $color?>;"><?php echo $AppName;?></div>
 						
-						<div class="applDetails">
+						<div class="applDetails" style="display: inline-block; border:solid <?php echo $color?> 1px ; border-radius: 0 0 3px 3px; padding: .2rem .5rem;">
 							<div class="col s12"><b>Appliance ID: </b> <span><?php echo $uid;?></span></div>
-							<div class="col s12"><b>Average Kwatthr :</b> <span><?php echo  number_format($avg,7) . " Kwhr";?></span></div>
-							<div class="col s12"><b>Total Consumption :</b> <span><?php echo number_format($sum,7). " Kwhr";?></span></div>
-							<div class="col s12"><b>Estimated Price :</b> <span><?php echo "₱ " .number_format($ep,2);?></span></div>
+							<div class="col s12"><b>Average Kwatthr :</b> <span><?php echo  $avg_out;?></span></div>
+							<div class="col s12"><b>Total Consumption :</b> <span><?php echo $sum_out;?></span></div>
+							<div class="col s12"><b>Estimated Price :</b> <span><?php echo "₱ " .sprintf('%0.2f',$ep);?></span></div>
 						</div>
 					</div>
 				</div>

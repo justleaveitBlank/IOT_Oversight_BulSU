@@ -1,1 +1,1 @@
-lastUID=NO_UID||currentConsumedVal=17.5
+lastUID=NO_UID||currentConsumedVal=0

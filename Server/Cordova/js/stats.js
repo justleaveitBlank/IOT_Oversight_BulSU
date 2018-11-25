@@ -175,29 +175,67 @@ $(function() {
 			
 		//---------------------OVERALL SUMMARY--------------------------
             var current_price = parseFloat(data.trim());
+			var weekly_Sum_out;
+			var weekly_Avg_out;
+			var mothly_Sum_out;
+			var monthly_Avg_out;
+			var yearly_Sum_out;
+			var yearly_Avg_out;
           if(type==options[0]){
 			  
 			weekly_sum=0.0;
             for (var l = 0; l < overallCharset.length; l++) {
-              weekly_sum+=parseFloat(overallCharset[l])/1000;
+              weekly_sum+=parseFloat(overallCharset[l]);
             }
-            weekly_avg=weekly_sum/overallCharset.length;
-            weekly_price=weekly_sum*parseFloat(data.trim());
-            $('#weekly_avg').text(weekly_avg.toFixed(3)+" kwhr");
-            $('#weekly_sum').text(weekly_sum.toFixed(3)+" kwhr");
-            $('#weekly_price').text("₱ "+weekly_price.toFixed(2));
+			
+			console.log("weekly_sum = "+weekly_sum/1000);
+			if((weekly_sum/1000).toFixed(2) == 0.00){
+				weekly_Sum_out = weekly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
+			}
+			else{
+				weekly_Sum_out = (weekly_sum/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+			}
+			 
+			weekly_avg=weekly_sum/overallCharset.length;
+			if((weekly_avg/1000).toFixed(2) == 0.00){
+				weekly_Avg_out = weekly_avg.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
+			}
+			else{;
+				weekly_Avg_out = (weekly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+			}
+           
+            weekly_price=(weekly_sum/1000)*parseFloat(data.trim());
+            $('#weekly_avg').text(weekly_Avg_out);
+            $('#weekly_sum').text(weekly_Sum_out);
+            $('#weekly_price').text("₱ "+weekly_price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 			
           } else if(type==options[1]){
 			
             monthly_sum=0.0;
             for (var l = 0; l < overallCharset.length; l++) {
-              monthly_sum+=parseFloat(overallCharset[l])/1000;
+              monthly_sum+=parseFloat(overallCharset[l]);
             }
+			
+			console.log("monthly_sum = "+monthly_sum/1000);
+			if((monthly_sum/1000).toFixed(2) == 0.00){
+				monthly_Sum_out = monthly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
+			}
+			else{
+				monthly_Sum_out = (monthly_sum/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+			}
+			
             monthly_avg=monthly_sum/overallCharset.length;
-            monthly_price=monthly_sum*parseFloat(data.trim());
-            $('#monthly_avg').text(monthly_avg.toFixed(3)+" kwhr");
-            $('#monthly_sum').text(monthly_sum.toFixed(3)+" kwhr");
-            $('#monthly_price').text("₱ "+monthly_price.toFixed(2));
+			if((monthly_avg/1000).toFixed(2) == 0.00){
+				monthly_Avg_out = monthly_avg.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
+			}
+			else{;
+				monthly_Avg_out = (monthly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+			}
+			
+            monthly_price=(monthly_sum/1000)*parseFloat(data.trim());
+            $('#monthly_avg').text(monthly_Avg_out);
+            $('#monthly_sum').text(monthly_Sum_out);
+            $('#monthly_price').text("₱ "+monthly_price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 			
           } else if(type==options[2]){
 			
@@ -205,14 +243,29 @@ $(function() {
             for (var l = 0; l < overallCharset.length; l++) {
               yearly_sum+=parseFloat(overallCharset[l])/1000;
             }
+			
+			console.log("yearly_sum = "+yearly_sum/1000);
+			if((yearly_sum/1000).toFixed(2) == 0.00){
+				yearly_Sum_out = yearly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
+			}
+			else{
+				yearly_Sum_out = (yearly_sum/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+			}
+			
             yearly_avg=yearly_sum/overallCharset.length;
-            yearly_price=yearly_sum*parseFloat(data.trim());
-            $('#yearly_avg').text(yearly_avg.toFixed(3)+" kwhr");
-            $('#yearly_sum').text(yearly_sum.toFixed(3)+" kwhr");
-            $('#yearly_price').text("₱ "+yearly_price.toFixed(2));
+			if((yearly_avg/1000).toFixed(2) == 0.00){
+				yearly_Avg_out = yearly_avg.toFixed(2)+" whr";
+			}
+			else{;
+				yearly_Avg_out = (yearly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+			}
 			
+            yearly_price=(yearly_sum/1000)*parseFloat(data.trim());
 			
-
+            $('#yearly_avg').text(yearly_Avg_out);
+            $('#yearly_sum').text(yearly_Sum_out);
+            $('#yearly_price').text("₱ "+yearly_price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+			
           }
 		 //-----------------SINGLE APP SUMMARY----------------------
 		  getSingleAppSummary(singleAppChartset,type,current_price)
