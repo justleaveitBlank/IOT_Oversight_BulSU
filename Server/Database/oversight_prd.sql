@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2018 at 02:23 PM
+-- Generation Time: Nov 25, 2018 at 10:55 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -52,8 +52,8 @@ CREATE TABLE `t_appliance` (
 --
 
 INSERT INTO `t_appliance` (`uid`, `appl_name`, `appl_type`, `has_power`, `has_power_limit`, `has_time_limit`, `current_date_time`, `time_limit_value`, `power_limit_value`, `current_power_usage`, `avg_watthr`, `estimated_cost`, `description`) VALUES
-('6f63b28', 'Promac', 'Television', 0, 1, 0, '2018-11-23 12:36:53', '2018-09-02 21:48:23', 0.05, 65, 0, 0, NULL),
-('f7ba179', 'Standard', 'Electric Stove', 0, 0, 0, '2018-11-23 12:36:58', '2018-09-07 06:11:43', 0, 0, 0, 0, NULL);
+('6f63b28', 'Promac', 'Television', 1, 1, 0, '2018-11-25 08:14:51', '2018-09-02 21:48:23', 5, 48.43, 1.61, 18.16, NULL),
+('f7ba179', 'Standard', 'Electric Fan', 0, 0, 0, '2018-11-24 08:13:19', '2018-09-07 06:11:43', 0, 0, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -82,6 +82,7 @@ INSERT INTO `t_history` (`uid`, `consumed`, `effective_date`, `lst_updt_dte`) VA
 ('6f63b28', 18.62, '2018-11-08 15:52:59', '2018-11-08 17:33:23'),
 ('6f63b28', 1.43, '2018-11-16 15:48:08', '2018-11-16 18:46:56'),
 ('6f63b28', 28.11, '2018-11-17 20:17:18', '2018-11-17 20:45:36'),
+('6f63b28', 0.27, '2018-11-25 16:06:15', '2018-11-25 16:14:16'),
 ('ae113a20', 0, '2018-11-08 16:02:19', '2018-11-08 16:02:19'),
 ('NO_UID', 37.42, '2018-10-25 12:16:59', '2018-10-25 12:21:55'),
 ('NO_UID', 14.24, '2018-10-26 04:08:37', '2018-10-26 04:27:02'),
@@ -91,7 +92,9 @@ INSERT INTO `t_history` (`uid`, `consumed`, `effective_date`, `lst_updt_dte`) VA
 ('NO_UID', 0.08, '2018-11-08 16:01:18', '2018-11-08 16:44:06'),
 ('NO_UID', 10.4, '2018-11-14 16:29:08', '2018-11-14 16:44:40'),
 ('NO_UID', 11.69, '2018-11-16 15:22:18', '2018-11-16 17:20:48'),
-('NO_UID', 42.74, '2018-11-17 20:08:48', '2018-11-17 20:44:20');
+('NO_UID', 42.74, '2018-11-17 20:08:48', '2018-11-17 20:44:20'),
+('NO_UID', 2500.18, '2018-11-24 16:11:15', '2018-11-24 17:15:13'),
+('NO_UID', 28.42, '2018-11-25 15:55:39', '2018-11-25 17:21:44');
 
 -- --------------------------------------------------------
 
@@ -113,8 +116,8 @@ CREATE TABLE `t_notification` (
 --
 
 INSERT INTO `t_notification` (`notif_id`, `type`, `status`, `appliance_id`, `date_pop`) VALUES
-(21, 'newanoapp', 'ignored', 'NO_UID', '2018-11-23 13:03:35'),
-(22, 'consumption', 'unresolved', '6f63b28', '2018-11-23 13:02:20');
+(21, 'newanoapp', 'unresolved', 'NO_UID', '2018-11-25 09:52:03'),
+(22, 'consumption', 'ignored', '6f63b28', '2018-11-25 08:06:15');
 
 -- --------------------------------------------------------
 

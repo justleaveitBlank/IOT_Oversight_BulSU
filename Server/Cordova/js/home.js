@@ -282,6 +282,10 @@ function loadinfos() {
 					limit_value = appinfo[i].time_limit_value;
 					if(limit_value.match(/0000-00-00 00:00:00/i)){
 						limit_value = "Indefinite Time";
+					} else {
+						var date = new Date(limit_value);
+						var options = {year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
+						limit_value = date.toLocaleString('en-Us',options);
 					}
 					unit = "";
 				} else {

@@ -120,8 +120,9 @@ try {
 
 		$('.allow-trigger').click(function() {
 			var app_id = $(this).attr('id');
-			notif_id = $(this).closest('.card').attr('id');
-			var minimum = $(this).closest('.card').attr('name');
+			notif_id = $(this).closest('.for-id').attr('name');
+			console.log(notif_id);
+			var minimum = $(this).closest('.for-id').attr('name');
 			$('#allow_app_btn').attr('name', app_id);
 		});
 	}

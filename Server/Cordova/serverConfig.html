@@ -165,6 +165,16 @@
 	<!--cordova-->
 
 	<script>
+		function mySubmit(e) { 
+		  e.preventDefault(); 
+		  try {
+		   
+		  } catch (er) {
+		  
+		  }
+		  return false;
+		}
+	
 		$(document).ready(function(){
 			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
 
@@ -179,17 +189,62 @@
 					$(this).removeClass('active');
 				})
 			}
+			
+			function testHost(devHost,type){
+				$.ajax({
+					type: "POST",
+					url: "http://" + devHost + "/check.php",
+					data: "none",
+					crossDomain: true,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						if(type=="set"){
+							window.localStorage.setItem('I-O-T',deviceHost);
+						}
+						window.location.href = "index.html";
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						SendToast("Connection Failed! Host Unreachable!");
+					}
+				});
+			
+			}
 
 			$('.modal').modal({onCloseEnd: function() { modalClosed(); }});
 			
 			$('#saveConfig').click(function(){
 				if($('#serverAddress').val().trim()!=""){
 					deviceHost = $('#serverAddress').val().trim();
-					window.localStorage.setItem('I-O-T',deviceHost);
-					window.location.href = "index.html";
+					testHost(deviceHost,"set");
 				}
 			});
 			
+			$('#backbutton').click(function(){
+				var ip = window.localStorage.getItem('I-O-T');
+				if(ip){
+					testHost(ip,"cancel");
+				}else{
+					$('#serverAddress').addClass('invalid');
+					SendToast("You have no server address. It is required to proceed");
+				}
+			});
+			
+			function SendToast(message){
+				$('.toast').hide();
+
+				var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size: 1em;'>" +message+ "</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+				M.toast({
+					html: toastHTML
+				});
+
+				$('.toast-action').click(function() {
+					M.Toast.dismissAll();
+				});
+			}
+			$('input').on('input',function(){
+				$(this).removeClass('invalid');
+				$(this).removeClass('valid');
+			});
 		});
 	</script>
 </head>
@@ -207,15 +262,15 @@
 						<div class="row">
 								<div class="appLogo"></div>
 								<p class="appName ">OVERSIGHT</p>
-							<form class="col s12" method="POST" action="index.html" id='loginForm'>
+							<form class="col s12" method="POST" action="index.html" id='serverForm' onsubmit="return mySubmit(event)">
 								<div class="input-field col s12">
 									<i class="material-icons prefix">insert_link</i>
 									<input id="serverAddress" type="text" class="validate white-text" autocomplete="off" required/>
-									<span class="helper-text" data-error="&#10006;" data-success=""></span>
+									<span class="helper-text" data-error="&#10006; This field is required!" data-success=""></span>
 									<label for="serverAddress">SERVER ADDRESS</label>
 								</div>
 								<button id='saveConfig' class="submitbtn btn waves-effect waves-light green" type="submit" name="action">SAVE CONFIG</button>
-								<a class="submitbtn btn waves-effect waves-light  red" href="index.html">BACK</a>
+								<a id="backbutton" class="submitbtn btn waves-effect waves-light  red" href="#Back">BACK</a>
 							</form>
 
 							<div id='sampleholder'></div>

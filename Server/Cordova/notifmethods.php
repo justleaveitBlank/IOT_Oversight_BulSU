@@ -331,7 +331,7 @@
 						<div class="collapsible-body">
 							<div class='row' name='<?php echo $id;?>' style="margin:0;">
 								<div class="col s12 m12 center-block">
-									<div id='<?php echo $id?>' >
+									<div for-id name='<?php echo $id?>' >
 										<div class="card-content white-text" style="margin-bottom:1rem;">
 											<span class="card-title black-text">Unregistered Device</span>
 											<p class="black-text">ID: <em><?php echo $app_id;?></em></p>
@@ -365,7 +365,7 @@
 						<div class="collapsible-body">
 							<div class='row' name='<?php echo $id;?>' style="margin:0;">
 								<div class="col s12 m12 center-block">
-									<div id='<?php echo $id?>' >
+									<div class='for-id' name='<?php echo $id?>' >
 										<div class="card-content white-text" style="margin-bottom:1rem;">
 											<span class="card-title black-text">Anonymous Device</span>
 											<p class="black-text">ID: <em>No Id</em></p>

@@ -188,7 +188,7 @@ $(function() {
               weekly_sum+=parseFloat(overallCharset[l]);
             }
 			
-			console.log("weekly_sum = "+weekly_sum/1000);
+			//console.log("weekly_sum = "+weekly_sum/1000);
 			if((weekly_sum/1000).toFixed(2) == 0.00){
 				weekly_Sum_out = weekly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
 			}
@@ -216,7 +216,7 @@ $(function() {
               monthly_sum+=parseFloat(overallCharset[l]);
             }
 			
-			console.log("monthly_sum = "+monthly_sum/1000);
+			//console.log("monthly_sum = "+monthly_sum/1000);
 			if((monthly_sum/1000).toFixed(2) == 0.00){
 				monthly_Sum_out = monthly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
 			}
@@ -244,7 +244,7 @@ $(function() {
               yearly_sum+=parseFloat(overallCharset[l])/1000;
             }
 			
-			console.log("yearly_sum = "+yearly_sum/1000);
+			//console.log("yearly_sum = "+yearly_sum/1000);
 			if((yearly_sum/1000).toFixed(2) == 0.00){
 				yearly_Sum_out = yearly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
 			}
