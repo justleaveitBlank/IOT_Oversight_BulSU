@@ -32,6 +32,11 @@ try {
 						window.localStorage.setItem('CurrentLogger',user.username);
 						window.location.href = "home.html";
 
+					} else if (data.trim().toUpperCase().match(/Redirect/i)) {
+						window.localStorage.setItem('toConfirmUser',user.username);
+						window.localStorage.setItem('toConfirmPass',user.password);
+						window.location.href = "confirmationCode.html";
+
 					} else {
 						SendToast("Account Doesn't Exist");
 					}

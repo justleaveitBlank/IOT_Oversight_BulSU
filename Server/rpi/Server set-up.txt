@@ -1,0 +1,44 @@
+sudo apt-get install -t stretch apache2
+sudo apt-get install -t stretch php7.0
+sudo apt-get install -t stretch php7.0-mysql
+
+sudo nano  /var/www/html/info.php
+<?php
+	phpinfo();
+?>
+
+reboot
+
+sudo apt-get install -t stretch mysql-server
+sudo apt-get install -t stretch mysql-client
+
+reboot
+
+sudo apt-get install phpmyadmin
+sudo mysql_secure_installation
+>> use oversight as password
+>> change root password = "n"
+>> remove anonymous user = "n"
+>> disaalow root login remotely = "n"
+>> remove test database and access to it = "n"
+>> reload privilage tabl now = "y"
+
+sudo su -
+mysql -u root -p
+GRANT ALL PRIVILEGES on *.* to 'root'@'localhost' IDENTIFIED BY 'test';
+FLUSH PRIVILEGES;
+\q
+service mysql stop
+service mysql start
+
+sudo chown -R pi /var/www/html
+
+sudo apt-get install vsftpd
+
+sudo nano /etc/vsftpd.conf
+>> anonymous_enable=NO
+>> UNCOMMENT local_enable=YES
+>> UNCOMMENT write_enable=YES
+>> ADD force_dot_files=YES
+
+sudo sevice vsftpd restart

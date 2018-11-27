@@ -56,7 +56,7 @@
 		<div class="section row">
 			<div class="col s10">
 				<div class="sTitle">Consumption Limit</div>
-				<div class="sDesc">Option for Granting Consumption Limits for Registered Device</div>
+				<div class="sDesc">Option for Granting Consumption Limits</div>
 			</div>
 			<div class="col s2">
 				<span class="badge">

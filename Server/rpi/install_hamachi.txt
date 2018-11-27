@@ -2,10 +2,11 @@ sudo bash
 apt-get update
 apt-get upgrade
 apt-get install lsb-core
-wget http://www/vpn.net/installers/logmein-hamachi-2.1.0.198-armel.tgz
+wget https://www.vpn.net/installers/logmein-hamachi-2.1.0.198-armel.tgz
 tar -zxvf logmein-hamachi-2.2.0.198-armel.tgz
+./install.sh
 cd logmein-hamachi-2.1.0.198-armel
-./intall.sh
+
 /etc/init.d/logmein-hamachi start
 hamachi login
 hamachi attach email@email.com

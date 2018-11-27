@@ -41,10 +41,21 @@
 		}
 	}
 
-	if(isset($_GET[$en_email])){
-		$confirm_code = $_GET[$en_confirm];
-		$email = $_GET[$en_email];
-		register($confirm_code,$email);
+	if(isset($_POST['verification'])){
+		$confirm_code = $_POST['verification'];
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+	
+		$query = "SELECT email FROM t_users WHERE username = '".$username."' and password= '".$password."'";
+		$result = $con->query($query);
+		if(mysqli_num_rows($result)==1){
+			while($row = mysqli_fetch_assoc($result)){
+				echo "PASOK";
+				register($confirm_code,$row['email']);
+			}
+		} else {
+			echo "HINDE PASOK";
+		}
 	}
 
 	if(isset($_POST['login_data'])){
@@ -165,7 +176,12 @@
 			}
 		}
 		else{
-			echo "Account Doesn't Exist!";
+			$query = "SELECT * from t_users where username = '$username' and password = '$password' and confirm_code IS NOT NULL";
+
+			$result = $con->query($query);
+			if(mysqli_num_rows($result)==1){
+				echo "Redirect";
+			}
 		}
 	}
 
@@ -313,10 +329,9 @@
 			if(mysqli_error($con)){
 				echo "Failed" .  mysqli_error($con);
 			}else if($result){
-	  			echo "<script>window.close();</script>";
+	  			echo "Verified";
 			}
 		}
-
 	}
 
 	//registration : send confirm code
@@ -330,8 +345,10 @@
 		$email = $user->email;
 		$contact = $user->contact;
 		$en_email = md5("email");
-    $en_confirm = md5("confirm");
+		$en_confirm = md5("confirm");
 		require_once 'EmailSender.php';
+		$rest = substr($confirm_code, strlen($confirm_code)-15, 5);
+		
 		$message = '<div bgcolor="#FFFFFF" style="margin:0;padding:0">
 		  <table border="0" cellpadding="0" cellspacing="0" height="100%" lang="en" style="min-width:348px" width="100%">
 		    <tbody>
@@ -391,25 +408,25 @@
 		                            </div>
 		                          </td>
 		                          <td>
-		                            <div style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;padding-left:20px;padding-right:20px;border-bottom:thin solid #f0f0f0;color:rgba(0,0,0,0.87);font-size:24px;padding-bottom:38px;padding-top:40px;text-align:center;word-break:break-word">
+		                            <div style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;padding-left:20px;padding-right:20px;border-bottom:thin solid #f0f0f0;color:green;font-size:24px;padding-bottom:38px;padding-top:40px;text-align:center;word-break:break-word">
 		                              <div class="m_-964311646947607407v2sp">
-		                                <strong>New Oversight Account Registered To</strong><br>
+		                                <strong>CONFIRM CODE</strong><br>
 		                                <a style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;color:rgba(0,0,0,0.87);font-size:16px;line-height:1.8">
-		                                  '.$email.'</a>
+		                                  </a>
 		                                </div>
 		                              </div>
-		                              <div style="text-align:center;font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:rgba(0,0,0,0.87);line-height:1.6;padding-left:20px;padding-right:20px;padding-bottom:32px;padding-top:24px">
+									  <div style="text-align:center;font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:rgba(0,0,0,0.87);line-height:1.6;padding-left:20px;padding-right:20px;padding-bottom:32px;padding-top:24px">
 		                                <div class="m_-964311646947607407v2sp">
-		                                  Your Google Account was used as part of registration of an Oversight Account. You are getting this email to make sure it was you.<div style="padding-top:24px;text-align:center">
-		                                    <a href="http://localhost/methods.php?'.$en_email.'='.$email.'&'.$en_confirm.'='.$confirm_code.'" style="display:inline-block;text-decoration:none">
+		                                  
+		                                    <a style="display:inline-block;text-decoration:none">
 		                                      <table border="0" cellpadding="0" cellspacing="0" style="background-color:#4184f3;border-radius:2px;min-width:90px">
 		                                        <tbody>
 		                                          <tr style="height:6px">
 		                                          </tr>
 		                                          <tr>
 		                                            <td style="padding-left:8px;padding-right:8px;text-align:center">
-		                                              <a href="http://localhost/methods.php?'.$en_email.'='.$email.'&'.$en_confirm.'='.$confirm_code.'" style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;color:#ffffff;font-weight:400;line-height:20px;text-decoration:none;font-size:13px;text-transform:uppercase" >
-		                                                Verify My Account</a>
+		                                              <a style="font-family: font-weight: 800; Roboto-Regular,Helvetica,Arial,sans-serif;color:white;line-height:20px;text-decoration:none;font-size:30px;text-transform:uppercase" >
+		                                                '.$rest.'</a>
 		                                              </td>
 		                                            </tr>
 		                                            <tr style="height:6px">
@@ -417,6 +434,12 @@
 		                                          </tbody>
 		                                        </table>
 		                                      </a>
+		                                    </div>
+		                                  </div>
+		                              <div style="text-align:center;font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:rgba(0,0,0,0.87);line-height:1.6;padding-left:20px;padding-right:20px;padding-bottom:32px;padding-top:24px">
+		                                <div class="m_-964311646947607407v2sp">
+		                                  Above is your confirmation code. Open the App, Login, then input the code. After that you will need to re-log your Account. <div style="padding-top:24px;text-align:center">
+		                                    
 		                                    </div>
 		                                  </div>
 		                                </div>
@@ -482,7 +505,7 @@
 		if(!$mailer_result) { // send mail and check whether it succeed
 		echo 'Message could not be sent.';
 		} else { // if it does succeed
-			$query = "INSERT INTO t_users VALUES ('$username','$password','$firstname','$lastname','$contact','$email','$confirm_code',DEFAULT)";
+			$query = "INSERT INTO t_users VALUES ('$username','$password','$firstname','$lastname','$contact','$email','$rest',DEFAULT)";
 			if(mysqli_query($con,$query)){ //execute query
 				echo "A Message has been Sent to your Email!" . mysqli_error($con); // inform if success
 			}

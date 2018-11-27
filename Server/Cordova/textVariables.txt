@@ -1,1 +1,1 @@
-lastUID=sdad123||currentConsumedVal=0.00
+lastUID=NO_UID||currentConsumedVal=275.75
