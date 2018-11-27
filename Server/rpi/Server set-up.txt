@@ -25,7 +25,7 @@ sudo mysql_secure_installation
 
 sudo su -
 mysql -u root -p
-GRANT ALL PRIVILEGES on *.* to 'root'@'localhost' IDENTIFIED BY 'test';
+GRANT ALL PRIVILEGES on *.* to 'root'@'localhost' IDENTIFIED BY 'password';
 FLUSH PRIVILEGES;
 \q
 service mysql stop

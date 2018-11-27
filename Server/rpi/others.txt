@@ -5,3 +5,5 @@
  sudo chmod -R 777 var/www/html
  sudo mysql --user:root --password:phpmyadmiin
  
+  sudo apt-get autoremove
+  sudo apt-get purge appname

@@ -267,10 +267,10 @@ function loadinfos() {
 				//console.log(avg +" = " +avg/1000);
 				
 				if((consump/1000).toFixed(2) == 0.00){
-					consump_out = (consump*1).toFixed(2)+" watt/s";
+					consump_out = (consump*1).toFixed(2)+" whr";
 				}
 				else{
-					consump_out = (consump/1000).toFixed(2)+" Kwatt/s";
+					consump_out = (consump/1000).toFixed(2)+" Kwhr";
 				}
 				
 				
