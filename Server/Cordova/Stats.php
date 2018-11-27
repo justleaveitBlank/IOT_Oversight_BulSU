@@ -194,11 +194,17 @@
 	  $avg = $sum/count($consumptions);
 	  $ep = $sum/1000*$price;
 	  //echo number_format($sum,2)." = ".number_format($sum/1000,2);
-	  $query = "SELECT IFNULL((SELECT appl_name FROM t_appliance WHERE uid = '".$uid."'),'UNREGISTERED APPLIANCE') as appl_name";
+	  $query = "SELECT IFNULL((SELECT appl_name FROM t_appliance WHERE uid = '".$uid."'),'Unregistered - ".$uid."') as appl_name , IFNULL((SELECT appl_type FROM t_appliance WHERE uid = '".$uid."'),'GENERAL APPLIANCE') as appl_type";
 	  $result = $con->query($query);
 	  if(mysqli_num_rows($result)>0){
 		  while($row = mysqli_fetch_assoc($result)){
-			  $AppName = ($uid == "NO_UID")? 'ANONYMOUS APPLIANCE' : $row['appl_name'];
+			  $AppName = ($uid == "NO_UID")? 'Anonymous Appliance' : $row['appl_name'];
+			  $type = $row['appl_type'];
+			if ((strpos($AppName, 'Unregistered') === false) && (strpos($AppName, 'Anonymous') === false)) {
+				$AppName = $AppName . " (" .$type. ") ";
+			}
+			  
+			  
 			 if(number_format($sum/1000,2) == 0.00){
 				$sum_out = number_format($sum,2)." whr";
 			  }
@@ -222,6 +228,7 @@
 						
 						<div class="applDetails" style="display: inline-block; border:solid <?php echo $color?> 1px ; border-radius: 0 0 3px 3px; padding: .2rem .5rem;">
 							<div class="col s12"><b>Appliance ID: </b> <span><?php echo $uid;?></span></div>
+							<div class="col s12"><b>Appliance Type: </b> <span><?php echo $type;?></span></div>
 							<div class="col s12"><b>Average Kwatthr :</b> <span><?php echo  $avg_out;?></span></div>
 							<div class="col s12"><b>Total Consumption :</b> <span><?php echo $sum_out;?></span></div>
 							<div class="col s12"><b>Estimated Price :</b> <span><?php echo "₱ " .sprintf('%0.2f',$ep);?></span></div>

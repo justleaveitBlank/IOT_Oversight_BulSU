@@ -1,0 +1,73 @@
+----------------------------------------------------------------------------------------------------------------------------------
+
+			replace each instance
+			with
+			:
+
+			<!--cordova-->
+			<!--cordova--><script type="text/javascript" src='cordova.js'></script>
+
+
+			<!--localnotification-->
+			<!--localnotification--><script type="text/javascript" src='js/localnotification.js'></script>
+
+
+			//identifyNotifs(res[0]);
+			identifyNotifs(res[0]);
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+			PUT ON Document READY of EVERY FILE EXCEPT INDEX BEFORE checkLocal
+			:
+			document.addEventListener("deviceready", function() {
+				function ClearNotification(){
+					cordova.plugins.notification.local.hasPermission(function(granted) {
+						cordova.plugins.notification.local.clearAll(function() {
+								console.log("done");
+						}, this);
+					});
+				}
+
+				cordova.plugins.backgroundMode.enable();
+				cordova.plugins.backgroundMode.overrideBackButton();
+				cordova.plugins.backgroundMode.excludeFromTaskList();
+
+				cordova.plugins.backgroundMode.setDefaults({
+			    title: "Monitoring Consumption",
+			    text: "Oversight is Currently Monitoring Consumption",
+			    icon: 'file:///android_asset/www/imgs/Logo3.png',
+			    color: "#4b0082",
+			    resume: true,
+			    hidden: false,
+			    bigText: false
+				});
+
+				cordova.plugins.notification.local.on("click", function() {
+					cordova.plugins.backgroundMode.moveToForeground();
+					navigator.app.loadUrl("file:///android_asset/www/notifications.html");
+				});
+				
+				setInterval(checkLocal, 500);
+			}, false);
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+			PUT ON Document READY ON NOTIFICATION AND INDEX ONLY remove marked lines for notification
+			:
+			document.addEventListener("deviceready", function() {
+				function ClearNotification(){
+					cordova.plugins.notification.local.hasPermission(function(granted) {
+						cordova.plugins.notification.local.clearAll(function() {
+								console.log("done");
+						}, this);
+					});
+				}
+				ClearNotification();
+				cordova.plugins.backgroundMode.setDefaults({ hidden: true, silent: true }); // marked
+				cordova.plugins.backgroundMode.disable(); // marked
+			}, false);
+----------------------------------------------------------------------------------------------------------------------------------

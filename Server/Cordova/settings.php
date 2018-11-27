@@ -56,7 +56,7 @@
 		<div class="section row">
 			<div class="col s10">
 				<div class="sTitle">Consumption Limit</div>
-				<div class="sDesc">Option for Granting Consumption Limits</div>
+				<div class="sDesc">Option for Granting Consumption Limits for Registered Device</div>
 			</div>
 			<div class="col s2">
 				<span class="badge">
@@ -94,7 +94,7 @@
 		
 		<div class="divider"></div>
 		<div class="section">
-			<a class="black-text modal-trigger sTitle" style="display:block" href="#adminConfirmChangeRate">Price/KwH Rate</a>
+			<a id='price-button-admin' class="black-text modal-trigger sTitle" style="display:block" href="#adminConfirmChangeRate">Price/KwH Rate</a>
 		</div>
 		
 		<div class="divider"></div>

@@ -46,8 +46,15 @@ function initiate_settings() {
 	});
 
 	$('#s_authenticate').change(function () {
-		settings.deviceauthentication = (this.checked) ? 'true' : 'false';
-		updateSettings();
+		$('#confirm_admin').attr('href','#');
+		$('#confirm_admin').removeClass('triggerForPrice');
+		var instance = M.Modal.getInstance($('#adminConfirmChangeRate'));
+		instance.open();
+	});
+	
+	$('#price-button-admin').focus(function(){
+		$('#confirm_admin').attr('href','#ChangeMultiplyerRate');
+		$('#confirm_admin').addClass('triggerForPrice');
 	});
 
 	$('#s_price').change(function () {
@@ -134,11 +141,29 @@ function initiate_settings() {
   
 	admin_password_class = $('#admin_password').attr('class');
 	$('#validation_status').attr('data-error', "This Field is Required");
-	$('#confirm_admin').click(function () {
-		if ($('#admin_password').val() == admin_code) {
-			admin_pass_reset();
+	$('#confirm_admin').focus(function () {
+		if($(this).hasClass('triggerForPrice')){
+			if ($('#admin_password').val().trim() == admin_code) {
+				admin_pass_reset();
+			} else {
+				inc_error("Invalid Pass!");
+			}
 		} else {
-			inc_error("Invalid Pass!");
+			$('#confirm_admin').removeClass('modal-trigger');
+			if ($('#admin_password').val().trim() == admin_code) {
+				admin_pass_reset();
+				if(settings.deviceauthentication.match(/false/i)){
+					$('.myCheckbox').prop('checked', true);
+					settings.deviceauthentication = 'true';
+					updateSettings();
+				} else if(settings.deviceauthentication.match(/true/i)){
+					$('.myCheckbox').prop('checked', false);
+					settings.deviceauthentication = 'false';
+					updateSettings();
+				}
+			} else {
+				inc_error("Invalid Pass!");
+			}
 		}
 	});
 
@@ -149,9 +174,9 @@ function initiate_settings() {
 
 		if ($('#admin_password').val() != "") {
 			if ($('#admin_password').val() == admin_code) {
-				$('#confirm_admin').attr('class', class_value + ' modal-trigger modal-close');
+				$('#confirm_admin').addClass('modal-trigger modal-close');
 			} else {
-				$('#confirm_admin').attr('class', class_value);
+				$('#confirm_admin').removeClass('modal-trigger modal-close');
 				$('#validation_status').attr('data-error', "Wrong Password");
 			}
 		}

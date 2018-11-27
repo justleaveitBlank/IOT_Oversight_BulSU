@@ -451,6 +451,7 @@
 							isPlugged = "false";
 
 					function throwDataOnSigned(){
+					console.log("UID = "+uid);
 						$.ajax({
 							type: "GET",
 							url: "http://" + deviceHost + "/signedPowerData.php?UID="+uid+"&powerdata=ae113a20||224.20||0.01||0.00||0.00&notifStat="+ns+"&aDevice="+arePluggedDevices+"&unplugged="+isPlugged,
@@ -508,7 +509,6 @@
 
 				$('.unplug').click(function(){
 					clearInterval(intervalfunction);
-					uid="";
 					arePluggedDevices = 0;
 					ns="false";
 					isPlugged = "true";

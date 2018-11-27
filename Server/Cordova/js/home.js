@@ -5,6 +5,7 @@ var chartcounter = 0;
 var priceperkwhr = 0;
 var numNotifs = "0";
 var tries = 0;
+var numItems = 0;
 
 function loadapps() {
 	$.ajax({
@@ -15,6 +16,7 @@ function loadapps() {
 		success: function (data) {
 			$('#registered-apps').html(data);
 			initiate_functions();
+			checkapps();
 		}
 	});
 }
@@ -27,7 +29,7 @@ function initiate_functions() {
 
 function load_xml() {
 	$.ajax({
-		url: "pathtoOverpassXML.php",
+		url: 'http://'+deviceHost+'/pathtoOverpassXML.php',
 		dataType: "xml",
 		crossDomain: true,
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -220,7 +222,7 @@ function add_appschart() {
 }*/
 
 function checkapps() {
-	var numItems = $('.appliance-info').length;
+	numItems = $('.appliance-info').length;
 	var x = 0;
 	$.ajax({
 		type: "POST",
@@ -229,6 +231,7 @@ function checkapps() {
 		crossDomain: true,
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function (data) {
+			console.log(data);
 			if (data.trim().match(/Reload/i)) {
 				loadapps();
 			} else {
@@ -340,6 +343,7 @@ function loadPrice(){
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
 			success: function(data) {
 				priceperkwhr = parseFloat(data.trim());
+				checkapps();
 			}
 	});
 }
@@ -361,7 +365,7 @@ function checkNoNotifs(){
 var jsonFormer = {};
 function checkPlugged() {
 	//$.getJSON('http://' + deviceHost + '/plugged.json', function (data) {
-	$.getJSON('pathtoPluggedJSON.php', function (data) {
+	$.getJSON('http://'+deviceHost+'/pathtoPluggedJSON.php', function (data) {
 		//if((!isEqual(jsonFormer, data)) || (tries==1)){
 		//	tries++;
 			if(data.plugged!="0"){
@@ -443,9 +447,7 @@ function isEqual(jsonFormer,jsonToCompare){
 }
 
 checkNoNotifs();
-checkPlugged();
-loadapps();
+checkapps();
 
-setInterval(checkapps, 500);
 setInterval(checkNoNotifs, 500);
 setInterval(load_xml, 500);

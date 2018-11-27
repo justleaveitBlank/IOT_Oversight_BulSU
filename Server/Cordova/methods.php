@@ -669,7 +669,7 @@ if(isset($_POST['getPrice'])){
 	}
 
 	if(isset($_POST['checkappchanges'])){
-		$appliance = (int)$_POST['checkappchanges'];
+		$appliance = intval($_POST['checkappchanges']);
 		$existing = 0;
 
 		$query = "SELECT COUNT(uid) as appcount FROM t_appliance";
@@ -678,7 +678,7 @@ if(isset($_POST['getPrice'])){
 		if(mysqli_num_rows($result)==1){
 			while($row = mysqli_fetch_assoc($result)){
 				if($row['appcount']==$appliance){
-						echo "No app changes";
+					echo "No app changes";
 				}else{
 					echo "Reload";
 				}

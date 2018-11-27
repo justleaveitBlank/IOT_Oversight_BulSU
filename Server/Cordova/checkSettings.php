@@ -91,55 +91,55 @@
 			
 		}
 		else{
-			if($s_limitation == "true"){
-				//Check whether temporary appliance have an id or not
-				$nameToCompare = ($UID == "NO_UID")? "Anonymous_Appliance" : "Unregistered_Appliance";
-				//check if device already allowed or in other words already registered
-				$query ='SELECT *
-						FROM t_appliance
-						WHERE appl_name="' .$nameToCompare. '"';
-				$has_power = "0";
-				$result = $con->query($query);
-				if(mysqli_num_rows($result)>0){
-					$appl_rows = $result->fetch_object();
-					$has_power= $appl_rows->has_power;
-					$appl_Auid = $appl_rows->uid;
-					$appl_has_time_limit = $appl_rows->has_time_limit;
-					$appl_time_limit_value = $appl_rows->time_limit_value;
-					if($UID==$appl_Auid){
-						$flag = 0;
-						if($appl_has_time_limit == "1"){
-							$dateEx = strtotime($appl_time_limit_value);
+			//Check whether temporary appliance have an id or not
+			$nameToCompare = ($UID == "NO_UID")? "Anonymous_Appliance" : "Unregistered_Appliance";
+			//check if device already allowed or in other words already registered
+			$query ='SELECT *
+					FROM t_appliance
+					WHERE appl_name="' .$nameToCompare. '"';
+			$has_power = "0";
+			$result = $con->query($query);
+			if(mysqli_num_rows($result)>0){
+				$appl_rows = $result->fetch_object();
+				$has_power= $appl_rows->has_power;
+				$appl_Auid = $appl_rows->uid;
+				$appl_has_time_limit = $appl_rows->has_time_limit;
+				$appl_time_limit_value = $appl_rows->time_limit_value;
+				if($UID==$appl_Auid){
+					$flag = 0;
+					if($appl_has_time_limit == "1"){
+						$dateEx = strtotime($appl_time_limit_value);
 
-							if(time()<$dateEx || $dateEx==strtotime("0000-00-00 00:00:00") && $aDevice!="0"){
-								$query = "UPDATE t_appliance SET has_time_limit = 1 WHERE appl_name = '".$nameToCompare."'";
-								$result = $con->query($query);
-								$notifStat = "false";
-								$aDevice = "3";
-								$flag = 1;
-							} if(time() > strtotime("-1 minutes", $dateEx) && $dateEx!=strtotime("0000-00-00 00:00:00")){
-								$timeLimiNotif = "1";
-							}
-						}
-						if($flag == 0){
-							$has_power="0";
-							if($UID != "NO_UID"){
-								$notifStat = "true";
-								$aDevice = "1";
-								if($UID = "UNPLUGGED"){
-									$notifStat = "false";
-									$aDevice = "0";
-								}
-							} else {
-								$aDevice = "1";
-								$notifStat = "true";
-							}
-
-							$query = "DELETE FROM t_appliance WHERE appl_name = '".$nameToCompare."'";
+						if(time()<$dateEx || $dateEx==strtotime("0000-00-00 00:00:00") && $aDevice!="0"){
+							$query = "UPDATE t_appliance SET has_time_limit = 1 WHERE appl_name = '".$nameToCompare."'";
 							$result = $con->query($query);
+							$notifStat = "false";
+							$aDevice = "3";
+							$flag = 1;
+						} if(time() > strtotime("-1 minutes", $dateEx) && $dateEx!=strtotime("0000-00-00 00:00:00")){
+							$timeLimiNotif = "1";
 						}
 					}
+					if($flag == 0){
+						$has_power="0";
+						if($UID != "NO_UID"){
+							$notifStat = "true";
+							$aDevice = "1";
+							if($UID = "UNPLUGGED"){
+								$notifStat = "false";
+								$aDevice = "0";
+							}
+						} else {
+							$aDevice = "1";
+							$notifStat = "true";
+						}
+
+						$query = "DELETE FROM t_appliance WHERE appl_name = '".$nameToCompare."'";
+						$result = $con->query($query);
+					}
 				}
+			}
+			if($s_limitation == "true"){
 				//Check consumption vs limit take id if appliance exceed warning level
 				$query = "SELECT IF(current_power_usage/1000 < (power_limit_value*0.85),'NORMAL', IF(current_power_usage/1000 >= power_limit_value,'STOP','OVERCONSUMING')) as ConsumptionStatus FROM t_appliance WHERE power_limit_value>0 and uid = '".$UID."'";
 				$result = $con->query($query);

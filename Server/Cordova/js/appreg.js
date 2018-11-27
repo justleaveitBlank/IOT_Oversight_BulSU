@@ -47,16 +47,8 @@ $("#regsub").click(function() {
 
 function reloadvalues() {
 	id = $('#d_id').val().trim();
-	var array_type = [
-		"",
-		"General Appliances",
-		"Aircon",
-		"Refrigerator",
-		"Electric Stove",
-		"Fan",
-		"Television"
-	];
-	var selected_type = array_type[parseInt($('#applianceType').find(":selected").attr('value'))];
+	
+	var selected_type = $('#applianceType').find(":selected").attr('value');
 	type = selected_type;
 	name = $('#d_name').val().trim();
 
@@ -78,6 +70,9 @@ function reloadvalues() {
 //------------------------------------------------------------------------------------------------------
 
 	if ((id == '') || (name == '') || (limit == 'hasnolimit') || $('#d_name').hasClass('invalid') || !($('#d_name').hasClass('valid')) || (type=="")) {
+		if(type==""){
+			$('.select-dropdown').addClass("invalid");
+		}
 		appl.valid = 'no';
 		$('#regsub').attr('class', regclass);
 	} else {

@@ -59,9 +59,9 @@
 			$date = date_format($rawdate, 'Y-m-d H:i:s');
 		}
 		if($app_id == "NO_UID"){
-			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Anonymous_Appliance','Others',1,0,1,DEFAULT,'" .$date. "',0,0,0,0,DEFAULT)";
+			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Anonymous_Appliance','GENERAL APPLIANCE',1,0,1,DEFAULT,'" .$date. "',0,0,0,0,DEFAULT)";
 		} else {
-			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Unregistered_Appliance','Others',1,0,1,DEFAULT,'" .$date. "',0,0,0,0,DEFAULT)";
+			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Unregistered_Appliance','GENERAL APPLIANCE',1,0,1,DEFAULT,'" .$date. "',0,0,0,0,DEFAULT)";
 		}
 		if($con->query($query)){
 			$query = 'UPDATE t_notification SET Status="allowed" WHERE notif_id = "' . $notif_id . '"';
@@ -158,7 +158,7 @@
 								$color = "red";
 							}
 							?>
-								<li style="border: solid <?php echo $color;?> 1px; margin-bottom: 10px; border-radius: inherit;">
+								<li style="border: solid <?php echo $color;?> 1px; margin-bottom: 10px; border-radius: inherit;-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
 									<div class="collapsible-header" style="display: block;">
 										<div class="row" style="margin:0;">
 											<div class="col s11 m11" style="padding:0 .1rem;">
@@ -192,7 +192,7 @@
 					}
 				}else if(trim($type)=='newapp'){
 				?>
-					<li style="border: solid green 1px;  margin-bottom: 10px; border-radius: inherit;">
+					<li style="border: solid green 1px;  margin-bottom: 10px; border-radius: inherit; -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
 						<div class="collapsible-header" style="display: block;">
 							<div class="row" style="margin:0;">
 								<div class="col s11 m11" style="padding:0 .1rem;">
@@ -220,7 +220,7 @@
 				<?php
 				}else if(trim($type)=='newanoapp'){
 				?>
-					<li style="border: solid grey 1px;  margin-bottom: 10px; border-radius: inherit;">
+					<li style="border: solid grey 1px;  margin-bottom: 10px; border-radius: inherit; -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
 						<div class="collapsible-header" style="display: block;">
 							<div class="row" style="margin:0;">
 								<div class="col s11 m11" style="padding:0 .1rem;">
@@ -331,7 +331,7 @@
 						<div class="collapsible-body">
 							<div class='row' name='<?php echo $id;?>' style="margin:0;">
 								<div class="col s12 m12 center-block">
-									<div for-id name='<?php echo $id?>' >
+									<div class='for-id' name='<?php echo $id?>' >
 										<div class="card-content white-text" style="margin-bottom:1rem;">
 											<span class="card-title black-text">Unregistered Device</span>
 											<p class="black-text">ID: <em><?php echo $app_id;?></em></p>
