@@ -55,11 +55,54 @@ function add_jqueries() {
 		var appl_id = $(this).closest('.row').find('.appl_id').val();
 		var appl_name = $(this).closest('.row').find('.appl_name').val();
 		var appl_consumption = $(this).closest('.row').find('.appl_consumption').val();
-		var appl_limit = $(this).closest('.row').find('.appl_limit').val();
+		var appl_limit = $('.appl_limit[name="' + appl_id + '"]').val();
+		var appl_type = $('.appl_type[name="' + appl_id + '"]').val();
 
 		$('#d_ID').val(appl_id);
 		$('#d_NAME').val(appl_name);
 		$('#d_LIMIT').val(appl_limit);
+		
+		var ac = ['0','AIR CONDITIONER','BOX FAN','CEILING FAN','DESK FAN','EXHAUST FAN','ORBIT WALL FAN'];
+		var com = ['0','LAPTOP COMPUTER','PERSONAL COMPUTER','PRINTER'];
+		var ent = ['0','HOME THEATER SYSTEM (5 DVD/CD)','KARAOKE','PLASMA TV','PLAYSTATION','Projection TV','RADIO CASETTE RECORDER','STEREO','TV SET','VCD / DVD / MP3 PLAYER','VHS','XBOX'];
+		var kit = ['0','BREAD TOASTER','COFFEE MAKER','FOOD PROCESSOR','FREEZER CHEST','FRYER','GRILLER','INDUCTION / IH COOKER','MEAT CHOPPER','MICROWAVE','OSTERIZER/BLENDER','OVEN TOASTER','POPCORN POPPER','REFRIGERATOR','RICE COOKER','SLOW COOKER','STOVE','TURBO BROILER','WATER DISPENSER','WATER HEATER'];
+		var light = ['0','CFL','CHRISTMAS LIGHT','FLUORESCENT LAMP 48','INCANDESCENT BULB','RECHARGEABLE LIGHTS/FANS'];
+		var other = ['0','CELLPHONE CHARGER','CLOTHES DRYER','FLAT IRON','FLOOR POLISHER','HAIR DRYER','SEWING MACHINE','VACUUM CLEANER','WASHING MACHINE','WATER DISPENSER','WATER HEATER'];
+		console.log(appl_type);
+		if(ac.indexOf(appl_type) != -1){
+			$('#applianceCategHome').val(1);
+			insertOptions(1);
+			$('#applianceTypeHome').val(appl_type);
+			
+		} else if(com.indexOf(appl_type) != -1){
+			$('#applianceCategHome').val(2);
+			insertOptions(2);
+			$('#applianceTypeHome').val(appl_type);
+			
+		} else if(ent.indexOf(appl_type) != -1){
+			$('#applianceCategHome').val(3);
+			insertOptions(3);
+			$('#applianceTypeHome').val(appl_type);
+			
+		} else if(kit.indexOf(appl_type) != -1){
+			$('#applianceCategHome').val(4);
+			insertOptions(4);
+			$('#applianceTypeHome').val(appl_type);
+			
+		} else if(light.indexOf(appl_type) != -1){
+			$('#applianceCategHome').val(5);
+			insertOptions(5);
+			$('#applianceTypeHome').val(appl_type);
+			
+		} else if(other.indexOf(appl_type) != -1){
+			$('#applianceCategHome').val(6);
+			insertOptions(6);
+			$('#applianceTypeHome').val(appl_type);
+		} 
+		
+		
+		$('#applianceTypeHome').formSelect();
+		$('#applianceCategHome').formSelect();
 
 		$(".u_label").each(function (index) {
 			$(this).addClass("active");
@@ -99,9 +142,9 @@ function add_jqueries() {
 			var updates = {
 				id: $('#d_ID').val().trim(),
 				name: $('#d_NAME').val().trim(),
-				limit: parseFloat($('#d_LIMIT').val().trim())
+				limit: parseFloat($('#d_LIMIT').val().trim()),
+				type: $('#applianceTypeHome').find(":selected").attr('value')
 			};
-
 			$.ajax({
 				type: "POST",
 				data: "appl_updates=" + JSON.stringify(updates),
@@ -117,6 +160,81 @@ function add_jqueries() {
 			});
 		}
 	});
+
+}
+
+function insertOptions(givenValue){
+	if(givenValue == 1){
+		htmlToAppend = '<option class="AIR-CONDITIONING black-text text-darken-2" value="AIR CONDITIONER">AIR CONDITIONER</option>'+
+							'<option class="AIR-CONDITIONING black-text text-darken-2" value="BOX FAN">BOX FAN</option>'+
+							'<option class="AIR-CONDITIONING black-text text-darken-2" value="CEILING FAN">CEILING FAN</option>'+
+							'<option class="AIR-CONDITIONING black-text text-darken-2" value="DESK FAN">DESK FAN</option>'+
+							'<option class="AIR-CONDITIONING black-text text-darken-2" value="EXHAUST FAN">EXHAUST FAN</option>'+
+							'<option class="AIR-CONDITIONING black-text text-darken-2" value="ORBIT WALL FAN">ORBIT WALL FAN</option>';
+	
+	} else if(givenValue == 2){
+		htmlToAppend = '<option class="COMPUTERS black-text text-darken-2" value="LAPTOP COMPUTER">LAPTOP COMPUTER</option>'+
+							'<option class="COMPUTERS black-text text-darken-2" value="PERSONAL COMPUTER">PERSONAL COMPUTER</option>'+
+							'<option class="COMPUTERS black-text text-darken-2" value="PRINTER">PRINTER</option>';
+	} else if(givenValue == 3){
+		htmlToAppend = '<option class="ENTERTAINMENT black-text text-darken-2" value="HOME THEATER SYSTEM (5 DVD/CD)">HOME THEATER SYSTEM</option>'+
+							'<option class="ENTERTAINMENT black-text text-darken-2" value="KARAOKE">KARAOKE</option>'+
+							'<option class="ENTERTAINMENT black-text text-darken-2" value="PLASMA TV">PLASMA TV</option>'+
+							'<option class="ENTERTAINMENT black-text text-darken-2" value="PLAYSTATION">PLAYSTATION </option>'+
+							'<option class="ENTERTAINMENT black-text text-darken-2" value="Projection TV">Projection TV</option>'+
+							'<option class="ENTERTAINMENT black-text text-darken-2" value="RADIO CASETTE RECORDER">RADIO CASETTE RECORDER</option>'+
+							'<option class="ENTERTAINMENT black-text text-darken-2" value="STEREO">STEREO</option>'+
+							'<option class="ENTERTAINMENT black-text text-darken-2" value="TV SET">TV SET</option>'+
+							'<option class="ENTERTAINMENT black-text text-darken-2" value="VCD / DVD / MP3 PLAYER">VCD / DVD / MP3 PLAYER</option>'+
+							'<option class="ENTERTAINMENT black-text text-darken-2" value="VHS">VHS</option>'+
+							'<option class="ENTERTAINMENT black-text text-darken-2" value="XBOX">XBOX</option>';
+	
+	} else if(givenValue == 4){
+		htmlToAppend = '<option class="KITCHEN black-text text-darken-2" value="BREAD TOASTER">BREAD TOASTER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="COFFEE MAKER">COFFEE MAKER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="FOOD PROCESSOR">FOOD PROCESSOR</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="FREEZER CHEST">FREEZER CHEST</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="FRYER">FRYER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="GRILLER">GRILLER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="INDUCTION / IH COOKER">INDUCTION / IH COOKER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="MEAT CHOPPER">MEAT CHOPPER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="MICROWAVE">MICROWAVE</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="OSTERIZER/BLENDER">OSTERIZER/BLENDER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="OVEN TOASTER">OVEN TOASTER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="POPCORN POPPER">POPCORN POPPER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="REFRIGERATOR">REFRIGERATOR</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="RICE COOKER">RICE COOKER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="SLOW COOKER">SLOW COOKER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="STOVE">STOVE</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="TURBO BROILER">TURBO BROILER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="WATER DISPENSER">WATER DISPENSER</option>'+
+							'<option class="KITCHEN black-text text-darken-2" value="WATER HEATER">WATER HEATER</option>';
+	
+	} else if(givenValue == 5){
+		htmlToAppend = '<option class="LIGHTINGS black-text text-darken-2" value="CFL">CFL</option>'+
+							'<option class="LIGHTINGS black-text text-darken-2" value="CHRISTMAS LIGHT">CHRISTMAS LIGHT</option>'+
+							'<option class="LIGHTINGS black-text text-darken-2" value="FLUORESCENT LAMP 48">FLUORESCENT LAMP</option>'+
+							'<option class="LIGHTINGS black-text text-darken-2" value="INCANDESCENT BULB">INCANDESCENT BULB</option>'+
+							'<option class="LIGHTINGS black-text text-darken-2" value="RECHARGEABLE LIGHTS/FANS">RECHARGEABLE LIGHTS/FANS</option>';
+	
+	} else if(givenValue == 6){
+		htmlToAppend = '<option class="OTHERS black-text text-darken-2" value="CELLPHONE CHARGER">CELLPHONE CHARGER</option>'+
+							'<option class="OTHERS black-text text-darken-2" value="CLOTHES DRYER">CLOTHES DRYER</option>'+
+							'<option class="OTHERS black-text text-darken-2" value="FLAT IRON">FLAT IRON</option>'+
+							'<option class="OTHERS black-text text-darken-2" value="FLOOR POLISHER">FLOOR POLISHER</option>'+
+							'<option class="OTHERS black-text text-darken-2" value="HAIR DRYER">HAIR DRYER</option>'+
+							'<option class="OTHERS black-text text-darken-2" value="SEWING MACHINE">SEWING MACHINE</option>'+
+							'<option class="OTHERS black-text text-darken-2" value="VACUUM CLEANER">VACUUM CLEANER</option>'+
+							'<option class="OTHERS black-text text-darken-2" value="WASHING MACHINE">WASHING MACHINE</option>'+
+							'<option class="OTHERS black-text text-darken-2" value="WATER DISPENSER">WATER DISPENSER</option>'+
+							'<option class="OTHERS black-text text-darken-2" value="WATER HEATER">WATER HEATER</option>';
+	}
+	disabledOption = '<option class="grey-text text-darken-2" value="0" disabled selected>Choose appliance type</option>';
+	$('#applianceTypeHome').html(disabledOption + htmlToAppend);
+	$('#applianceTypeHome').prop("disabled", false);
+	$('#applianceTypeHome').removeAttr("disabled");
+	$('#applianceTypeHome').formSelect();
+	$('select').formSelect();
 }
 
 function ToastMessage(message){
@@ -267,18 +385,18 @@ function loadinfos() {
 				//console.log(avg +" = " +avg/1000);
 				
 				if((consump/1000).toFixed(2) == 0.00){
-					consump_out = (consump*1).toFixed(2)+" whr";
+					consump_out = (consump*1).toFixed(2)+" Wh";
 				}
 				else{
-					consump_out = (consump/1000).toFixed(2)+" Kwhr";
+					consump_out = (consump/1000).toFixed(2)+" kWh";
 				}
 				
 				
 				if((avg/1000).toFixed(2) == 0.00){
-					avg_out = (avg*1).toFixed(2) + " whr";
+					avg_out = (avg*1).toFixed(2) + " Wh";
 				}
 				else{
-					avg_out = (avg/1000).toFixed(2) + " Kwhr";
+					avg_out = (avg/1000).toFixed(2) + " kWh";
 				}
 				
 				if(appname.match(/Anonymous_Appliance/i) || appname.match(/Unregistered_Appliance/i)){
@@ -293,11 +411,12 @@ function loadinfos() {
 					unit = "";
 				} else {
 					limit_value = appinfo[i].power_limit_value;
+					original_limit_value = limit_value;
 					if(limit_value == 0){
 						limit_value = "Unlimited";
 						unit = "";
 					} else {
-						unit = " Kwhr";
+						unit = " kWh / mo";
 					}
 
 				}
@@ -311,19 +430,20 @@ function loadinfos() {
 				$('.kwh[name="' + appuid + '"]').text((consump/1000).toFixed(3) + " whr / " + limit_value + unit);
 				$('.switcher[name="' + appuid + '"]').attr('id', appuid);
 
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(0).html("UID: <span style='font-weight: normal; font-size: inherit;'>" + appuid + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(1).html("Name: <span style='font-weight: normal; font-size: inherit;'>" + appname + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("Type: <span style='font-weight: normal; font-size: inherit;'>" + apptype + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("Power Consumption: <span style='font-weight: normal; font-size: inherit;'>" + consump_out +" </span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(4).html("Average Consumption: <span style='font-weight: normal; font-size: inherit;'>" + avg_out + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(5).html("Price per KWhr: <span style='font-weight: normal; font-size: inherit;'>₱ " + priceperkwhr.toFixed(2) + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(6).html("Estimated Price: <span style='font-weight: normal; font-size: inherit;'>₱ " + cost.toFixed(2) + "</span>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(7).html("Limit: <span style='font-weight: normal; font-size: inherit;'>" + limit_value + unit + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(0).html("<div class='olabel'>UID</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + appuid + "</div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(1).html("<div class='olabel'>Name</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + appname + "</div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("<div class='olabel'>Type</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + apptype + "</div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("<div class='olabel'>Power Consumption</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + consump_out +" </div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(4).html("<div class='olabel'>Average Consumption</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + avg_out + " / mo </div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(5).html("<div class='olabel'>Rate / kWh</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>₱ " + priceperkwhr.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+ "</div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(6).html("<div class='olabel'>Estimated Cost</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>₱ " + cost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + " / mo</div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(7).html("<div class='olabel'>Limit</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + limit_value + unit + "</span>");
 
 				$('.appl_id[name="' + appuid + '"]').val(appuid);
 				$('.appl_name[name="' + appuid + '"]').val(appname);
 				$('.appl_consumption[name="' + appuid + '"]').val(consump);
-				$('.appl_limit[name="' + appuid + '"]').val(limit_value);
+				$('.appl_type[name="' + appuid + '"]').val(apptype);
+				$('.appl_limit[name="' + appuid + '"]').val(original_limit_value);
 
 				//chartlist[i].config.data.datasets[0].data[cur_month] = consump;
 				//chartlist[i].update();

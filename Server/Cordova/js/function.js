@@ -10,7 +10,27 @@ $('#SignOut').click(function() {
 	UserLogOut();
 });
 
+$('#webSignOut').click(function() {
+	webUserLogOut();
+});
+
 function UserLogOut(){
+	$.ajax({
+		type: "POST",
+		url: "http://" + deviceHost + "/methods.php",
+		data: "signout=" + 1,
+		crossDomain: true,
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		success: function(data) {
+			console.log("Signing Out!");
+			window.location = 'index.html';
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			SendErrorMessage();
+		}
+	});
+}
+function webUserLogOut(){
 	$.ajax({
 		type: "POST",
 		url: "http://" + deviceHost + "/methods.php",
@@ -64,7 +84,7 @@ function IdentifyUser(destination){
 function SendErrorMessage(){
 	$('.toast').hide();
 
-	var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size: 1em;'>Something Went Wrong!</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+	var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size: 1em;'>Something Went Wrong</span><button style='color:gray; margin-left:.5rem; width: 30%;' class='btn-flat toast-action'>&#10006;</button>";
 	M.toast({
 		html: toastHTML
 	});

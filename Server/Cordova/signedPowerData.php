@@ -18,6 +18,7 @@
 	$e_price =  0;
 	$m_avg_watthr = 0;
 	$lastUID;
+	$reseter="false";
 	
 	//echo $lastUID."\r\n";
 	//echo "NOTIFSTAT:\t".$notifStat."\r\n";

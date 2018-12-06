@@ -34,18 +34,18 @@
 	<div class="col s12 m4 l8 overhidden">
 		<div class="divider"></div>
 		<div class="section row">
-			<div class="col s10">
+			<div class="col s8">
 				<div class="sTitle">Socket</div>
 				<div class="sDesc">Main switch of the power socket</div>
 			</div>
-			<div class="col s2">
+			<div class="col s4">
 				<span class="badge">
 					<div class="switch">
 						<label>
-							<!--Off-->
+							Off
 							<input type="checkbox" id='s_socket' <?php echo $socket;?>>
 							<span class="lever"></span>
-							<!--On-->
+							On
 						</label>
 					</div>
 				</span>
@@ -54,18 +54,18 @@
 		
 		<div class="divider"></div>
 		<div class="section row">
-			<div class="col s10">
+			<div class="col s8">
 				<div class="sTitle">Consumption Limit</div>
-				<div class="sDesc">Option for Granting Consumption Limits</div>
+				<div class="sDesc">Option for Granting Consumption Limits for registered appliances</div>
 			</div>
-			<div class="col s2">
+			<div class="col s4">
 				<span class="badge">
 					<div class="switch">
 						<label>
-							<!--Off-->
+							Off
 							<input type="checkbox" id='s_limit' <?php echo $limit;?>>
 							<span class="lever"></span>
-							<!--On-->
+							On
 						</label>
 					</div>
 				</span>
@@ -73,19 +73,19 @@
 		</div>
 		<div class="divider"></div>
 		<div class="section row">
-			<div class="col s10">
-				<div class="sTitle">Device Authentication</div>
+			<div class="col s8">
+				<div class="sTitle">Strict Authentication</div>
 				<div class="sDesc">Socket Strict mode</div>
 			</div>
 			
-			<div class="col s2">
+			<div class="col s4">
 				<span class="badge">
 					<div class="switch">
 						<label>
-							<!--Off-->
+							Off
 							<input type="checkbox" id='s_authenticate' <?php echo $authentication;?>>
 							<span class="lever"></span>
-							<!--On-->
+							On
 						</label>
 					</div>
 				</span>
@@ -94,7 +94,7 @@
 		
 		<div class="divider"></div>
 		<div class="section">
-			<a id='price-button-admin' class="black-text modal-trigger sTitle" style="display:block" href="#adminConfirmChangeRate">Price/KwH Rate</a>
+			<a id='price-button-admin' class="black-text modal-trigger sTitle" style="display:block" href="#adminConfirmChangeRate">Rate Cost / KwH </a>
 		</div>
 		
 		<div class="divider"></div>

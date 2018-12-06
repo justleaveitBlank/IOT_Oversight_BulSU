@@ -67,6 +67,7 @@ $(function() {
         var labelset = JSON.parse(result[0].trim());
         var overallCharset = JSON.parse(result[1].trim());
 		var singleAppChartset = JSON.parse(result[2].trim());
+		var singleAppName = JSON.parse(result[3].trim());
         var colCount = 0;
 		var chartset = {
 				"label":"OVERALL",
@@ -85,7 +86,7 @@ $(function() {
 			for(var count = 0; count<singleAppChartset.length; count++){
 				for(var curUid in singleAppChartset[count]){
 					var chartset = {
-						"label": curUid,
+						"label": singleAppName[count],
 						"data": singleAppChartset[count][curUid],
 						"fill": false,
 						"borderColor": Colors[++colCount],
@@ -104,7 +105,7 @@ $(function() {
 			for(var count = 0; count<singleAppChartset.length; count++){
 				for(var curUid in singleAppChartset[count]){
 					var chartset = {
-						"label": curUid,
+						"label": singleAppName[count],
 						"data": singleAppChartset[count][curUid],
 						"fill": false,
 						"borderColor": Colors[++colCount],
@@ -123,7 +124,7 @@ $(function() {
 			for(var count = 0; count<singleAppChartset.length; count++){
 				for(var curUid in singleAppChartset[count]){
 					var chartset = {
-						"label": curUid,
+						"label": singleAppName[count],
 						"data": singleAppChartset[count][curUid],
 						"fill": false,
 						"borderColor": Colors[++colCount],
@@ -149,6 +150,15 @@ $(function() {
 				"datasets":[]
 			},
 			"options":{
+				tooltips: {
+					enabled: true,
+					mode: 'single',
+					callbacks: {
+						label: function(tooltipItems, data) { 
+							return tooltipItems.yLabel + ' kWh';
+						}
+					}
+				},
 				animation: {
 					duration: 1000, // general animation time
 				},
@@ -181,7 +191,7 @@ $(function() {
 			var monthly_Avg_out;
 			var yearly_Sum_out;
 			var yearly_Avg_out;
-          if(type==options[0]){
+			if(type==options[0]){
 			  
 			weekly_sum=0.0;
             for (var l = 0; l < overallCharset.length; l++) {
@@ -190,18 +200,18 @@ $(function() {
 			
 			//console.log("weekly_sum = "+weekly_sum/1000);
 			if((weekly_sum/1000).toFixed(2) == 0.00){
-				weekly_Sum_out = weekly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
+				weekly_Sum_out = weekly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Wh";
 			}
 			else{
-				weekly_Sum_out = (weekly_sum/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+				weekly_Sum_out = (weekly_sum/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" kWh";
 			}
 			 
 			weekly_avg=weekly_sum/overallCharset.length;
 			if((weekly_avg/1000).toFixed(2) == 0.00){
-				weekly_Avg_out = weekly_avg.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
+				weekly_Avg_out = weekly_avg.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Wh";
 			}
 			else{;
-				weekly_Avg_out = (weekly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+				weekly_Avg_out = (weekly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" kWh";
 			}
            
             weekly_price=(weekly_sum/1000)*parseFloat(data.trim());
@@ -218,18 +228,18 @@ $(function() {
 			
 			//console.log("monthly_sum = "+monthly_sum/1000);
 			if((monthly_sum/1000).toFixed(2) == 0.00){
-				monthly_Sum_out = monthly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
+				monthly_Sum_out = monthly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Wh";
 			}
 			else{
-				monthly_Sum_out = (monthly_sum/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+				monthly_Sum_out = (monthly_sum/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" kWh";
 			}
 			
             monthly_avg=monthly_sum/overallCharset.length;
 			if((monthly_avg/1000).toFixed(2) == 0.00){
-				monthly_Avg_out = monthly_avg.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
+				monthly_Avg_out = monthly_avg.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Wh";
 			}
 			else{;
-				monthly_Avg_out = (monthly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+				monthly_Avg_out = (monthly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" kWh";
 			}
 			
             monthly_price=(monthly_sum/1000)*parseFloat(data.trim());
@@ -246,18 +256,18 @@ $(function() {
 			
 			//console.log("yearly_sum = "+yearly_sum/1000);
 			if((yearly_sum/1000).toFixed(2) == 0.00){
-				yearly_Sum_out = yearly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" whr";
+				yearly_Sum_out = yearly_sum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Wh";
 			}
 			else{
-				yearly_Sum_out = (yearly_sum/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+				yearly_Sum_out = (yearly_sum/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" kWh";
 			}
 			
             yearly_avg=yearly_sum/overallCharset.length;
 			if((yearly_avg/1000).toFixed(2) == 0.00){
-				yearly_Avg_out = yearly_avg.toFixed(2)+" whr";
+				yearly_Avg_out = yearly_avg.toFixed(2)+" Wh";
 			}
 			else{;
-				yearly_Avg_out = (yearly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" Kwhr";
+				yearly_Avg_out = (yearly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" kWh";
 			}
 			
             yearly_price=(yearly_sum/1000)*parseFloat(data.trim());

@@ -1,6 +1,6 @@
-sudo apt-get install -t stretch apache2
-sudo apt-get install -t stretch php7.0
-sudo apt-get install -t stretch php7.0-mysql
+sudo apt-get install apache2
+//sudo apt-get install php
+//sudo apt-get install -t stretch php7.0-mysql
 
 sudo nano  /var/www/html/info.php
 <?php
@@ -21,7 +21,8 @@ sudo mysql_secure_installation
 >> remove anonymous user = "n"
 >> disaalow root login remotely = "n"
 >> remove test database and access to it = "n"
->> reload privilage tabl now = "y"
+>> reload privilage table now = "y"
+
 
 sudo su -
 mysql -u root -p
@@ -42,3 +43,7 @@ sudo nano /etc/vsftpd.conf
 >> ADD force_dot_files=YES
 
 sudo sevice vsftpd restart
+
+sudo nano /etc/apache2/apache2.conf
+>> add at bottom Include /etc/phpmyadmin/apache.conf
+sudo /etc/init.d/apache2 restart

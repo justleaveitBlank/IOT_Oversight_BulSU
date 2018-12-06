@@ -177,8 +177,8 @@
 														<span class="card-title black-text"><b><?php echo $title?></b></span>
 														<p class="black-text">ID: <em><?php echo $app_id?></em></p>
 														<p class="black-text">Name: <em><?php echo $name?></em></p>
-														<p class="black-text">Consumption: <em><?php echo $consumption?> whr</em></p>
-														<p class="black-text">Limit: <em><?php echo $limit?> kwhr</em></p>
+														<p class="black-text">Consumption: <em><?php echo $consumption?> Wh</em></p>
+														<p class="black-text">Limit: <em><?php echo $limit?> kWh</em></p>
 													</div>
 												</div>
 
@@ -303,7 +303,7 @@
 														<p class="black-text">Limit: <em><?php echo $limit?> kwhr</em></p>
 													</div>
 													<div class="card-action right-align" name="<?php echo $name?>">
-														<a class="consumption_btn btn-small waves-effect waves-light orange white-text modal-trigger sTitle" href='#updateLimit' id='<?php echo $app_id;?>'>Update</a>
+														<a class="consumption_btn btn-small waves-effect waves-purple modal-trigger sTitle btn-register btn-flat" style="line-height:2rem;" href='#updateLimit' id='<?php echo $app_id;?>'>Update</a>
 													</div>
 												</div>
 
@@ -338,10 +338,9 @@
 										</div>
 										<div class="divider"></div>
 										<div class="card-action right-align" style="margin-top:1rem;">
-											<a id='<?php echo $app_id;?>' class="register-trigger modal-trigger btn-small waves-effect waves-light orange white-text sTitle" href="#register_appl">Register</a>
-											<a id='<?php echo $app_id;?>' class="allow-trigger btn-small waves-effect waves-light green white-text modal-trigger sTitle" href='#allowUnregistered'>Allow</a>
-											
-											<a class="ignore btn-small waves-effect waves-light red white-text sTitle" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
+											<a id='<?php echo $app_id;?>' class="register-trigger modal-trigger btn-small waves-effect waves-purple sTitle btn-register btn-flat" style="line-height:2rem;" href="#register_appl">Register</a>
+											<a id='<?php echo $app_id;?>' class="allow-trigger btn-small waves-effect waves-green modal-trigger sTitle btn-accept btn-flat" style="line-height:2rem;" href='#allowUnregistered'>Allow</a>
+											<a class="ignore btn-small waves-effect waves-red sTitle btn-cancel btn-flat" style="line-height:2rem;" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
 										</div>
 									</div>
 								</div>
@@ -372,9 +371,8 @@
 										</div>
 										<div class="divider"></div>
 										<div class="card-action right-align" style="margin-top:1rem;">
-											<a id='<?php echo $app_id;?>' class="register-trigger btn-small waves-effect waves-light orange white-text sTitle" href="#register_appl" disabled>Register</a>
-											<a id='<?php echo $app_id;?>' class="allow-trigger btn-small waves-effect waves-light green white-text modal-trigger sTitle" href='#allowUnregistered'>Allow</a>
-											<a class="ignore btn-small waves-effect waves-light red white-text sTitle" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
+											<a id='<?php echo $app_id;?>' class="allow-trigger btn-small waves-effect waves-green modal-trigger sTitle btn-accept btn-flat"  style="line-height:2rem;" href='#allowUnregistered'>Allow</a>
+											<a class="ignore btn-small waves-effect waves-red sTitle btn-cancel btn-flat" style="line-height:2rem;" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
 										</div>
 									</div>
 								</div>

@@ -18,7 +18,13 @@
 			$e_price = $m_Kwatthr * $s_price_rate;
 			$e_price = round($e_price,2);
 			//echo $m_Kwatthr."\r\n";
-			
+			//need to update
+			if($reseter == "true" && date('m-d') == $current_month."-01" ){
+				$upd_query = 'UPDATE t_appliance SET current_power_usage = 0, estimated_cost=0 WHERE uid = "' . $UID . '"';
+				if($con->query($upd_query)){
+					echo mysqli_error($con);
+				}
+			}
 			if($has_power =="1"){
 				
 				$upd_query = 'UPDATE t_appliance SET current_power_usage = ' . $m_consumed . ', avg_watthr = ' . round($m_Kwatthr,2) . ',estimated_cost= '.$e_price.'  WHERE uid = "' . $UID . '"';

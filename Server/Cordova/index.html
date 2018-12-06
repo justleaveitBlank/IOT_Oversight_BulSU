@@ -7,6 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=device-height"/>
 
 	<!--Import Google Icon Font-->
 	<link href="css/material+icons.css" rel="stylesheet">
@@ -32,9 +33,9 @@
 		}
 		body{
 			width: 100%;
-			height: 100%;
-			background: rgba(138,43,226,1) radial-gradient(transparent,rgba(75,0,130,1));
-			background: rgba(138,43,226,1) linear-gradient(rgba(75,0,130,1),rgba(138,43,226,1));
+			height: 100vh;
+			background-color: #7e57c2;
+			background-image: linear-gradient(to bottom right, #f48fb1,  #7e57c2);
 			background-attachment: fixed;
 			background-position: center;
 			background-size: 100% 100%;
@@ -42,7 +43,12 @@
 			align-items: center;
 			animation: fadein .7s;
 		}
-
+		.bgimage{
+			background:url(imgs/BG01.png) no-repeat;
+			background-size:100% auto;
+			-webkit-background-size: 100% auto;
+			background-position:center bottom;
+		}
 		@keyframes fadein {
 				from { opacity: 0; }
 				to   { opacity: 1; }
@@ -58,7 +64,7 @@
 			position:relative;
 		}
 		.appName{
-			font-size: 2rem;
+			font-size: 2.5rem;
 			color:white;
 			font-weight:bold;
 			margin: 0 auto;
@@ -66,13 +72,121 @@
 			user-select:none;
 			position:relative;
 			text-align:center;
+			margin-bottom:1.5rem;
 		}
+		.input-field .prefix {
+			position: absolute;
+			width: 3rem;
+			font-size: 2rem;
+			-webkit-transition: color .2s;
+			transition: color .2s;
+			top: 0.5rem;
+			color: #ffffff;
+		}
+		input:not([type]), 
+		input[type=text]:not(.browser-default), 
+		input[type=password]:not(.browser-default), 
+		input[type=email]:not(.browser-default), 
+		input[type=url]:not(.browser-default), 
+		input[type=time]:not(.browser-default), 
+		input[type=date]:not(.browser-default), 
+		input[type=datetime]:not(.browser-default), 
+		input[type=datetime-local]:not(.browser-default), 
+		input[type=tel]:not(.browser-default), 
+		input[type=number]:not(.browser-default), 
+		input[type=search]:not(.browser-default), 
+		textarea.materialize-textarea {
+			border-bottom: 1px solid #616161;
+		}
+		input:not([type]), 
+		input[type=text]:not(.browser-default),
+		input[type=password]:not(.browser-default), 
+		input[type=email]:not(.browser-default), 
+		input[type=url]:not(.browser-default), 
+		input[type=time]:not(.browser-default), 
+		input[type=date]:not(.browser-default), 
+		input[type=datetime]:not(.browser-default), 
+		input[type=datetime-local]:not(.browser-default), 
+		input[type=tel]:not(.browser-default), 
+		input[type=number]:not(.browser-default), 
+		input[type=search]:not(.browser-default), 
+		textarea.materialize-textarea {
+			border-bottom: 1px solid rgba(0,0,0,0);
+			border-radius:50px;
+			padding: 1.5rem;
+			background-color:rgba(0,0,0,0.1);
+		}		
+		.input-field > label {
+			color: #ffffff;
+		}
+		.input-field > label:not(.label-icon).active {
+			-webkit-transform: translateY(-20px) scale(.9);
+			transform: translateY(-20px) scale(.9);
+		}
+		button{
+			background: rgba(0,0,0,0);
+			-webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0);
+			box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.0), 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0);
+		}
+		.btn, .btn-large, .btn-small, .btn-floating{
+			background: rgba(0,0,0,0);
+			-webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0);
+			box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.0), 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0);
+			border: 1.5px solid #ffffff;
+			border-radius:50px;
+			padding:.2rem;
+		}
+		#forgotPassword{
+			height: 50%;
+		}
+		@media only screen and (max-width: 992px)
+		.modal {
+			width: 90%;
+		}
+		.regbtn{
+			color:#ffffff;
+			border: solid 1.5px #ffffff !important;
+		}
+		input.invalid:not([type]), 
+		input.invalid:not([type]):focus,
+		input[type=text].invalid:not(.browser-default), 
+		input[type=text].invalid:not(.browser-default):focus, 
+		input[type=password].invalid:not(.browser-default), 
+		input[type=password].invalid:not(.browser-default):focus, 
+		input[type=email].invalid:not(.browser-default), 
+		input[type=email].invalid:not(.browser-default):focus, 
+		input[type=url].invalid:not(.browser-default), 
+		input[type=url].invalid:not(.browser-default):focus, 
+		input[type=time].invalid:not(.browser-default), 
+		input[type=time].invalid:not(.browser-default):focus, 
+		input[type=date].invalid:not(.browser-default), 
+		input[type=date].invalid:not(.browser-default):focus, 
+		input[type=datetime].invalid:not(.browser-default), 
+		input[type=datetime].invalid:not(.browser-default):focus, 
+		input[type=datetime-local].invalid:not(.browser-default), 
+		input[type=datetime-local].invalid:not(.browser-default):focus, 
+		input[type=tel].invalid:not(.browser-default), 
+		input[type=tel].invalid:not(.browser-default):focus, 
+		input[type=number].invalid:not(.browser-default), 
+		input[type=number].invalid:not(.browser-default):focus, 
+		input[type=search].invalid:not(.browser-default), 
+		input[type=search].invalid:not(.browser-default):focus, 
+		textarea.materialize-textarea.invalid, 
+		textarea.materialize-textarea.invalid:focus, 
+		.select-wrapper.invalid > input.select-dropdown, 
+		.select-wrapper.invalid > input.select-dropdown:focus {
+			border: 1px solid #F44336;
+			-webkit-box-shadow: 0 1px 0 0 #F44336;
+			box-shadow: 0 1px 0 0 #F44336;
+		}
+		
 		.submitbtn{
 			width:100%;
 			font-weight:bold;
-			font-size:20px;
+			font-size:1.5rem;
 			margin:10px 0;
 			box-sizing:border-box;
+			background-color:rgba(0,0,0,0) !important;
 		}
 		.spacing1{
 			display:inline-block;
@@ -136,9 +250,9 @@
 		input[type=number].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
 		input[type=search].border_bottom_darkgray:not(.browser-default):focus:not([readonly]),
 		textarea.border_bottom_darkgray.materialize-textarea:focus:not([readonly]) {
-		  border-bottom: 1px solid #616161;
-		  -webkit-box-shadow: 0 1px 0 0 #757575;
-				  box-shadow: 0 1px 0 0 #757575;
+		  border: 1px solid #7e57c2;
+		  -webkit-box-shadow: 0 1px 0 0 #7e57c2;
+				  box-shadow: 0 1px 0 0 #7e57c2;
 		}
 		html, body, .my-wrapper {
 		  height: 100%;
@@ -154,7 +268,53 @@
 		#toast-container {
 		  top: auto !important;
 		  right: auto !important;
-		  bottom: 50%;
+		  bottom: 1rem;
+		}
+		.toast{
+			background-color:rgba(0,0,0,0.6);
+			width: max-content;
+			min-width:75%;
+			margin: 0 auto;
+			border-radius:50px;
+		}
+		.iffail{
+			border-bottom: 1px solid #F44336 !important;
+			-webkit-box-shadow: 0 1px 0 0 #F44336 !important;
+			box-shadow: 0 1px 0 0 #F44336 !important;
+		}
+		.btn-accept{
+			color: #66bb6a !important;;
+			background-color:rgba(0,0,0,0) !important;
+			border-radius: 50px;
+			border:solid 1px #66bb6a;
+			min-width: 96px !important;;
+			text-align: center;
+		}
+		.btn-cancel{
+			color: #ef5350 !important;;
+			background-color:rgba(0,0,0,0) !important;
+			border-radius:50px;
+			border:solid 1px #ef5350;
+			min-width: 96px !important;;
+			text-align: center;
+		}
+		.btn-register{
+			color: #7e57c2 !important;
+			background-color:rgba(0,0,0,0) !important;
+			border-radius:50px;
+			border:solid 1px #7e57c2;
+			min-width: 96px;
+			text-align: center;
+		}
+		input[type="number"] {
+			-moz-appearance: textfield;
+		}
+		.input-field.col label {
+			left: 2rem;
+			line-height: 1.4rem;
+		}
+		h5 {
+			margin: 0 0 1rem 0;
 		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
@@ -188,11 +348,14 @@
 		  }
 
 			$('.modal').modal({onCloseEnd: function() { modalClosed(); }});
+			
+			$('body').css('max-height', $( window ).height()); 
+			$('body').css('overflow', 'hidden'); 
 		});
 	</script>
 </head>
 <body>
-	<div class="my-wrapper valign-wrapper">
+	<div class="my-wrapper valign-wrapper bgimage">
 		<div class="container">
 			<div class="row">
 				<div class="col l8 s12 hide-on-med-and-down border_right">
@@ -206,25 +369,23 @@
 								<div class="appLogo"></div>
 								<p class="appName">OVERSIGHT</p>
 							<form class="col s12" method="POST" action="" id='loginForm'>
-								<div class="input-field col s12">
-									<i class="material-icons prefix">account_box</i>
-									<input id="user_name" type="text" class="validate white-text" autocomplete="off" required/>
-									<span class="helper-text" data-error="&#10006;" data-success=""></span>
+								<div class="input-field col s12" style="padding:0;">
+									<i class="material-icons prefix" style="font-size: 2.5rem; top: 0.25rem;">account_box</i>
+									<input id="user_name" type="text" class="validate white-text " style="border-radius: 50px; background:rgba(0,0,0,.15); padding:1.6rem; border-bottom: 1px solid rgba(0,0,0,0)" autocomplete="off" required/>
 									<label for="user_name">User Name</label>
 								</div>
-								<div class="input-field col s12">
-									<i class="material-icons prefix">lock</i>
-									<input id="password" type="password" class="validate white-text" autocomplete="off" required/>
-									<span class="helper-text" data-error="&#10006;" data-success=""></span>
+								<div class="input-field col s12" style="padding:0;">
+									<i class="material-icons prefix" style="font-size: 2.5rem; top: 0.25rem;">lock</i>
+									<input id="password" type="password" class="validate white-text" style="border-radius: 50px; background:rgba(0,0,0,.15); padding:1.6rem; border-bottom: 1px solid rgba(0,0,0,0)" autocomplete="off" required/>
 									<label for="password">Password</label>
 								</div>
-								<button id='btnlogin' class="submitbtn btn waves-effect waves-light light-blue accent-4" type="submit" name="action">Log In</button>
+								<button id='btnlogin' class="submitbtn btn waves-effect waves-light" type="submit" name="action">Log In</button>
 
 								<!-- Modal Trigger -->
-								<a class=" grey-text darken-4 spacing1 modal-trigger center-align" href="#forgotPassword">Forgot password?</a>
+								<a class="spacing1 modal-trigger center-align" href="#forgotPassword"><b style="color:#e0e0e0;">Forgot password?</a>
 
 								<!-- Modal Trigger -->
-								<a class="waves-effect waves-light btn modal-trigger submitbtn yellow darken-4" href="#registerForm">Register</a>
+								<a class="waves-effect waves-light btn modal-trigger regbtn submitbtn" href="#registerForm">Sign Up</a>
 							</form>
 
 							<div id='sampleholder'></div>
@@ -241,12 +402,12 @@
 			<!-- Modal Structure for forgot password-->
 			<div id="forgotPassword" class="modal modal-fixed-footer">
 				<form class="col s12" method="POST" action="">
-					<div class="modal-content">
+					<div class="modal-content" style="overflow-y: scroll; height: auto;">
 						<div class="row">
 							<h5>Forgot Your Password?</h5>
 							<p class="text_indent">Don't worry. Resetting your password is easy. Just tell us the email address you registered with OverSight</p>
 						</div>
-						<div class="row">
+						<div class="row"  style=" margin-bottom:0;">
 							<div class="input-field col s12">
 								<i class="material-icons prefix grey-text text-darken-2">email</i>
 								<input id="email" type="email" class="border_bottom_green border_bottom_darkgray" autocomplete="off" required>
@@ -256,8 +417,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a href="#!" class=" forgot-btn modal-action waves-effect waves-purple btn-flat">Send</a>
-						<a href="#!" class=" modal-action modal-close waves-effect waves-purple btn-flat">Cancel</a>
+						<a href="#!" class=" forgot-btn modal-action waves-effect waves-purple btn-flat btn-accept">Send</a>
+						<a href="#!" class=" modal-action modal-close waves-effect waves-purple btn-flat btn-cancel">Cancel</a>
 					</div>
 				</form>
 			</div>
@@ -265,7 +426,7 @@
 			<!-- Modal Structure for register form-->
 			<div id="registerForm" class="modal bottom-sheet modal-limits">
 				<form class="col s12" method="POST" action="">
-					<div class="modal-content">
+					<div class="modal-content" style="padding: 15px 24px 0 24px">
 						<h5>Register</h5>
 						<br>
 						<div class="row">
@@ -294,13 +455,13 @@
 							<i class="material-icons prefix grey-text text-darken-2">contact_phone</i>
 							<input id="r_contact" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "11" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
 							<label for="r_contact" class="grey-text text-darken-2">Contact Number</label>
-							<span class="helper-text" data-error="&#10006;" data-success="&#10004;"></span>
+							<span class="helper-text" data-error="" data-success=""></span>
 						</div>
 						<div class="input-field col s12">
 							<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
 							<input id="r_password" type="password" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
 							<label for="r_password" class="grey-text text-darken-2">Password</label>
-							<span class="helper-text" data-error="&#10006; 8 characters or longer" data-success="&#10004;"></span>
+							<span class="helper-text" data-error="&#10006; 8 characters or longer" data-success=""></span>
 						</div>
 						<div class="input-field col s12">
 							<i class="material-icons prefix grey-text text-darken-2">lock</i>
@@ -310,8 +471,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a href="#!" id='submit_register' class="waves-effect waves-purple btn-flat">Register</a>
-						<a href="#!" class="modal-close waves-effect waves-purple btn-flat">Cancel</a>
+						<a href="#!" id='submit_register' class="waves-effect waves-purple btn-flat btn-register">Register</a>
+						<a href="#!" class="modal-close waves-effect waves-red btn-flat btn-cancel">Cancel</a>
 					</div>
 				</form>
 			</div>

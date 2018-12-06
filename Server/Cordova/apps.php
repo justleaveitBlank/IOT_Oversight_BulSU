@@ -33,16 +33,16 @@
 						<div class="collapsible-header">
 							<div>
 								<div class="applianceName truncate" name='<?php echo $row['uid']; ?>'><?php echo $row['appl_name']; ?></div>
-								<div class="grey-text kwh" name='<?php echo $row['uid']; ?>'><?php echo $row['current_power_usage']; ?> kwh / <?php echo $row['power_limit_value']; ?> kwh</div>
+								<div class="grey-text kwh" name='<?php echo $row['uid']; ?>'><?php echo $row['current_power_usage']; ?> kWh / <?php echo $row['power_limit_value']; ?> kWh</div>
 							</div>
 
 							<span class="badge">
 								<div class="switch" style="display:none;">
 									<label>
-										<!--Off-->
+										Off
 										<input type="checkbox" class='switcher' name='<?php echo $row['uid']; ?>' id='<?php echo $row['uid']; ?>' <?php echo $checked;?>>
-										<span class="lever"></span>
-										<!--On-->
+										<span class="lever" ></span>
+										On
 									</label>
 								</div>
 							</span>
@@ -62,7 +62,7 @@
 
 							<div class="row m_bottom0">
 								<div class="container">
-									<a href="#adminConfirmUpdate" class="d_update_btn col s12 btn-small modal-trigger orange waves-effect waves-light " <?php echo $disabled; ?>><b>Update</b></a>
+									<a href="#adminConfirmUpdate" class="d_update_btn col s12 btn-flat btn-small modal-trigger waves-effect waves-light " <?php echo $disabled; ?>><b>Update</b></a>
 
 								</div>
 
