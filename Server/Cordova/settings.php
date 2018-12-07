@@ -94,7 +94,7 @@
 		
 		<div class="divider"></div>
 		<div class="section">
-			<a id='price-button-admin' class="black-text modal-trigger sTitle" style="display:block" href="#adminConfirmChangeRate">Rate Cost / KwH </a>
+			<a id='price-button-admin' class="black-text modal-trigger sTitle" style="display:block" href="#adminConfirmChangeRate">Rate / KwH </a>
 		</div>
 		
 		<div class="divider"></div>

@@ -385,22 +385,23 @@ function loadinfos() {
 				//console.log(avg +" = " +avg/1000);
 				
 				if((consump/1000).toFixed(2) == 0.00){
-					consump_out = (consump*1).toFixed(2)+" Wh";
+					consump_out = (consump*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') +" Wh";
 				}
 				else{
-					consump_out = (consump/1000).toFixed(2)+" kWh";
+					consump_out = (consump/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') +" kWh";
 				}
 				
 				
 				if((avg/1000).toFixed(2) == 0.00){
-					avg_out = (avg*1).toFixed(2) + " Wh";
+					avg_out = (avg*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + " Wh";
 				}
 				else{
-					avg_out = (avg/1000).toFixed(2) + " kWh";
+					avg_out = (avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + " kWh";
 				}
 				
 				if(appname.match(/Anonymous_Appliance/i) || appname.match(/Unregistered_Appliance/i)){
 					limit_value = appinfo[i].time_limit_value;
+					$('.m_buttom0').css('display','none');
 					if(limit_value.match(/0000-00-00 00:00:00/i)){
 						limit_value = "Indefinite Time";
 					} else {
@@ -427,17 +428,17 @@ function loadinfos() {
 				}
 
 				$('.applianceName[name="' + appuid + '"]').text(appname);
-				$('.kwh[name="' + appuid + '"]').text((consump/1000).toFixed(3) + " whr / " + limit_value + unit);
+				$('.kwh[name="' + appuid + '"]').text(consump_out + " / " + limit_value + unit);
 				$('.switcher[name="' + appuid + '"]').attr('id', appuid);
 
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(0).html("<div class='olabel'>UID</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + appuid + "</div>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(1).html("<div class='olabel'>Name</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + appname + "</div>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("<div class='olabel'>Type</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + apptype + "</div>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("<div class='olabel'>Power Consumption</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + consump_out +" </div>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(4).html("<div class='olabel'>Average Consumption</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + avg_out + " / mo </div>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(5).html("<div class='olabel'>Rate / kWh</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>₱ " + priceperkwhr.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+ "</div>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(6).html("<div class='olabel'>Estimated Cost</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>₱ " + cost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + " / mo</div>");
-				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(7).html("<div class='olabel'>Limit</div><span><b>:</b></span> <div class='olabelc' style='font-weight: normal; font-size: inherit;'>" + limit_value + unit + "</span>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(0).html("<div class='olabel valign-wrapper'>UID</div><span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'> " + appuid + "</div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(1).html("<div class='olabel valign-wrapper'>Name</div><span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'> " + appname + "</div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(2).html("<div class='olabel valign-wrapper'>Type</div><span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'> " + apptype + "</div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(3).html("<div class='olabel valign-wrapper'>Power Consumption</div><span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'> " + consump_out +" </div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(4).html("<div class='olabel valign-wrapper'>Average Consumption</div><span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'> " + avg_out + " / mo </div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(5).html("<div class='olabel valign-wrapper'>Rate / kWh</div><span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'> ₱ " + priceperkwhr.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+ "</div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(6).html("<div class='olabel valign-wrapper'>Estimated Cost</div><span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'> ₱ " + cost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + " / mo</div>");
+				$('.actualbody[name="' + appuid + '"]').find('.fullinfo').eq(7).html("<div class='olabel valign-wrapper'>Limit</div><span class='valign-wrapper'><b>:</b class='valign-wrapper'></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'> " + limit_value + unit + "</span>");
 
 				$('.appl_id[name="' + appuid + '"]').val(appuid);
 				$('.appl_name[name="' + appuid + '"]').val(appname);
@@ -498,6 +499,7 @@ function checkPlugged() {
 					});
 					if ($("#plugged-apps").find($(".appliance-info[name='" + data.uid + "']")).length == 0) {
 						$(".appliance-info[name='" + data.uid + "']").appendTo($("#plugged-apps"));
+						$(".appliance-info[name='" + data.uid + "']").find('.collapsible-header').addClass("ClassNgPlugged");
 						$(".appliance-info[name='" + data.uid + "']").find('.switch').show();
 					}
 				} else {

@@ -116,6 +116,7 @@
 		}
 		span.badge{
 			padding:0;
+			line-height:33px;
 		}
 		.kwh{
 			padding:.1rem .5rem;
@@ -241,6 +242,8 @@
 			grid-template-columns: repeat(3, 1fr); 
 			grid-gap: .1rem;
 			line-height: 1.5rem;
+			border-bottom: 1px solid #e0e0e0;
+			padding: .2rem;
 		}
 		.fullinfo span{
 			font-size: 1rem;
@@ -258,9 +261,7 @@
 		.hCenter{
 			margin: 0 auto;
 		}
-		span.badge{
-			line-height:30px;
-		}
+		
 		.overflow{
 			overflow-x:hidden;
 		}
@@ -562,11 +563,11 @@
 			background: rgba(0,0,0,0);
 		}
 		.olabel{
-			width:12rem;
+			width:9rem;
 			font-size: 1rem;;
 		}
 		.olabelc{
-			width:14rem;
+			width:15rem;
 			font-size: 1rem;;
 		}
 		input[type="number"] {
@@ -578,6 +579,21 @@
 		}
 		h5 {
 			margin: 0 0 1rem 0;
+		}
+		.ClassNgPlugged{
+			background-color: #e8f5e9;
+			//background-image: linear-gradient(to bottom right, #e8f5e9, #ffebee);
+		}
+		.select-wrapper input.select-dropdown:focus {
+			border: 1px solid #7e57c2;
+		}
+		.dropdown-content li > a, 
+		.dropdown-content li > span {
+			font-size: 16px;
+			color: #000000;
+			display: block;
+			line-height: 22px;
+			padding: 14px 16px;
 		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->

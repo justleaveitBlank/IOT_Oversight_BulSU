@@ -26,7 +26,8 @@
 					}
 					$disabled = "";
 					if($row['uid']=="NO_UID" || $row['appl_name']=="Unregistered_Appliance"){
-						$disabled = "disabled";
+						$disabled = "display:none;";
+						
 					}
 				?>
 					<li class='appliance-info chartHolder' name='<?php echo $row['uid']; ?>'>
@@ -55,15 +56,14 @@
 								<p class="fullinfo"> Type: <span> <?php echo $row['appl_type']; ?> </span></p>
 								<p class="fullinfo"> Power Consumption: <span> <?php echo $row['current_power_usage']; ?> watt(s) </span></p>
 								<p class="fullinfo"> Average Consumption: <span> <?php echo $row['avg_watthr']; ?> </span></p>
-								<p class="fullinfo pricekwhr"> Price per kWhr: <span> 0 </span></p>
+								<p class="fullinfo pricekwhr"> Price per kWh: <span> 0 </span></p>
 								<p class="fullinfo"> Estimated Price: <span> <?php echo $row['estimated_cost']; ?> </span></p>
 								<p class="fullinfo"> Limit: <span> <?php echo $row['power_limit_value']; ?> watt(s) </span> </p>
 							</div>
 
-							<div class="row m_bottom0">
+							<div class="row m_bottom0" style="<?php echo $disabled; ?>">
 								<div class="container">
-									<a href="#adminConfirmUpdate" class="d_update_btn col s12 btn-flat btn-small modal-trigger waves-effect waves-light " <?php echo $disabled; ?>><b>Update</b></a>
-
+									<a href="#adminConfirmUpdate" class="d_update_btn col s12 btn-flat btn-small modal-trigger waves-effect waves-light "><b>Update</b></a>
 								</div>
 
 								<div class='forUpdate' style='display:none;'>
