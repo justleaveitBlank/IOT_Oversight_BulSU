@@ -1,1 +1,1 @@
-lastUID=df324g4||currentConsumedVal=0.00
+lastUID=df2tg4c||currentConsumedVal=0||lastMoUpdate=12

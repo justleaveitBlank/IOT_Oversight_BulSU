@@ -25,7 +25,7 @@
 						$checked = 'checked';
 					}
 					$disabled = "";
-					if($row['uid']=="NO_UID" || $row['appl_name']=="Unregistered_Appliance"){
+					if($row['uid']=="NO_UID" || $row['appl_name']=="Unregistered_Appliances"){
 						$disabled = "display:none;";
 						
 					}

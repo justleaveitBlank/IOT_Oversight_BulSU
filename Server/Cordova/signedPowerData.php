@@ -18,7 +18,9 @@
 	$e_price =  0;
 	$m_avg_watthr = 0;
 	$lastUID;
-	$reseter="false";
+	$monthlyReseter;
+	
+	
 	
 	//echo $lastUID."\r\n";
 	//echo "NOTIFSTAT:\t".$notifStat."\r\n";
@@ -35,6 +37,10 @@
 	$dateTime = date('Y-m-d H:i:s');
 	$current_date = date('Y-m-d');
 	$time = date('H:i:s');
+	$current_month=date('m');
+	$current_day=date('d');
+	$current_year=date('Y');
+	$lstMoUpdate =0;
 	//$status0 = file_put_contents("txt_has_power.txt",$UID. "||" . $powerdata . "||" . $dateTime . "\r\n" , FILE_APPEND);
 	
 	//$Kwatthr=$watthr/1000;
@@ -60,7 +66,16 @@
 	//else{
 		//echo "Falied to write";
 	//}
-	
+	if($handle = fopen('textVariables.txt','r')){
+		while(!feof($handle))
+		{
+			$content = fgets($handle);
+			$arraystr = explode("||",$content);
+			$lastUID = substr($arraystr[0],8);
+			$c_consumed = (float)trim(substr($arraystr[1],19));
+			$lstMoUpdate = substr($arraystr[2],13);
+		}
+	}
 	if($notifStat == "1"){
 		$query = "SELECT * FROM t_history WHERE uid='".$UID."' and DATE(effective_date) ='".$current_date."'";
 		$result = $con->query($query);
@@ -70,11 +85,11 @@
 				// this will make $row['name'] to
 				// just $name only
 				extract($row);
-				file_put_contents("textVariables.txt","lastUID=".$uid."||currentConsumedVal=".$consumed);
+				file_put_contents("textVariables.txt","lastUID=".$UID ."||currentConsumedVal=".$consumed."||lastMoUpdate=".$lstMoUpdate);
 			}
 		}
 		else{
-			file_put_contents("textVariables.txt","lastUID=".$UID."||currentConsumedVal=0");
+			file_put_contents("textVariables.txt","lastUID=".$UID."||currentConsumedVal=0||lastMoUpdate=".$lstMoUpdate);
 		}
 	}
 	
@@ -85,9 +100,11 @@
 			$arraystr = explode("||",$content);
 			$lastUID = substr($arraystr[0],8);
 			$c_consumed = (float)trim(substr($arraystr[1],19));
+			$lstMoUpdate = substr($arraystr[2],13);
 		}
 	}
 	fclose($handle);
+	//echo $lstMoUpdate;
 	//echo $lastUID." || ".$c_consumed."\r\n";
 	include_once 'checkSettings.php';
 ?>

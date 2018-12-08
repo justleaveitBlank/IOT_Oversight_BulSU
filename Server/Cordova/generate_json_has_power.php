@@ -30,7 +30,6 @@ if($notifStat=="true"){
 }
 //------------------------------- t_appliance with id --------------------
 $appliance_arr = array();
-
 if($num>0 && $appl_uid !="NO_UID"){
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         // extract row
@@ -73,12 +72,12 @@ if($num>0 && $appl_uid !="NO_UID"){
 else if($appl_uid == "NO_UID"){
     // retrieve our table contents
     // fetch() is faster than fetchAll()
-
+		
 		if($notifStat == true){
 			$type = "newanoapp";
 			include_once 'CheckExistingNotif.php';
 		}
-
+		
 		// extract row
     // this will make $row['name'] to
     // just $name only

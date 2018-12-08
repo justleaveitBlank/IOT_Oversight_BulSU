@@ -736,7 +736,7 @@ if(isset($_POST['getPrice'])){
 						$result = $con->query($query);
 						if(mysqli_num_rows($result) == 1){
 							while($row = mysqli_fetch_assoc($result)){
-								if($row['appl_name']=="Anonymous_Appliance" || $row['appl_name']=="Unregistered_Appliance"){
+								if($row['appl_name']=="Anonymous_Appliances" || $row['appl_name']=="Unregistered_Appliances"){
 									$date = strtotime($row['time_limit_value']);
 									if(($row['has_time_limit']==1 && (time()<$date)) || ($row['time_limit_value'] == "0000-00-00 00:00:00")){
 										$flag = 1;

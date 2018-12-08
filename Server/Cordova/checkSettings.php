@@ -92,7 +92,7 @@
 		}
 		else{
 			//Check whether temporary appliance have an id or not
-			$nameToCompare = ($UID == "NO_UID")? "Anonymous_Appliance" : "Unregistered_Appliance";
+			$nameToCompare = ($UID == "NO_UID")? "Anonymous_Appliances" : "Unregistered_Appliances";
 			//check if device already allowed or in other words already registered
 			$query ='SELECT *
 					FROM t_appliance

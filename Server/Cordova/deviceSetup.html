@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -8,12 +7,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=device-height"/>
 
 	<!--Import Google Icon Font-->
 	<link href="css/material+icons.css" rel="stylesheet">
 
 	<!--Import materialize.css-->
 	<link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+
 	<style>
 		@viewport {
 		  width: device-width ;
@@ -36,8 +37,13 @@
 		}
 
 		@keyframes fadein {
-				from { opacity: 0; }
-				to   { opacity: 1; }
+		    from { opacity: 0; }
+		    to   { opacity: 1; }
+		}
+		
+		nav .minFont {
+			font-size: 1.15rem;
+			min-width: 20rem;
 		}
 		.navbg{
 			background:#7e57c2;
@@ -110,10 +116,11 @@
 		}
 		span.badge{
 			padding:0;
+			line-height:33px;
 		}
 		.kwh{
 			padding:.1rem .5rem;
-			font-size: 1rem;
+			font-size: .8rem;
 		}
 		@media only screen and (min-width: 320px) {
 			.applianceName {
@@ -225,13 +232,18 @@
 				max-width: 50rem;
 			}
 		}
-
 		.collapsible-body {
 			padding: 1rem;
 		}
 		.fullinfo{
 			font-size: 1rem;
 			font-weight:700;
+			display:grid;
+			grid-template-columns: repeat(3, 1fr); 
+			grid-gap: .1rem;
+			line-height: 1.5rem;
+			border-bottom: 1px solid #e0e0e0;
+			padding: .2rem;
 		}
 		.fullinfo span{
 			font-size: 1rem;
@@ -243,9 +255,15 @@
 		.switch label input[type=checkbox]:checked + .lever:after {
 			background-color: #6a1b9a;
 		}
-		nav .minFont{
-			font-size:1.15rem;
-			min-width: 20rem;
+		.switch label .lever{
+			margin:0;
+		}
+		.hCenter{
+			margin: 0 auto;
+		}
+		
+		.overflow{
+			overflow-x:hidden;
 		}
 		input.border_bottom_green.valid:not([type]),
 		input.border_bottom_green.valid:not([type]):focus,
@@ -331,73 +349,110 @@
 			-webkit-box-shadow: 0 1px 0 0 #F44336;
 			box-shadow: 0 1px 0 0 #F44336;
 		}
-		.section .sTitle{
-			margin: 0 15px;
+		.input-field{
+			margin-bottom:0;
 		}
-		.overhidden{
-			overflow:hidden;
+		.submitbtn{
+			width:48%;
+			font-weight:bold;
+			font-size:14px;
+			margin:10px 0;
+			box-sizing:border-box;
+		}
+		.m_bottom0{
+			margin-bottom:1rem;
+		}
+		.chartCon{
+			height: 10rem;
+			width: 100%;
+			margin: 0px auto;
 		}
 		#toast-container {
 		  top: auto !important;
 		  right: auto !important;
 		  bottom: 50%;
 		}
-		.bgiholder{
-			background: url("imgs/background.jpg") no-repeat;
-			background-opacity:50%;
+		.icon-green{
+			color: green;
+			vertical-align: bottom;
+		}
+		.icon-grey{
+			color: grey;
+			vertical-align: bottom;
+		}
+		#noappnotice{
+			padding: 1rem;
+		}
+		#unregisterednotice{
+			display: none;
+			padding: 1rem;
+			font-size: 1rem;
+		}
+		.card .card-action{
+			padding:.8rem .5rem 0 .5rem ;
+		}
+		#unregisterednotice {
+			display: none;
+			padding: 1rem;
+			font-size: 1rem;
+			margin:0;
 		}
 		.sidenav .collapsible-header, .sidenav.fixed .collapsible-header {
 			background-color: transparent;
 			padding: 0 32px;
 		}
-		.sidenav li > a.subchoice {
-			font-size: 16px;
-			padding-left:90px;
-		}
 		.dropdown-content{
 			width: 160px;
 			top: -62px;
 		}
-		.sDesc{
-			margin: 0 0 0 15px;
-			font-size: .9rem;
-			color:grey;
+		blockquote {
+			border-left: 5px solid #7e57c2;
 		}
-		.section.row{
-			margin-bottom:0;
-			display: flex;
-			align-items: center;
+		blockquote.margindenser{
+			margin:.5rem 0;
 		}
-		span.badge {
-			position: relative;
-			top: -.25rem;
+		.DAnotes{
+			padding: 1rem;
+			color:#616161 ;
 		}
-		#adminConfirmChangeRate, #ChangeMultiplyerRate{
-			height: 40%;
+		.notes{
+			font-size:1.1em;
 		}
-		.btn-accept{
-			color: #66bb6a !important;
-			background-color:rgba(0,0,0,0) !important;
-			border-radius: 50px;
-			border:solid 1px #66bb6a;
-			min-width: 96px;
-			text-align: center;
+		.plsacan{
+			padding: 0 1rem ;
+			color:#616161 ;
+			font-size:.9em;
+			margin-bottom: 1rem;
 		}
-		.btn-cancel{
-			color: #ef5350 !important;
-			background-color:rgba(0,0,0,0) !important;
+		#toast-container {
+		  top: auto !important;
+		  right: auto !important;
+		  bottom: 1rem;
+		}
+		.toast{
+			background-color:rgba(0,0,0,0.6);
+			width: max-content;
+			min-width:75%;
+			margin: 0 auto;
 			border-radius:50px;
-			border:solid 1px #ef5350;
-			min-width: 96px;
-			text-align: center;
 		}
-		.switch label .lever{
-			margin:0;
+		.input-field .prefix {
+			position: absolute;
+			width: 3rem;
+			font-size: 2rem;
+			-webkit-transition: color .2s;
+			transition: color .2s;
+			top: 0.5rem;
+			color: #ffffff;
 		}
-		span.badge{
-			padding:0;
-			margin:0;
+		.input-field > label {
+			color: #ffffff;
 		}
+		.input-field > label:not(.label-icon).active {
+			-webkit-transform: translateY(-20px) scale(.9);
+			transform: translateY(-20px) scale(.9);
+		}
+		
 		input:not([type]), 
 		input[type=text]:not(.browser-default), 
 		input[type=password]:not(.browser-default), 
@@ -431,9 +486,88 @@
 			padding: 1.5rem;
 			background-color:rgba(0,0,0,0.1);
 		}
-		.input-field > label:not(.label-icon).active {
-			-webkit-transform: translateY(-20px) scale(.9);
-			transform: translateY(-20px) scale(.9);
+		
+		#adminConfirmUpdate {
+			height: 50%;
+		}
+		.d_update_btn, .resolve-redirect{
+			border-radius:50px;
+			border: solid 1px #7e57c2;
+			color: #ffffff;
+			background: #7e57c2 !important;
+			height: 2.5rem !important;
+			font-size: 1rem;
+		}
+		.btn-accept{
+			color: #66bb6a !important;
+			background-color:rgba(0,0,0,0) !important;
+			border-radius: 50px;
+			border:solid 1px #66bb6a;
+		}
+		.btn-cancel{
+			color: #ef5350 !important;
+			background-color:rgba(0,0,0,0) !important;
+			border-radius:50px;
+			border:solid 1px #ef5350;
+			min-width: 96px;
+			text-align: center;
+		}
+		.btn-register{
+			color: #7e57c2 !important;
+			background-color:rgba(0,0,0,0) !important;
+			border-radius:50px;
+			border:solid 1px #7e57c2;
+			min-width: 96px;
+			text-align: center;
+		}
+		.select-wrapper + label {
+			position: absolute;
+			top: -33px;
+			font-size: 1rem;
+			color: #616161 !important;
+			min-width: 96px;
+			text-align: center;
+		}
+		input:not([type]):disabled, 
+		input:not([type])[readonly="readonly"], 
+		input[type="text"]:not(.browser-default):disabled, 
+		input[type="text"]:not(.browser-default)[readonly="readonly"], 
+		input[type="password"]:not(.browser-default):disabled, 
+		input[type="password"]:not(.browser-default)[readonly="readonly"], 
+		input[type="email"]:not(.browser-default):disabled, 
+		input[type="email"]:not(.browser-default)[readonly="readonly"], 
+		input[type="url"]:not(.browser-default):disabled, 
+		input[type="url"]:not(.browser-default)[readonly="readonly"], 
+		input[type="time"]:not(.browser-default):disabled, 
+		input[type="time"]:not(.browser-default)[readonly="readonly"], 
+		input[type="date"]:not(.browser-default):disabled, 
+		input[type="date"]:not(.browser-default)[readonly="readonly"], 
+		input[type="datetime"]:not(.browser-default):disabled, 
+		input[type="datetime"]:not(.browser-default)[readonly="readonly"], 
+		input[type="datetime-local"]:not(.browser-default):disabled, 
+		input[type="datetime-local"]:not(.browser-default)[readonly="readonly"], 
+		input[type="tel"]:not(.browser-default):disabled, 
+		input[type="tel"]:not(.browser-default)[readonly="readonly"], 
+		input[type="number"]:not(.browser-default):disabled, 
+		input[type="number"]:not(.browser-default)[readonly="readonly"], 
+		input[type="search"]:not(.browser-default):disabled, 
+		input[type="search"]:not(.browser-default)[readonly="readonly"], 
+		textarea.materialize-textarea:disabled, 
+		textarea.materialize-textarea[readonly="readonly"] {
+			color: rgba(0, 0, 0, 0.42);
+			border: 1px dotted rgba(0, 0, 0, 0.42);
+			background: rgba(0,0,0,0);
+		}
+		.olabel{
+			width:9rem;
+			font-size: 1rem;;
+		}
+		.olabelc{
+			width:15rem;
+			font-size: 1rem;;
+		}
+		input[type="number"] {
+			-moz-appearance: textfield;
 		}
 		.input-field.col label {
 			left: 2rem;
@@ -442,42 +576,73 @@
 		h5 {
 			margin: 0 0 1rem 0;
 		}
-		input[type="number"] {
-			-moz-appearance: textfield;
+		.ClassNgPlugged{
+			background-color: #e8f5e9;
+			//background-image: linear-gradient(to bottom right, #e8f5e9, #ffebee);
+		}
+		.select-wrapper input.select-dropdown:focus {
+			border: 1px solid #7e57c2;
+		}
+		.dropdown-content li > a, 
+		.dropdown-content li > span {
+			font-size: 16px;
+			color: #000000;
+			display: block;
+			line-height: 22px;
+			padding: 14px 16px;
+		}
+		.sidenav li > a.subchoice {
+			font-size: 16px;
+			padding-left: 60px;
+
+		}
+		.sidenav .collapsible-body > ul:not(.collapsible) > li.active, 
+		.sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+		.col .row {
+			margin: 0 0 20px 0;
+		}
+		.hborder{
+			border: solid 2px black;
+			border-radius:10px;
 		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
 
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="js/materialize.js"></script>
+	<script type="text/javascript" src="js/materialize.js"></script>
 	<script type="text/javascript" src="js/sidenav.js"></script>
 	<script type="text/javascript" src="js/transition.js"></script>
+	<script type="text/javascript" src="js/socket.io.js"></script>
 	<script type="text/javascript" src='js/oversight_dep.js'></script>
-	<script type="text/javascript" src="js/settings.js"></script>
 	<!--cordova-->
 	<!--localnotification-->
 
-	<script type="text/javascript">
+	<script src="js/charts.js"></script>
+	<!--script src="js/canvasjs.min.js"></script-->
+	<script>
 		$(document).ready(function(){
-			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
-			$('#adminConfirmChangeRate').modal();
-			$('#ChangeMultiplyerRate').modal();
-			$('#adminConfirmChangePass').modal();
-			$('#ChangePass').modal();
 			$('.collapsible').collapsible();
+			
 			$(".dropdown-trigger").dropdown({
 				hover: true, constrainWidth: false
 			});
-			$('.tooltipped').tooltip();
+
+			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
+			$('#updateDevice').modal();
+			$('#adminConfirmUpdate').modal();
+			
+			$('select').formSelect();
 			//setInterval(checkLocal, 500);
 			
-			$('input.autocomplete').autocomplete({
-			  data: {
-				"Apple": null,
-				"Microsoft": null,
-				"Google": 'https://placehold.it/250x250'
-			  },
+			$("#applianceCategHome").change(function() {
+				insertOptions(this.value);
 			});
+			$(document).ready(function(){
+				$('.materialboxed').materialbox();
+			  });
+
 		});
 	</script>
 </head>
@@ -486,22 +651,22 @@
 		<nav class="navbg" role="navigation">
 			<div class="nav-wrapper container">
 				<a id="logo-container" href="#" class="brand-logo center-align minFont hide-on-med-and-down"><img src="imgs/logo.png" style="height:70px"></a>
-				<a id="logo-container" href="#" class="brand-logo center-align minFont hide-on-med-and-up"><b style="font-size:1.3rem;">GENERAL SETTINGS</b></a>
+				<a id="logo-container" href="#" class="brand-logo center-align minFont hide-on-med-and-up"><b style="font-size:1.3rem;">REGISTRATION MANUAL</b></a>
 				<ul class="right hide-on-med-and-down">
 					<li><a class="waves-effect" href="home.html">Home</a></li>
 					<li><a class="waves-effect" href="statistic.html#monthly">Overall Statistics</a></li>
 					<li><a class="waves-effect" href="notifications.html">Notifications</a></li>
-					<li><a class=" waves-effect dropdown-trigger" href="#!" data-target="howToOptions">Information<i class="material-icons right">arrow_drop_down</i></a></li>
+					<li class="active"><a class=" waves-effect dropdown-trigger" href="#!" data-target="howToOptions">Informations<i class="material-icons right">arrow_drop_down</i></a></li>
 					<ul id="howToOptions" class="dropdown-content" style="150px">
-						<li><a class="waves-effect black-text "  href="safetyWarning.html" >Safety Warnings</a></li>
+						<li><a class="waves-effect black-text "  href="safetyWarning.html.html" >Safety Warnings</a></li>
 						<li><a class="waves-effect black-text "  href="networkConfig.html" >Network Setup</a></li>
 						<li><a class="waves-effect black-text "  href="projectAssembly.html" >User Manual</a></li>
-						<li><a class="waves-effect black-text "  href="deviceSetup.html" >Device Setup</a></li>
+						<li class="active><a class="waves-effect black-text "  href="deviceSetup.html" >Device Setup</a></li>
 						<li><a class="waves-effect black-text" href="regManual.html">Registration</a></li>
 						<div class="divider"></div>
 						<li><a class="waves-effect black-text" href="tips.html">Tips</a></li>
 					</ul>
-					<li class="active"><a class="waves-effect" href="settings.html">General Settings</a></li>
+					<li><a class="waves-effect" href="settings.html">General Settings</a></li>
 					<li><a class="waves-effect" href="accountSettings.html">Accont Settings</a></li>
 					<li><a id='webSignOut' class="waves-effect" href="#">Logout</a></li>
 				</ul>
@@ -517,16 +682,16 @@
 					<li><a class="waves-effect black-text" href="home.html"><i class="material-icons prefix grey-text">home</i><p>Home</p></a></li>
 					<li><a class="waves-effect black-text" href="statistic.html#monthly"><i class="material-icons prefix grey-text">pie_chart</i><p> Overall Statistics</p></a></li>
 					<li><a class="waves-effect black-text" href="notifications.html"><i class="material-icons prefix grey-text">notifications</i><p>Notification</p></a></li>
-					<li>
+					<li class="active">
 						<ul class="collapsible collapsible-accordion">
 							<li class="bold">
-								<a class="collapsible-header waves-effect black-text noborder"><i class="material-icons prefix gray-text">info</i><p>Information</p></a>
+								<a class="collapsible-header waves-effect black-text noborder"><i class="material-icons prefix gray-text">info</i><p>Informations</p></a>
 								<div class="collapsible-body" style="border-bottom:1px solid #e0e0e0">
 									<ul class="white">
 										<li><a class="waves-effect black-text subchoice" href="safetyWarning.html"><i class="material-icons prefix grey-text" style="margin: 0 1rem 0 0;">chevron_right</i>Safety Warnings</a></li>
 										<li><a class="waves-effect black-text subchoice" href="networkConfig.html"><i class="material-icons prefix grey-text" style="margin: 0 1rem 0 0;">chevron_right</i>Network Setup</a></li>
-										<li><a class="waves-effect black-text subchoice" href="projectAssembly.html"><i class="material-icons prefix grey-text" style="margin: 0 1rem 0 0;">chevron_right</i>User Manual</a></li>
-										<li><a class="waves-effect black-text subchoice" href="deviceSetup.html"><i class="material-icons prefix grey-text" style="margin: 0 1rem 0 0;">chevron_right</i>Device Setup</a></li>
+										<li><a class="waves-effect black-text subchoice" href="projectAssembly.html"><i class="material-icons prefix grey-text" style="margin: 0 1rem 0 0;">chevron_right</i>Project Assembly</a></li>
+										<li class="active"><a class="waves-effect black-text subchoice" href="deviceSetup.html"><i class="material-icons prefix grey-text" style="margin: 0 1rem 0 0;">chevron_right</i>Device Setup</a></li>
 										<li><a class="waves-effect black-text subchoice" href="regManual.html"><i class="material-icons prefix grey-text" style="margin: 0 1rem 0 0;">chevron_right</i>Registration</a></li>
 										<li><a class="waves-effect black-text subchoice" href="tips.html"><i class="material-icons prefix grey-text" style="margin: 0 1rem 0 0;">chevron_right</i>Tips</a></li>
 									</ul>
@@ -534,7 +699,7 @@
 							</li>
 						</ul>
 					</li>
-					<li class="active"><a class="waves-effect black-text" href="settings.html"><i class="material-icons prefix gray-text">settings</i><p>General Settings</p></a></li>
+					<li><a class="waves-effect black-text" href="settings.html"><i class="material-icons prefix gray-text">settings</i><p>General Settings</p></a></li>
 					<div class="divider"></div>
 					<li><a class="waves-effect black-text" href="accountSettings.html"><i class="material-icons prefix gray-text">person</i><p>Account Settings</p></a></li>
 					<li><a class="waves-effect black-text" href="#"><i class="material-icons prefix grey-text">input</i><p id='SignOut'>Logout</p></a></li>
@@ -543,107 +708,49 @@
 			</div>
 		</nav>
 	</div>
-
-	<div class="had-container" id='settingsholder'>
-
-	</div>
-
-	<!--Modal Structures-->
-	<div class="modalCon">
-		<!-- Modal Structure for Admin Change Multiplyer Rate -->
-		<div id="adminConfirmChangeRate" class="modal modal-fixed-footer">
-			<form class="col s12" method="POST" action="">
-				<div class="modal-content">
-					<div class="row">
-						<h5>ADMIN CONFIRMATION</h5>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
-							<input id="admin_password" type="password" class="border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" required />
-							<label for="admin_password" id='passlabel' class="grey-text text-darken-2">Admin Password</label>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<a id='confirm_admin' class="triggerForPrice col s6 submitbtn btn-flat white-text waves-effect waves-green white-text sTitle btn-accept" href="#ChangeMultiplyerRate">Confirm</a>
-					<button id='cancel' class="col s6 submitbtn btn-flat white-text waves-effect waves-red modal-close btn-cancel" type="button" name="action">Cancel</button>
-				</div>
-			</form>
-		</div>
-
-	<!-- Modal Structure for Change Multiplyer Rate -->
-		<div id="ChangeMultiplyerRate" class="modal modal-fixed-footer">
-			<form class="col s12" method="POST" action="">
-				<div class="modal-content">
-					<div class="row">
-						<h5>CHANGE kWh PRICE RATING</h5>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<input id="s_price" type="number" step='0.00001' class="border_bottom_green border_bottom_darkgray" min="0" autocomplete="off" required />
-							<label for="s_price" id='price_label' class="grey-text text-darken-2"></label>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<a id='btn_price' class="col s6 submitbtn btn-flat white-text waves-effect waves-green sTitle btn-accept" name="action">Save</a>
-					<button class="col s6 submitbtn btn-flat white-text waves-effect waves-red modal-close btn-cancel" type="button" name="action">Cancel</button>
-				</div>
-			</form>
-		</div>
-
-	<!-- Modal Structure for Admin Change Change Admin Pass -->
 	
-		<div id="adminConfirmChangePass" class="modal modal-fixed-footer">
-			<form class="input-forms col s12" method="POST" action="">
-				<div class="modal-content">
+	<div class="had-container">
+		<div class="row">
+			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
+
+			<div class="col s12 m4 l8 overhidden" >
+				<div class="row" style="padding-top:10px; margin-bottom:0;">
 					<div class="row">
-						<h5><b>CHANGE ADMINISTRATOR PASSWORD</b></h5>
+						<h5 class="valign-wrapper "><i class="large material-icons" style="padding:1rem; color:#7e57c2;">account_balance_wallet</i>Device Setup</h5>
+						<h6><b>NOTE:</b></h6>
+						<p style="text-indent: 1rem; padding: 0 1rem;">First beep signifies hardware initialization success, second beep signifies network connection success and last beep is for setup complete.</p>
+					</div>
+					<div class="row"  style="margin-bottom:0;padding: 0 1rem;">
+						<h6><b>STEPS:</b></h6>
+						<ol>
+							<li>Plug the Home Oversight device on your electrical outlet and wait for setup completes.
+								<div style="width:100%;">
+									<img style="width:100%;" class="materialboxed" src="imgs/howto_1.jpg">
+								</div>
+							</li>
+							<li>Plug the Appliance in to Home Oversight device.
+								<div style="width:100%;">
+									<img style="width:100%;" class="materialboxed" src="imgs/howto_2.jpg">
+								</div>
+							</li>
+							<li>Grant it via mobile application or for instant grant tap the RFID Access card/chain on the adjacent side of the receptacle.
+								<div style="width:100%;">
+									<img style="width:100%;" class="materialboxed" src="imgs/howto_3.jpg">
+								</div>
+							</li>
+							
+							
+						</ol>
+					
 					</div>
 					
-					<div class="row">
-						<div class="input-field col s12">
-							<i class="material-icons prefix black-text text-darken-2">lock</i>
-							<input id="txtOldPassword" type="password" class="account-inputs border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-							<label for="txtOldPassword" class="a_label grey-text text-darken-2"> OLD PASSWORD</label>
-							<span class="helper-text" data-error="&#10006; INCORRECT" data-success="&#10004; CORRECT"></span>
-						</div>
-						<div class="input-field col s12">
-							<i class="material-icons prefix grey-text text-darken-2">lock</i>
-							<input id="txtNewPassword" type="password" class="account-inputs validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-							<label for="txtNewPassword" class="a_label grey-text text-darken-2"> NEW PASSWORD</label>
-							<span class="helper-text" data-error="&#10006; INVALID" data-success="&#10004; VALID"></span>
-						</div>
-						<div class="input-field col s12">
-							<i class="material-icons prefix grey-text text-darken-2">lock_outline</i>
-							<input id="txtConfirmPassword" type="password" class="account-inputs border_bottom_green border_bottom_darkgray" autocomplete="off" required>
-							<label for="txtConfirmPassword" class="a_label grey-text text-darken-2">RE-TYPE PASSWORD</label>
-							<span class="helper-text" data-error="&#10006; DOESN'T MATCHED" data-success="&#10004; MATCHED"></span>
-						</div>
-					</div>
 				</div>
-				<div class="modal-footer">
-					<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
-					<a id='#!' href="#updateDevice" class="save-password svbtn modal-action waves-effect waves-green btn-flat btn-accept">Save</a>
-					<a href="#!" class="closer modal-action modal-close waves-effect waves-red btn-flat btn-cancel">Cancel</a>
-				</div>
-			</form>
+			</div>
+
+			<div class="col s12 m4 l2 hide-on-med-and-down"></div>
 		</div>
 	</div>
-	<script type="text/javascript" src='js/function.js'></script>
-	<script type="text/javascript">
-		$.ajax({
-			type: "POST",
-			data: "getHTML=1",
-			url: 'http://'+deviceHost+'/settings.php',
-			crossDomain: true,
-			contentType: "application/x-www-form-urlencoded; charset=utf-8",
-			success: function(data) {
-				$('#settingsholder').html(data);
-				initiate_settings();
-			}
-		});
-	</script>
+
+	<script type="text/javascript" src="js/function.js"></script>
 </body>
 </html>

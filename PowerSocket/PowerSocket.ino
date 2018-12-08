@@ -118,13 +118,14 @@ void connectToHost() {
 void rf_check(){
   SPI.begin();
   mfrc522.PCD_Init(); //Initialize MFRC522 Hardware
-  //mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);
+  mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);
   if(mfrc522.PCD_PerformSelfTest()){
     Serial.println("RFID Initialized : SUCCESS");
     tone(buzzerPin, 700, 100);
   } else {
     Serial.println("RFID Initialized : FAILED");
     tone(buzzerPin, 500, 100);
+    rf_check();
   }  
 }
 
@@ -427,6 +428,7 @@ void setup() {
   mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);
   Serial.println("RFID Initialized");
   tone(buzzerPin, 700, 100);
+  //rf_check();  
   
   //begin wifi interface for ESP8266/NodeMCU
   ATconnectToWifi();
@@ -451,7 +453,9 @@ void loop() {
     if (currentUID == "" && relayOnChecker == false) {
       currentUID = getID();
     }
+    
     if (currentUID != "") {
+    
       // check if UID is allowed to have power
       //Serial.println("Sending to Server: " + pluggedAppliance);
       //sendUIDtoServer(pluggedAppliance);
@@ -464,6 +468,7 @@ void loop() {
           resetWattHour(); 
         }
         Serial.println("UID FOUND");
+        Serial.println("currentUID : " + currentUID);
         //relayOn();
         //send signed powerdata
         if (powerAnalyzerTurn == true) {

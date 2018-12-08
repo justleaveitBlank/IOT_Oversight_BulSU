@@ -59,9 +59,9 @@
 			$date = date_format($rawdate, 'Y-m-d H:i:s');
 		}
 		if($app_id == "NO_UID"){
-			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Anonymous_Appliance','GENERAL APPLIANCE',1,0,1,DEFAULT,'" .$date. "',0,0,0,0,DEFAULT)";
+			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Anonymous_Appliances','GENERAL APPLIANCE',1,0,1,DEFAULT,'" .$date. "',0,0,0,0,DEFAULT)";
 		} else {
-			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Unregistered_Appliance','GENERAL APPLIANCE',1,0,1,DEFAULT,'" .$date. "',0,0,0,0,DEFAULT)";
+			$query = "INSERT INTO t_appliance VALUES('".$app_id."','Unregistered_Appliances','GENERAL APPLIANCE',1,0,1,DEFAULT,'" .$date. "',0,0,0,0,DEFAULT)";
 		}
 		if($con->query($query)){
 			$query = 'UPDATE t_notification SET Status="allowed" WHERE notif_id = "' . $notif_id . '"';

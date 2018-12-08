@@ -375,8 +375,8 @@ function loadinfos() {
 				var appuid = appinfo[i].uid;
 				var appname = appinfo[i].appl_name;
 				var apptype = appinfo[i].appl_type;
-				var consump = appinfo[i].current_power_usage;
-				var avg = appinfo[i].avg_watthr;
+				var consump = appinfo[i].current_power_usage;// Wh
+				var avg = appinfo[i].avg_watthr;//Wh
 				var cost = parseFloat(appinfo[i].estimated_cost);
 				var limit_value;
 				var unit;
@@ -399,7 +399,7 @@ function loadinfos() {
 					avg_out = (avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + " kWh";
 				}
 				
-				if(appname.match(/Anonymous_Appliance/i) || appname.match(/Unregistered_Appliance/i)){
+				if(appname.match(/Anonymous_Appliances/i) || appname.match(/Unregistered_Appliances/i)){
 					limit_value = appinfo[i].time_limit_value;
 					$('.m_buttom0').css('display','none');
 					if(limit_value.match(/0000-00-00 00:00:00/i)){

@@ -13,7 +13,7 @@
    // echo $aDevice . $num;
     if($aDevice == "1"){
       //check if plugged device is registered then set id and register status
-      $applianceQuery = "SELECT * FROM t_appliance WHERE appl_name NOT IN ('Unregistered_Appliance','Anonymous_Appliance') AND uid='".$UID."'";
+      $applianceQuery = "SELECT * FROM t_appliance WHERE appl_name NOT IN ('Unregistered_Appliances','Anonymous_Appliances') AND uid='".$UID."'";
       $applianceResult = $con->query($applianceQuery);
       $numROWS = mysqli_num_rows($applianceResult);
       if($numROWS==1){
@@ -21,7 +21,7 @@
         $appliance_pluggedStatus->registered = true;
         //remove any unregistered and anonymous appliance in t_appliance and t_notifications ( for rfid issues )
 
-        $query = "DELETE FROM t_appliance WHERE appl_name in ('Unregistered_Appliance','Anonymous_Appliance')";
+        $query = "DELETE FROM t_appliance WHERE appl_name in ('Unregistered_Appliances','Anonymous_Appliances')";
       	$con->query($query);
 
         //remove any unregistered and anonymous appliance in t_notifications ( for rfid issues )
@@ -63,7 +63,7 @@
   //adevice = 0 if device is unplugged
   if ($aDevice == "0" || $unPlugged=="true"){
 	//delete anonymous and unregistered appliance once unplugged appliance
-	$query = "DELETE FROM t_appliance WHERE appl_name in ('Unregistered_Appliance','Anonymous_Appliance')";
+	$query = "DELETE FROM t_appliance WHERE appl_name in ('Unregistered_Appliances','Anonymous_Appliances')";
 	$con->query($query);
 
     $query = "UPDATE t_appliance SET time_limit_value = NOW() WHERE time_limit_value = '0000-00-00 00:00:00'";
