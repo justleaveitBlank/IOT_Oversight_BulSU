@@ -38,17 +38,44 @@ function getWeeklyComputation(){
 		data: "searched="+searchedWeekKey+"&sort="+sort+"&getComputeWeekly="+selecteddate+"&ts="+$.now(),
 		url: 'http://'+deviceHost+'/stats.php',
 		crossDomain: true,
+		async : false,
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function(data) {
 			var singleAppChartset = JSON.parse(data.trim());
+			var weekOpt = [];
+			
 			for(var xcount = 0; xcount<singleAppChartset.length; xcount++){
 				for(var curUid in singleAppChartset[xcount]){
 					for(var ycount in singleAppChartset[xcount][curUid]){
 						weeklyID[xcount] = curUid;
 						produceApplianceCard(curUid,singleAppChartset[xcount][curUid][ycount].consumption,xcount,1,7);
+						
+						//for autocomplete textinput
+						if(singleAppChartset[xcount][curUid][ycount].name.match(/Anonymous/i)){
+							if(!weekOpt.includes("Anonymous")){
+								weekOpt.push("Anonymous");
+							}
+						} else if(singleAppChartset[xcount][curUid][ycount].name.match(/Unregistered/i)){
+							if(!weekOpt.includes("Unregistered")){
+								weekOpt.push("Unregistered");
+							}
+						} else {
+							weekOpt.push(singleAppChartset[xcount][curUid][ycount].name);
+						}
+						if(!weekOpt.includes(singleAppChartset[xcount][curUid][ycount].type)){
+							weekOpt.push(singleAppChartset[xcount][curUid][ycount].type);
+						}
+						weekOpt.push(curUid);
 					}
 				}
 			}
+			
+			var updatedData = [];
+			for(var xkey in weekOpt){
+				updatedData[weekOpt[xkey]] = null;
+			}
+			var instanceMonth = M.Autocomplete.getInstance($(".autoWeek"));
+			instanceMonth.options.data = updatedData;
 		}
 	});
 }
@@ -69,17 +96,44 @@ function getMonthlyComputation(){
 		data: "searched="+searchedMonthKey+"&sort="+sort+"&getComputeMonthly="+selecteddate+"&ts="+$.now(),
 		url: 'http://'+deviceHost+'/stats.php',
 		crossDomain: true,
+		async : false,
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function(data) {
 			var singleAppChartset = JSON.parse(data.trim());
+			var monthOpt = [];
+			
 			for(var xcount = 0; xcount<singleAppChartset.length; xcount++){
 				for(var curUid in singleAppChartset[xcount]){
 					for(var ycount in singleAppChartset[xcount][curUid]){
 						monthlyID[xcount] = curUid;
 						produceApplianceCard(curUid,singleAppChartset[xcount][curUid][ycount].consumption,xcount,2,30);
+						
+						//for autocomplete textinput
+						if(singleAppChartset[xcount][curUid][ycount].name.match(/Anonymous/i)){
+							if(!monthOpt.includes("Anonymous")){
+								monthOpt.push("Anonymous");
+							}
+						} else if(singleAppChartset[xcount][curUid][ycount].name.match(/Unregistered/i)){
+							if(!monthOpt.includes("Unregistered")){
+								monthOpt.push("Unregistered");
+							}
+						} else {
+							monthOpt.push(singleAppChartset[xcount][curUid][ycount].name);
+						}
+						if(!monthOpt.includes(singleAppChartset[xcount][curUid][ycount].type)){
+							monthOpt.push(singleAppChartset[xcount][curUid][ycount].type);
+						}
+						monthOpt.push(curUid);
 					}
 				}
 			}
+			var updatedData = [];
+			for(var xkey in monthOpt){
+				updatedData[monthOpt[xkey]] = null;
+			}
+			var instanceMonth = M.Autocomplete.getInstance($(".autoMonth"));
+			instanceMonth.options.data = updatedData;
+			
 		}
 	});
 }
@@ -100,17 +154,44 @@ function getYearlyComputation(){
 		data: "searched="+searchedYearKey+"&sort="+sort+"&getComputeYearly="+selecteddate+"&ts="+$.now(),
 		url: 'http://'+deviceHost+'/stats.php',
 		crossDomain: true,
+		async : false,
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function(data) {
 			var singleAppChartset = JSON.parse(data.trim());
+			var yearOpt = [];
+			
 			for(var xcount = 0; xcount<singleAppChartset.length; xcount++){
 				for(var curUid in singleAppChartset[xcount]){
 					for(var ycount in singleAppChartset[xcount][curUid]){
 						yearlyID[xcount] = curUid;
 						produceApplianceCard(curUid,singleAppChartset[xcount][curUid][ycount].consumption,xcount,3,12);
+						
+						//for autocomplete textinput
+						if(singleAppChartset[xcount][curUid][ycount].name.match(/Anonymous/i)){
+							if(!yearOpt.includes("Anonymous")){
+								yearOpt.push("Anonymous");
+							}
+						} else if(singleAppChartset[xcount][curUid][ycount].name.match(/Unregistered/i)){
+							if(!yearOpt.includes("Unregistered")){
+								yearOpt.push("Unregistered");
+							}
+						} else {
+							yearOpt.push(singleAppChartset[xcount][curUid][ycount].name);
+						}
+						if(!yearOpt.includes(singleAppChartset[xcount][curUid][ycount].type)){
+							yearOpt.push(singleAppChartset[xcount][curUid][ycount].type);
+						}
+						yearOpt.push(curUid);
 					}
 				}
 			}
+			
+			var updatedData = [];
+			for(var xkey in yearOpt){
+				updatedData[yearOpt[xkey]] = null;
+			}
+			var instanceYear = M.Autocomplete.getInstance($(".autoYear"));
+			instanceYear.options.data = updatedData;
 		}
 	});
 }
@@ -123,9 +204,9 @@ function getOverallSummary(singleAppChartset,overallCharset,type) {
         data: "getPrice=1",
         url: 'http://'+deviceHost+'/methods.php',
         crossDomain: true,
+		async : false,
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         success: function(data) {
-            var current_price = parseFloat(data.trim());
 			var weekly_Sum_out;
 			var weekly_Avg_out;
 			var mothly_Sum_out;
@@ -155,7 +236,7 @@ function getOverallSummary(singleAppChartset,overallCharset,type) {
 					weekly_Avg_out = (weekly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" kWh";
 				}
 
-				weekly_price=(weekly_sum/1000)*parseFloat(data.trim());
+				weekly_price=(weekly_sum/1000)*current_price;
 				$('#weekly_avg').text(weekly_Avg_out);
 				$('#weekly_sum').text(weekly_Sum_out);
 				$('#weekly_price').text("₱ "+weekly_price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -193,16 +274,15 @@ function getOverallSummary(singleAppChartset,overallCharset,type) {
 					monthly_Avg_out = (monthly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" kWh";
 				}
 
-				monthly_price=(monthly_sum/1000)*parseFloat(data.trim());
+				monthly_price=(monthly_sum/1000)*current_price;
 				$('#monthly_avg').text(monthly_Avg_out);
 				$('#monthly_sum').text(monthly_Sum_out);
 				$('#monthly_price').text("₱ "+monthly_price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 
 			} else if(type==options[2]) {
-
 				yearly_sum=0.0;
 				for (var l = 0; l < overallCharset.length; l++) {
-				  yearly_sum+=parseFloat(overallCharset[l])/1000;
+				  yearly_sum+=parseFloat(overallCharset[l]);
 				}
 
 				//console.log("yearly_sum = "+yearly_sum/1000);
@@ -221,8 +301,8 @@ function getOverallSummary(singleAppChartset,overallCharset,type) {
 					yearly_Avg_out = (yearly_avg/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+" kWh";
 				}
 
-				yearly_price=(yearly_sum/1000)*parseFloat(data.trim());
-
+				yearly_price = (yearly_sum/1000)*current_price;
+				
 				$('#yearly_avg').text(yearly_Avg_out);
 				$('#yearly_sum').text(yearly_Sum_out);
 				$('#yearly_price').text("₱ "+yearly_price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -240,6 +320,7 @@ function getchartdata(type){
 		data: type + "=" + selecteddate + "&ts=" + $.now() + "&Day=" + dayOfWeek,
 		url: 'http://' + deviceHost + '/stats.php',
 		crossDomain: true,
+		async : false,
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function (data) {
 			// console.log(data);
@@ -367,7 +448,6 @@ $(".btn-search-month").click(function(){
 $(".btn-search-year").click(function(){
 	var instance = M.Autocomplete.getInstance($(".autoYear"));
 	searchedYearKey = $("#searchForYear").val();
-	console.log(searchedYearKey);
 	reloadYearly();
 });
 
@@ -413,11 +493,11 @@ function getPrice(){
         data: "getPrice=1",
         url: 'http://'+deviceHost+'/methods.php',
         crossDomain: true,
+		async: false,
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         success: function(data) {
-			var current_price = parseFloat(data.trim()).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-			console.log(current_price);
-			getPrice();
+			current_price = parseFloat(data.trim()).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+			reloadAll();
 		}
 	});
 }
@@ -427,6 +507,7 @@ function getPrice(){
 
 function produceApplianceCard(currentUid,total,count,type,divisor){
 	var colCode = Colors[count+1];
+	console.log(current_price);
 	$.ajax({
 		type: "POST",
 		data: "ts="+$.now()+"&color="+colCode+"&divisor="+divisor+"&applianceSummary="+currentUid+"&price="+current_price+"&total="+total,
@@ -464,7 +545,7 @@ function resetChartData(canvasHolder){
 				mode: 'single',
 				callbacks: {
 					label: function(tooltipItems, data) { 
-						return tooltipItems.yLabel + ' kWh';
+						return tooltipItems.yLabel + ' Wh';
 					}
 				}
 			},
@@ -483,4 +564,6 @@ function resetChartData(canvasHolder){
 
 // ================================ INITIATION ================================================
 
-reloadAll();
+$("document").ready(function(){
+	getPrice();
+});

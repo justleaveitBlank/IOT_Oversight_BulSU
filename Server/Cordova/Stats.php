@@ -89,13 +89,16 @@
 	
 	if(isset($_POST['applianceSummary'])){
 		$uid = $_POST['applianceSummary'];
-		$sum = $_POST['total'];
-		$price = $_POST['price'];
+		$sum = floatval($_POST['total']/1000);
+		$price = floatval($_POST['price']);
 		$color = $_POST['color'];
 		$divisor = intval($_POST['divisor']);
+		
+		
 
-		$avg = $sum/$divisor;
-		$ep = $sum/1000*$price;
+		$avg = number_format($sum/$divisor);
+		$ep = number_format($sum*$price);
+		
 		//echo number_format($sum,2)." = ".number_format($sum/1000,2);
 		$query = "SELECT IFNULL((SELECT appl_name FROM t_appliance WHERE uid = '".$uid."'),'Unregistered - ".$uid."') as appl_name , IFNULL((SELECT appl_type FROM t_appliance WHERE uid = '".$uid."'),'GENERAL APPLIANCE') as appl_type";
 		$result = $con->query($query);
@@ -108,18 +111,18 @@
 			}
 			  
 			  
-			if(number_format($sum/1000,2) == 0.00){
+			if(number_format($sum,2) == 0.00){
 				$sum_out = number_format($sum,2)." Wh";
 			}
 			else{
-				$sum_out = number_format($sum/1000,2)." kWh";
+				$sum_out = number_format($sum,2)." kWh";
 			}
 			  
-			if(number_format($avg/1000,2) == 0.00){
+			if(number_format($avg,2) == 0.00){
 				$avg_out = (number_format($avg,2))." Wh";
 			}
 			else{
-				$avg_out = (number_format($avg/1000,2))." kWh";
+				$avg_out = (number_format($avg,2))." kWh";
 			}
 			  
 			?>
@@ -134,7 +137,7 @@
 						<div class="col s12"><b>Appliance Type: </b> <span><?php echo $type;?></span></div>
 						<div class="col s12"><b>Average Kwatthr :</b> <span><?php echo  $avg_out;?></span></div>
 						<div class="col s12"><b>Total Consumption :</b> <span><?php echo $sum_out;?></span></div>
-						<div class="col s12"><b>Estimated Price :</b> <span><?php echo "₱ " .sprintf('%0.2f',$ep);?></span></div>
+						<div class="col s12"><b>Estimated Cost :</b> <span><?php echo "₱ " .number_format($ep,2);?></span></div>
 					</div>
 				</div>
 			</div>
@@ -168,7 +171,7 @@
 				$result = processQuery($select,$table,$where);
 				if(mysqli_num_rows($result)>0){
 					while($row = mysqli_fetch_assoc($result)){
-						$finalarray[$i] = sprintf('%0.2f',$row["consumed"]);
+						$finalarray[$i] = $row["consumed"];
 					}
 				} else {
 					print mysqli_error($con);
@@ -203,8 +206,8 @@
 						$consumptionResults = $con->query($consumptionQuery);
 						if(mysqli_num_rows($consumptionResults)>0){
 							while($conRow = mysqli_fetch_assoc($consumptionResults)){
-								$currentConsumption = sprintf('%0.2f',$conRow['consumed']);
-								array_push($singleAppConsumption, sprintf('%0.2f', $currentConsumption));
+								$currentConsumption = $row["consumed"];
+								array_push($singleAppConsumption, $currentConsumption);
 							}
 						} else {
 							print mysqli_error($con);
@@ -254,7 +257,7 @@
 
 				if(mysqli_num_rows($result)>0){
 					while($row = mysqli_fetch_assoc($result)){
-						array_push($consumptionarray,number_format(sprintf('%0.2f', $row["consumed"]),2));
+						array_push($consumptionarray,$row["consumed"]);
 					}
 				} else {
 					print mysqli_error($con);
@@ -290,7 +293,7 @@
 					if(mysqli_num_rows($consumptionResults)>0){
 						while($conRow = mysqli_fetch_assoc($consumptionResults)){
 							$currentConsumption = $conRow['consumed'];
-							array_push($singleAppConsumption,sprintf('%0.2f',$currentConsumption));
+							array_push($singleAppConsumption,$row["consumed"]);
 						}
 					} else {
 						echo mysqli_error($con);
@@ -341,7 +344,7 @@
 
 				if(mysqli_num_rows($result)>0){
 					while($row = mysqli_fetch_assoc($result)){
-						array_push($consumptionarray,number_format(sprintf('%0.2f', $row["consumed"]),2));
+						array_push($consumptionarray,$row["consumed"]);
 					}
 				} else {
 					print mysqli_error($con);
@@ -377,7 +380,7 @@
 						if(mysqli_num_rows($consumptionResults)>0){
 						  while($conRow = mysqli_fetch_assoc($consumptionResults)){
 							  $currentConsumption = $conRow['consumed'];
-							  array_push($singleAppConsumption,sprintf('%0.2f',$currentConsumption));
+							  array_push($singleAppConsumption,$currentConsumption);
 						  }
 						} else {
 							print mysqli_error($con);
