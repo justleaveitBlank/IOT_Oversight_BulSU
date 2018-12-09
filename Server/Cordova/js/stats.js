@@ -337,6 +337,8 @@ function getchartdata(type){
 					"borderColor": Colors[colCount],
 					"lineTension":0
 			};
+			
+			console.log(data);
 
 			if(type==options[0]){
 				weekchart.destroy();
@@ -507,7 +509,6 @@ function getPrice(){
 
 function produceApplianceCard(currentUid,total,count,type,divisor){
 	var colCode = Colors[count+1];
-	console.log(current_price);
 	$.ajax({
 		type: "POST",
 		data: "ts="+$.now()+"&color="+colCode+"&divisor="+divisor+"&applianceSummary="+currentUid+"&price="+current_price+"&total="+total,

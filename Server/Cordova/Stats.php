@@ -96,7 +96,7 @@
 		
 		
 
-		$avg = number_format($sum/$divisor);
+		$avg = $sum/$divisor;
 		$ep = number_format($sum*$price);
 		
 		//echo number_format($sum,2)." = ".number_format($sum/1000,2);
@@ -119,7 +119,7 @@
 			}
 			  
 			if(number_format($avg,2) == 0.00){
-				$avg_out = (number_format($avg,2))." Wh";
+				$avg_out = number_format($avg,2)." Wh";
 			}
 			else{
 				$avg_out = (number_format($avg,2))." kWh";
@@ -206,7 +206,7 @@
 						$consumptionResults = $con->query($consumptionQuery);
 						if(mysqli_num_rows($consumptionResults)>0){
 							while($conRow = mysqli_fetch_assoc($consumptionResults)){
-								$currentConsumption = $row["consumed"];
+								$currentConsumption = $conRow["consumed"];
 								array_push($singleAppConsumption, $currentConsumption);
 							}
 						} else {
@@ -293,7 +293,7 @@
 					if(mysqli_num_rows($consumptionResults)>0){
 						while($conRow = mysqli_fetch_assoc($consumptionResults)){
 							$currentConsumption = $conRow['consumed'];
-							array_push($singleAppConsumption,$row["consumed"]);
+							array_push($singleAppConsumption,$currentConsumption);
 						}
 					} else {
 						echo mysqli_error($con);
@@ -313,19 +313,11 @@
 		$singleAppArray = array();
 		$finalarray = array();
 		$monthsarray = array();
-		$months = array(
-			'January',
-			'February',
-			'March',
-			'April',
-			'May',
-			'June',
-			'July ',
-			'August',
-			'September',
-			'October',
-			'November',
-			'December',
+		$monthsarray = array(
+			'Jan - Mar',
+			'Apr - Jun',
+			'Jul - Sep',
+			'Nov - Dec'
 		);
 		$singleAppName = array();
 		$date = ($_POST['getyearly']=="now")? date("Y-m-d") : $_POST['getyearly'];
@@ -334,12 +326,11 @@
 		if($valid){
 			//------------------------------OVERALL YEARLY--------------------------
 			$consumptionarray = array();
-			for ($i=1; $i <= 12; $i++) {
-				array_push($monthsarray,$months[$i-1]);
+			for ($i=1; $i <= 12; $i+=3) {
 				array_push($finalarray,0);
 				$select = "IFNULL(SUM(consumed), 0) as  consumed";
 				$table = "t_history";
-				$where = "YEAR(effective_date) = YEAR('".$date."') and MONTH(effective_date) = " . $i;
+				$where = "YEAR(effective_date) = YEAR('".$date."') and (MONTH(effective_date) BETWEEN " .$i." AND ".($i+2).")";
 				$result = processQuery($select,$table,$where);
 
 				if(mysqli_num_rows($result)>0){
@@ -374,8 +365,8 @@
 					}
 						
 					$singleAppConsumption = array();
-					for ($i=1; $i <=12; $i++) {
-						$consumptionQuery = "SELECT IFNULL((SELECT IFNULL(SUM(consumed),0) FROM t_history WHERE uid='".$currentUID."' and YEAR('".$date."') and MONTH(effective_date) =  ".$i."),0) as consumed";
+					for ($i=1; $i <=12; $i+=3) {
+						$consumptionQuery = "SELECT IFNULL((SELECT IFNULL(SUM(consumed),0) FROM t_history WHERE uid='".$currentUID."' and YEAR('".$date."') AND (MONTH(effective_date) BETWEEN " .$i ." AND ".($i+2).")),0) as consumed";
 						$consumptionResults = $con->query($consumptionQuery);
 						if(mysqli_num_rows($consumptionResults)>0){
 						  while($conRow = mysqli_fetch_assoc($consumptionResults)){

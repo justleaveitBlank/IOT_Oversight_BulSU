@@ -476,7 +476,7 @@
 	<!--JavaScript at end of body for optimized loading-->
 
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src='js/materialize.min.update.js'></script>
+  <script type="text/javascript" src='js/materialize.min.update.js'></script>
 	<script type="text/javascript" src="js/sidenav.js"></script>
 	<script type="text/javascript" src="js/transition.js"></script>
 	<script type="text/javascript" src="js/socket.io.js"></script>
@@ -505,13 +505,6 @@
 				}
 			});
 			
-			$('.autoWeek').on("input",function(){
-				if($(this).val() != ""){
-					$(".btn-search-week").attr("disabled",true);
-				} else {
-					$(".btn-search-week").attr("disabled",false);
-				}
-			});
 			
 			$('.autoMonth').autocomplete({
 				data: {
@@ -523,13 +516,7 @@
 					$(".btn-search-month").attr("disabled",false);
 				}
 			});
-			$('.autoMonth').on("input",function(){
-				if($(this).val() != ""){
-					$(".btn-search-month").attr("disabled",true);
-				} else {
-					$(".btn-search-week").attr("disabled",false);
-				}
-			});
+			
 			
 			$('.autoYear').autocomplete({
 				data: {
@@ -539,13 +526,6 @@
 				onAutocomplete: function(val) {
 					console.log(val);
 					$(".btn-search-year").attr("disabled",false);
-				}
-			});
-			$('.autoYear').on("input",function(){
-				if($(this).val() != ""){
-					$(".btn-search-year").attr("disabled",true);
-				} else {
-					$(".btn-search-week").attr("disabled",false);
 				}
 			});
 			
@@ -710,7 +690,7 @@
 									<label for="searchForWeek" style="color: #616161 !important;">Search</label>
 								</div>
 								<div class="input-field col s3" style="padding-left: 0;">
-									<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-week btn-search" disabled style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
+									<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-week btn-search" style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
 								</div>
 								 
 							</div>
@@ -732,8 +712,6 @@
 								<li class='weekSortOption' name='consumed ASC'><a name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
 							</ul>
 						</div>
-						
-						<!-- END OF SORTER -->
 						
 						<!--SAMPLE APPLIANCE-->
 						<div class="WeeklyAppliances" id='weeklyHolder'></div>
@@ -805,30 +783,29 @@
 									<label for="searchForMonth" style="color: #616161 !important;">Search</label>
 								</div>
 								<div class="input-field col s3" style="padding-left: 0;">
-									<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-week btn-search" disabled style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
+									<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-month btn-search" style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
 								</div>
 								 
 							</div>
 						</div>
+
 						<!-- END AUTOCOMPLETE -->
 						
 						<!-- SORTER -->
-						
-						<div class="row weeksorter-div" style="padding-left: 1rem; margin-bottom:0;">
+						<div class="row month-sorter-div" style="padding-left: 1rem; margin-bottom:0;">
 							<a class='monthly-sorter-trigger sorter-trigger btn-flat' data-target='monthly-Sorter'><i class="material-icons" style='vertical-align: bottom;'>sort</i>Sort By : Consumption Desc</a>
 
 							<!-- Dropdown Structure -->
 							<ul id='monthly-Sorter' class='dropdown-content sort-content'>
-								<li class='monthSortOption' name='appl_name DESC'><a href="#monthlyHolder" name="Name Desc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Desc</a></li>
-								<li class='monthSortOption' name='appl_name ASC'><a href="#monthlyHolder" name="Name Asc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Asc</a></li>
-								<li class='monthSortOption' name='consumed DESC'><a href="#monthlyHolder" name="Price Desc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Desc</a></li>
-								<li class='monthSortOption' name='consumed ASC'><a href="#monthlyHolder" name="Price Asc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Asc</a></li>
-								<li class='monthSortOption' name='consumed DESC'><a href="#monthlyHolder" name="Consumption Desc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Desc</a></li>
-								<li class='monthSortOption' name='consumed ASC'><a href="#monthlyHolder" name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
+								<li class='monthSortOption' name='appl_name DESC'><a name="Name Desc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Desc</a></li>
+								<li class='monthSortOption' name='appl_name ASC'><a name="Name Asc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Asc</a></li>
+								<li class='monthSortOption' name='consumed DESC'><a name="Price Desc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Desc</a></li>
+								<li class='monthSortOption' name='consumed ASC'><a name="Price Asc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Asc</a></li>
+								<li class='monthSortOption' name='consumed DESC'><a name="Consumption Desc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Desc</a></li>
+								<li class='monthSortOption' name='consumed ASC'><a name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
 							</ul>
 						</div>
 						
-						<!-- END OF SORTER -->
 						
 						<!--SAMPLE APPLIANCE-->
 						<div class="MonthlyAppliances" id='monthlyHolder'></div>
@@ -839,7 +816,7 @@
 					<!-- YEARLY-->
 					<div id="yearly" class="col s12">
 						<div class="chartjs-wrapper divpadder">
-							<div class="chartjs-wrapper" style = "width: 600px; overflow-x: scroll;">
+							<div class="chartjs-wrapper">
 								<canvas id="yearlyGraph"></canvas>
 								<script>
 									var yearchart = new Chart(document.getElementById("yearlyGraph"),{
@@ -896,26 +873,26 @@
 									<label for="searchForYear" style="color: #616161 !important;">Search</label>
 								</div>
 								<div class="input-field col s3" style="padding-left: 0;">
-									<a class="waves-effect waves-light btn btn-flat btn-register btn-search-week btn-search" disabled style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
+									<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-year btn-search" style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
 								</div>
 								 
 							</div>
 						</div>
+
 						<!-- END AUTOCOMPLETE -->
 						
 						<!-- SORTER -->
-						
-						<div class="row weeksorter-div" style="padding-left: 1rem; margin-bottom:0;">
+						<div class="row year-sorter-div" style="padding-left: 1rem; margin-bottom:0;">
 							<a class='yearly-sorter-trigger sorter-trigger btn-flat' data-target='yearly-Sorter'><i class="material-icons" style='vertical-align: bottom;'>sort</i>Sort By : Consumption Desc</a>
 
 							<!-- Dropdown Structure -->
 							<ul id='yearly-Sorter' class='dropdown-content sort-content'>
-								<li class='yearSortOption' name='appl_name DESC'><a href="#yearlyHolder" name="Name Desc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Desc</a></li>
-								<li class='yearSortOption' name='appl_name ASC'><a href="#yearlyHolder" name="Name Asc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Asc</a></li>
-								<li class='yearSortOption' name='consumed DESC'><a href="#yearlyHolder" name="Price Desc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Desc</a></li>
-								<li class='yearSortOption' name='consumed ASC'><a href="#yearlyHolder" name="Price Asc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Asc</a></li>
-								<li class='yearSortOption' name='consumed DESC'><a href="#yearlyHolder" name="Consumption Desc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Desc</a></li>
-								<li class='yearSortOption' name='consumed ASC'><a href="#yearlyHolder" name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
+								<li class='yearSortOption' name='appl_name DESC'><a name="Name Desc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Desc</a></li>
+								<li class='yearSortOption' name='appl_name ASC'><a name="Name Asc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Asc</a></li>
+								<li class='yearSortOption' name='consumed DESC'><a name="Price Desc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Desc</a></li>
+								<li class='yearSortOption' name='consumed ASC'><a name="Price Asc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Asc</a></li>
+								<li class='yearSortOption' name='consumed DESC'><a name="Consumption Desc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Desc</a></li>
+								<li class='yearSortOption' name='consumed ASC'><a name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
 							</ul>
 						</div>
 						
