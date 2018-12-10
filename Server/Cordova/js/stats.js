@@ -546,7 +546,7 @@ function resetChartData(canvasHolder){
 				mode: 'single',
 				callbacks: {
 					label: function(tooltipItems, data) { 
-						return tooltipItems.yLabel + ' Wh';
+						return ((tooltipItems.yLabel)/1000).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' kWh';
 					}
 				}
 			},
