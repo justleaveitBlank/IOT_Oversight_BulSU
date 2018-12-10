@@ -239,11 +239,12 @@
 			font-size: 1rem;
 			font-weight:700;
 			display:grid;
-			grid-template-columns: repeat(3, 1fr); 
+			grid-template-columns: repeat(3, 9rem 1rem); 
 			grid-gap: .1rem;
 			line-height: 1.5rem;
 			border-bottom: 1px solid #e0e0e0;
 			padding: .2rem;
+			overflow: hidden;
 		}
 		.fullinfo span{
 			font-size: 1rem;
@@ -367,11 +368,6 @@
 			width: 100%;
 			margin: 0px auto;
 		}
-		#toast-container {
-		  top: auto !important;
-		  right: auto !important;
-		  bottom: 50%;
-		}
 		.icon-green{
 			color: green;
 			vertical-align: bottom;
@@ -433,6 +429,7 @@
 			background-color:rgba(0,0,0,0.6);
 			width: max-content;
 			min-width:75%;
+			max-width:100%;
 			margin: 0 auto;
 			border-radius:50px;
 		}
@@ -559,11 +556,13 @@
 			background: rgba(0,0,0,0);
 		}
 		.olabel{
-			width:9rem;
+			min-width:25px;
+			width:fit-content;
 			font-size: 1rem;;
 		}
 		.olabelc{
-			width:15rem;
+			min-width:25px;
+			width:fit-content;
 			font-size: 1rem;;
 		}
 		input[type="number"] {

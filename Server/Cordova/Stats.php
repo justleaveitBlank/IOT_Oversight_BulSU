@@ -127,17 +127,17 @@
 			  
 			?>
 
-			<div class="row" name="<?php echo $uid;?>" style="margin-bottom:0">
+			<div class="row" name="<?php echo $uid;?>" style="margin-bottom:0; display:block">
 				<div class="divider topNbotMarginer"></div>
 				<div class="col s12">
 					<div class="applName" style="background-color:<?php echo $color?>;"><?php echo $AppName;?></div>
 					
 					<div class="applDetails" style="display: inline-block; border:solid <?php echo $color?> 1px ; border-radius: 0 0 3px 3px; padding: .2rem .5rem;">
-						<div class="col s12"><b>Appliance ID: </b> <span><?php echo $uid;?></span></div>
-						<div class="col s12"><b>Appliance Type: </b> <span><?php echo $type;?></span></div>
-						<div class="col s12"><b>Average Kwatthr :</b> <span><?php echo  $avg_out;?></span></div>
-						<div class="col s12"><b>Total Consumption :</b> <span><?php echo $sum_out;?></span></div>
-						<div class="col s12"><b>Estimated Cost :</b> <span><?php echo "₱ " .number_format($ep,2);?></span></div>
+						<div class="col s12 fullinfo "><div class='olabel valign-wrapper'><b>Appliance ID</b></div> <span class='valign-wrapper'><b>:</b></span>  <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'><?php echo $uid;?></div></div>
+						<div class="col s12 fullinfo "><div class='olabel valign-wrapper'><b>Appliance Type</b></div> <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'><?php echo $type;?></div></div>
+						<div class="col s12 fullinfo "><div class='olabel valign-wrapper'><b>Average kWh</b></div> <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'><?php echo  $avg_out;?></div></div>
+						<div class="col s12 fullinfo "><div class='olabel valign-wrapper'><b>Total Consumption</b></div> <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'><?php echo $sum_out;?></div></div>
+						<div class="col s12 fullinfo "><div class='olabel valign-wrapper'><b>Estimated Cost</b></div> <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;'><?php echo "₱ " .number_format($ep,2);?></span></div>
 					</div>
 				</div>
 			</div>

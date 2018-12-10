@@ -261,7 +261,7 @@ function updateSettings() {
 		$('.toast').hide();
 
 		M.Toast.dismissAll();
-		var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size:1em;'>"+error+"</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+		var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size: 1em;'>" +error+ "</span><button style='color:gray; margin-left:.5rem; width: 30%;' class='btn-flat toast-action'>&#10006;</button>";
 		M.toast({html: toastHTML});
 
 		$('.toast-action').click(function(){

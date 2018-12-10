@@ -317,11 +317,6 @@
 		.marginer{
 			margin: 1.5rem 0;
 		}
-		#toast-container {
-		  top: auto !important;
-		  right: auto !important;
-		  bottom: 50%;
-		}
 		.tabs .tab a:hover, .tabs .tab a.active {
 			background-color: transparent;
 			color: #000000;
@@ -355,6 +350,11 @@
 		}
 		.applDetails  div.col.s12,.applDetails div.col.s12 span{
 			font-size: 1rem;
+		}
+		
+		.applDetails{
+			box-sizing: border-box;
+			width: 100%;
 		}
 		.marginbottomcanceler{
 			margin-bottom:0;
@@ -393,6 +393,8 @@
 			border-radius: 0 0 3px 3px;
 			display:inline-block;
 			padding: .2rem .5rem;
+			box-sizing: border-box;
+			width: 100%;
 		}
 		::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 			color: #616161;
@@ -449,12 +451,6 @@
 			transform: translateY(-20px) scale(.9);
 
 		}
-		.btn-search{
-			color:#ffffff !important;  
-			background-color:#7e57c2 !important; 
-			display: block; 
-			border-radius:0 50px 50px 0;
-		}
 		.dropdown-content li > a, .dropdown-content li > span {
 			font-size: 16px;
 			color: #000000;
@@ -471,6 +467,69 @@
 			border-radius: 50px;
 			padding: .2rem 1rem;
 			color: #7e57c2;
+		}
+		.fullinfo {
+			font-size: 1rem !important;
+			font-weight: 700;
+			display: grid;
+			grid-template-columns: repeat(3, 12rem 1rem); 
+			grid-gap: .1rem;
+			line-height: 1.5rem;
+			border-bottom: 1px solid #e0e0e0;
+			padding: .2rem !important;
+			overflow: hidden;
+		}
+		.olabel{
+			width:fit-content;
+			font-size: 1rem;;
+		}
+		.olabelc{
+			
+			width:fit-content;
+			font-size: 1rem;;
+		}
+		.seachContents{
+			position: absolute;
+			top:0;
+			left: 0;
+			background: #ffffff;
+			padding: 1rem;
+			width: 100%;
+			height: 100%;
+			overflow-y:scroll;
+			display:block
+		}
+		.searchModal {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			margin: 1rem;
+			position: fixed;
+		}
+		.btn-search{
+			color:#ffffff !important;  
+			background-color:#7e57c2 !important; 
+			display: block; 
+			border-radius:0 50px 50px 0;
+			min-width: 100% !important;
+		}
+		#toast-container {
+		  top: auto !important;
+		  right: auto !important;
+		  bottom: 1rem;
+		}
+		.toast{
+			background-color:rgba(0,0,0,0.6);
+			width: max-content;
+			min-width:75%;
+			max-width:100%;
+			margin: 0 auto;
+			border-radius:50px;
+		}
+		.sApplCon{
+			
+			overflow: hidden;
+			display: block;
 		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
@@ -543,6 +602,28 @@
 			//-------------------------------------------
 
 			//setInterval(checkLocal, 500);
+			$('#searchWeekly').hide();
+			$('#searchMonthly').hide();
+			$('#searchYearly').hide();
+			$('.sTrigger').click(function(){
+				var cImg = $(this).children('i.material-icons').text();
+				var toShow = $(this).attr('rel');
+				
+				if(cImg == "search"){
+					var cImg = $(this).children('i.material-icons').text('show_chart');
+					$(toShow).show();
+					$('body').css('overflow','hidden');
+				}
+				else
+				{
+					var cImg = $(this).children('i.material-icons').text('search');
+					$(toShow).hide();
+					$('body').css('overflow','');
+				}
+				//$(toShow).hide();
+				console.log(cImg);
+			});
+			
 		});
 
 	</script>
@@ -674,44 +755,52 @@
 							<div class="col s12">
 								<div class="applName" style="background-color:#460082; color:#ffffff;">Weekly Statistics :</div>
 								<div class="applDetails  overallstat">
-									<div class="col s12"><b>Average Kwatthr :</b> <span id='weekly_avg'>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span id='weekly_sum'>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span id='weekly_price'>value here</span></div>
+									<div class="col s12 fullinfo"><div class='olabel valign-wrapper'><b>Average kWh</b></div> <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;' id='weekly_avg'>value here</div></div>
+									<div class="col s12 fullinfo"><div class='olabel valign-wrapper'><b>Total Consumption</b></div>  <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;' id='weekly_sum'>value here</div></div>
+									<div class="col s12 fullinfo"><div class='olabel valign-wrapper'><b>Estimated Cost</b></div>  <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;' id='weekly_price'>value here</div></div>
 								</div>
 							</div>
 						</div>
 						<!-- END SAMPLE -->
+						<a class="btn-floating btn-large waves-effect waves-light deep-purple lighten-1 searchModal sTrigger" href="#" rel="#searchWeekly"><i class="material-icons">search</i></a>
 						
-						<!-- AUTOCOMPLETE -->
-						<div class="row" style="margin-bottom:0;">
-							<div class="row" style="margin:0;">
-								<div class="input-field col s9" style="padding-right: 0;">
-									<input id="searchForWeek" type="text" class="autoWeek autocomplete-text" style="border-radius: 50px 0 0 50px !important;"/>
-									<label for="searchForWeek" style="color: #616161 !important;">Search</label>
+						<div class="seachContents" id="searchWeekly">
+							<!-- AUTOCOMPLETE -->
+							<div class="row" style="margin: 4rem 0 0 0;">
+								<div class="row" style="margin:0;">
+									<div class="input-field col s9" style="padding-right: 0;">
+										<input id="searchForWeek" type="text" class="autoWeek autocomplete-text" style="border-radius: 50px 0 0 50px !important;"/>
+										<label for="searchForWeek" style="color: #616161 !important;">Search</label>
+									</div>
+									<div class="input-field col s3" style="padding-left: 0;">
+										<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-week btn-search" style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
+									</div>
+									 
 								</div>
-								<div class="input-field col s3" style="padding-left: 0;">
-									<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-week btn-search" style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
-								</div>
-								 
 							</div>
+
+							<!-- END AUTOCOMPLETE -->
+							
+							<!-- SORTER -->
+							<div class="row weeksorter-div" style="padding: 0 0 .2rem 1rem; margin-bottom:1rem;">
+								<a class='weekly-sorter-trigger sorter-trigger btn-flat' data-target='weekly-Sorter'><i class="material-icons" style='vertical-align: bottom;'>sort</i>Sort By : Consumption Desc</a>
+
+								<!-- Dropdown Structure -->
+								<ul id='weekly-Sorter' class='dropdown-content sort-content'>
+									<li class='weekSortOption' name='appl_name DESC'><a name="Name Desc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Desc</a></li>
+									<li class='weekSortOption' name='appl_name ASC'><a name="Name Asc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Asc</a></li>
+									<li class='weekSortOption' name='consumed DESC'><a name="Est Cost Desc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Estimated Cost Desc</a></li>
+									<li class='weekSortOption' name='consumed ASC'><a name="Est Cost Asc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Estimated Cost Asc</a></li>
+									<li class='weekSortOption' name='consumed DESC'><a name="Consumption Desc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Desc</a></li>
+									<li class='weekSortOption' name='consumed ASC'><a name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
+								</ul>
+							</div>
+							
+							<!--SAMPLE APPLIANCE-->
+							<div class="WeeklyAppliances sApplCon" id='weeklyHolder'></div>
+
 						</div>
 
-						<!-- END AUTOCOMPLETE -->
-						
-						<!-- SORTER -->
-						<div class="row weeksorter-div" style="padding-left: 1rem; margin-bottom:0;">
-							<a class='weekly-sorter-trigger sorter-trigger btn-flat' data-target='weekly-Sorter'><i class="material-icons" style='vertical-align: bottom;'>sort</i>Sort By : Consumption Desc</a>
-
-							<!-- Dropdown Structure -->
-							<ul id='weekly-Sorter' class='dropdown-content sort-content'>
-								<li class='weekSortOption' name='appl_name DESC'><a name="Name Desc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Desc</a></li>
-								<li class='weekSortOption' name='appl_name ASC'><a name="Name Asc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Asc</a></li>
-								<li class='weekSortOption' name='consumed DESC'><a name="Price Desc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Desc</a></li>
-								<li class='weekSortOption' name='consumed ASC'><a name="Price Asc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Asc</a></li>
-								<li class='weekSortOption' name='consumed DESC'><a name="Consumption Desc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Desc</a></li>
-								<li class='weekSortOption' name='consumed ASC'><a name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
-							</ul>
-						</div>
 						
 						<!--SAMPLE APPLIANCE-->
 						<div class="WeeklyAppliances" id='weeklyHolder'></div>
@@ -719,6 +808,8 @@
 
 					</div>
 					<!-- END WEEKLY-->
+					
+					
 					<!-- MONTHLY-->
 					<div id="monthly" class="col s12">
 						<div class="chartjs-wrapper divpadder">
@@ -767,46 +858,49 @@
 							<div class="col s12">
 								<div class="applName" style="background-color:#460082; color: #ffffff;">Monthly Statistics :</div>
 								<div class="applDetails  overallstat">
-									<div class="col s12"><b>Average watthr :</b> <span id='monthly_avg'>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span id='monthly_sum'>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span id='monthly_price'>value here</span></div>
+									<div class="col s12 fullinfo"><div class='olabel valign-wrapper'><b>Average kWh</b></div> <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;' id='monthly_avg'>value here</div></div>
+									<div class="col s12 fullinfo"><div class='olabel valign-wrapper'><b>Total Consumption</b></div>  <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;' id='monthly_sum'>value here</div></div>
+									<div class="col s12 fullinfo"><div class='olabel valign-wrapper'><b>Estimated Cost</b></div>  <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;' id='monthly_price'>value here</div></div>
 								</div>
 							</div>
 						</div>
 						<!-- END SAMPLE -->
+						<a class="btn-floating btn-large waves-effect waves-light deep-purple lighten-1 searchModal sTrigger" href="#" rel="#searchMonthly"><i class="material-icons">search</i></a>
 						
-						<!-- AUTOCOMPLETE -->
-						<div class="row" style="margin-bottom:0;">
-							<div class="row" style="margin:0;">
-								<div class="input-field col s9" style="padding-right: 0;">
-									<input id="searchForMonth" type="text" class="autoMonth autocomplete-text" style="border-radius: 50px 0 0 50px !important;"/>
-									<label for="searchForMonth" style="color: #616161 !important;">Search</label>
+						<div class="seachContents" id="searchMonthly">
+							<!-- AUTOCOMPLETE -->
+							<div class="row" style="margin: 4rem 0 0 0;">
+								<div class="row" style="margin:0;">
+									<div class="input-field col s9" style="padding-right: 0;">
+										<input id="searchForMonth" type="text" class="autoMonth autocomplete-text" style="border-radius: 50px 0 0 50px !important;"/>
+										<label for="searchForMonth" style="color: #616161 !important;">Search</label>
+									</div>
+									<div class="input-field col s3" style="padding-left: 0;">
+										<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-month btn-search" style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
+									</div>
+									 
 								</div>
-								<div class="input-field col s3" style="padding-left: 0;">
-									<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-month btn-search" style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
-								</div>
-								 
 							</div>
-						</div>
 
-						<!-- END AUTOCOMPLETE -->
-						
-						<!-- SORTER -->
-						<div class="row month-sorter-div" style="padding-left: 1rem; margin-bottom:0;">
-							<a class='monthly-sorter-trigger sorter-trigger btn-flat' data-target='monthly-Sorter'><i class="material-icons" style='vertical-align: bottom;'>sort</i>Sort By : Consumption Desc</a>
+							<!-- END AUTOCOMPLETE -->
+							
+							<!-- SORTER -->
+							<div class="row month-sorter-div" style="padding: 0 0 .2rem 1rem; margin-bottom:1rem">
+								<a class='monthly-sorter-trigger sorter-trigger btn-flat' data-target='monthly-Sorter'><i class="material-icons" style='vertical-align: bottom;'>sort</i>Sort By : Consumption Desc</a>
 
-							<!-- Dropdown Structure -->
-							<ul id='monthly-Sorter' class='dropdown-content sort-content'>
-								<li class='monthSortOption' name='appl_name DESC'><a name="Name Desc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Desc</a></li>
-								<li class='monthSortOption' name='appl_name ASC'><a name="Name Asc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Asc</a></li>
-								<li class='monthSortOption' name='consumed DESC'><a name="Price Desc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Desc</a></li>
-								<li class='monthSortOption' name='consumed ASC'><a name="Price Asc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Asc</a></li>
-								<li class='monthSortOption' name='consumed DESC'><a name="Consumption Desc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Desc</a></li>
-								<li class='monthSortOption' name='consumed ASC'><a name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
-							</ul>
+								<!-- Dropdown Structure -->
+								<ul id='monthly-Sorter' class='dropdown-content sort-content'>
+									<li class='monthSortOption' name='appl_name DESC'><a name="Name Desc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Desc</a></li>
+									<li class='monthSortOption' name='appl_name ASC'><a name="Name Asc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Asc</a></li>
+									<li class='monthSortOption' name='consumed DESC'><a name="Est Cost Desc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Estimated Cost Desc</a></li>
+									<li class='monthSortOption' name='consumed ASC'><a name="Est Cost Asc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Estimated Cost Asc</a></li>
+									<li class='monthSortOption' name='consumed DESC'><a name="Consumption Desc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Desc</a></li>
+									<li class='monthSortOption' name='consumed ASC'><a name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
+								</ul>
+							</div>
+							
+							<div class="MonthlyAppliances sApplCon" id='monthlyHolder'></div>
 						</div>
-						
-						
 						<!--SAMPLE APPLIANCE-->
 						<div class="MonthlyAppliances" id='monthlyHolder'></div>
 						<!-- END SAMPLE APPLIANCE -->
@@ -856,50 +950,55 @@
 							<div class="col s12">
 								<div class="applName" style="background-color:#460082; color: #ffffff;">Yearly Statistics :</div>
 								<div class="applDetails  overallstat">
-									<div class="col s12"><b>Average watthr :</b> <span id='yearly_avg'>value here</span></div>
-									<div class="col s12"><b>Total Consumption :</b> <span id='yearly_sum'>value here</span></div>
-									<div class="col s12"><b>Estimated Price :</b> <span id='yearly_price'>value here</span></div>
+								<div class="col s12 fullinfo"><div class='olabel valign-wrapper'><b>Average kWh</b></div> <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;' id='yearly_avg'>value here</div></div>
+									<div class="col s12 fullinfo"><div class='olabel valign-wrapper'><b>Total Consumption</b></div>  <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;' id='yearly_sum'>value here</div></div>
+									<div class="col s12 fullinfo"><div class='olabel valign-wrapper'><b>Estimated Cost</b></div>  <span class='valign-wrapper'><b>:</b></span> <div class='olabelc valign-wrapper' style='font-weight: normal; font-size: inherit;' id='yearly_price'>value here</div></div>
 								</div>
 							</div>
 
 						</div>
 						<!-- OverAll -->
+						<a class="btn-floating btn-large waves-effect waves-light deep-purple lighten-1 searchModal sTrigger" href="#" rel="#searchYearly"><i class="material-icons">search</i></a>
 						
-						<!-- AUTOCOMPLETE -->
-						<div class="row" style="margin-bottom:0;">
-							<div class="row" style="margin:0;">
-								<div class="input-field col s9" style="padding-right: 0;">
-									<input id="searchForYear" type="text" class="autoYear autocomplete-text" style="border-radius: 50px 0 0 50px !important;"/>
-									<label for="searchForYear" style="color: #616161 !important;">Search</label>
+						<div class="seachContents" id="searchYearly">
+							<!-- AUTOCOMPLETE -->
+							<div class="row" style="margin: 4rem 0 0 0;">
+								<div class="row" style="margin:0;">
+									<div class="input-field col s9" style="padding-right: 0;">
+										<input id="searchForYear" type="text" class="autoYear autocomplete-text" style="border-radius: 50px 0 0 50px !important;"/>
+										<label for="searchForYear" style="color: #616161 !important;">Search</label>
+									</div>
+									<div class="input-field col s3" style="padding-left: 0;">
+										<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-year btn-search" style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
+									</div>
+									 
 								</div>
-								<div class="input-field col s3" style="padding-left: 0;">
-									<a class="waves-effect waves-purple btn btn-flat btn-register btn-search-year btn-search" style="color: #ffffff !important; background-color: #7e57c2 !important;"><i class="material-icons">search</i></a>
-								</div>
-								 
 							</div>
-						</div>
 
-						<!-- END AUTOCOMPLETE -->
-						
-						<!-- SORTER -->
-						<div class="row year-sorter-div" style="padding-left: 1rem; margin-bottom:0;">
-							<a class='yearly-sorter-trigger sorter-trigger btn-flat' data-target='yearly-Sorter'><i class="material-icons" style='vertical-align: bottom;'>sort</i>Sort By : Consumption Desc</a>
+							<!-- END AUTOCOMPLETE -->
+							
+							<!-- SORTER -->
+							<div class="row year-sorter-div" style="padding: 0 0 .2rem 1rem; margin-bottom:1rem;">
+								<a class='yearly-sorter-trigger sorter-trigger btn-flat' data-target='yearly-Sorter'><i class="material-icons" style='vertical-align: bottom;'>sort</i>Sort By : Consumption Desc</a>
 
-							<!-- Dropdown Structure -->
-							<ul id='yearly-Sorter' class='dropdown-content sort-content'>
-								<li class='yearSortOption' name='appl_name DESC'><a name="Name Desc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Desc</a></li>
-								<li class='yearSortOption' name='appl_name ASC'><a name="Name Asc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Asc</a></li>
-								<li class='yearSortOption' name='consumed DESC'><a name="Price Desc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Desc</a></li>
-								<li class='yearSortOption' name='consumed ASC'><a name="Price Asc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Price Asc</a></li>
-								<li class='yearSortOption' name='consumed DESC'><a name="Consumption Desc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Desc</a></li>
-								<li class='yearSortOption' name='consumed ASC'><a name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
-							</ul>
+								<!-- Dropdown Structure -->
+								<ul id='yearly-Sorter' class='dropdown-content sort-content'>
+									<li class='yearSortOption' name='appl_name DESC'><a name="Name Desc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Desc</a></li>
+									<li class='yearSortOption' name='appl_name ASC'><a name="Name Asc"><i class="material-icons"  style='vertical-align: bottom;'>sort_by_alpha</i>Name Asc</a></li>
+									<li class='yearSortOption' name='consumed DESC'><a name="Est Cost Desc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Estimated Cost Desc</a></li>
+									<li class='yearSortOption' name='consumed ASC'><a name="Est Cost Asc"><i class="material-icons"  style='vertical-align: bottom;'>attach_money</i>Estimated Cost Asc</a></li>
+									<li class='yearSortOption' name='consumed DESC'><a name="Consumption Desc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Desc</a></li>
+									<li class='yearSortOption' name='consumed ASC'><a name="Consumption Asc"><i class="material-icons"  style='vertical-align: bottom;'>flash_on</i>Consumption Asc</a></li>
+								</ul>
+							</div>
+							
+							<!-- END OF SORTER -->
+							
+							<div class="YearlyAppliances sApplCon" id='yearlyHolder'></div>
 						</div>
-						
-						<!-- END OF SORTER -->
 						
 						<!--SAMPLE APPLIANCE-->
-						<div class="YearlyAppliances"></div>
+						<div class="YearlyAppliances" id='yearlyHolder'></div>
 						<!-- END SAMPLE APPLIANCE -->
 
 					</div>
