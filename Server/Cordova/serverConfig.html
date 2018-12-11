@@ -7,12 +7,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=device-height"/>
 
 	<!--Import Google Icon Font-->
 	<link href="css/material+icons.css" rel="stylesheet">
 
 	<!--Import materialize.css-->
 	<link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+	
 	<style>
 		@viewport {
 		  width: device-width ;
@@ -297,9 +299,8 @@
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.js"></script>
 	<script type="text/javascript" src="js/socket.io.js"></script>
-	<script type="text/javascript" src='js/oversight_dep.js'></script>
 
-	<!--cordova-->
+	<!--cordova--><script type="text/javascript" src='cordova.js'></script>
 
 	<script>
 		function mySubmit(e) { 
@@ -314,7 +315,20 @@
 	
 		$(document).ready(function(){
 			// the "href" attribute of .modal-trigger must specify the modal ID that   wants to be triggered
-
+			
+			document.addEventListener("deviceready", function() {
+				function ClearNotification(){
+					cordova.plugins.notification.local.hasPermission(function(granted) {
+						cordova.plugins.notification.local.clearAll(function() {
+								console.log("done");
+						}, this);
+					});
+				}
+				ClearNotification();
+				cordova.plugins.backgroundMode.setDefaults({ hidden: true, silent: true, silent: true }); // marked
+				cordova.plugins.backgroundMode.disable(); // marked
+			}, false);
+			
 			function modalClosed(){
 				$('input').each(function(){
 				  $(this).val("");
@@ -327,24 +341,18 @@
 				})
 			}
 			
-			function testCode(conCode,username,password){
+			function testHost(devHost,type){
 				$.ajax({
 					type: "POST",
-					url: "http://" + deviceHost + "/methods.php",
-					data: "verification="+conCode+"&username="+username+"&password="+password,
+					url: "http://" + devHost + "/check.php",
+					data: "none",
 					crossDomain: true,
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
 					success: function(data) {
-						console.log(data.trim());
-						if(data.trim().match(/verified/i)){
-							SendToast("Account Verified! Re-log needed. Redirecting in 3 seconds!");
-							setTimeout(function(){
-								window.location.href = "index.html";
-							},3000);
-							
-						} else {
-							SendToast("No Account Matches that Code. Advice: Check Your Email and follow the Instructions!");
+						if(type=="set"){
+							window.localStorage.setItem('I-O-T',deviceHost);
 						}
+						window.location.href = "index.html";
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						SendToast("Connection Failed! Host Unreachable!");
@@ -355,19 +363,27 @@
 
 			$('.modal').modal({onCloseEnd: function() { modalClosed(); }});
 			
-			$('#btnConfirm').click(function(){
-				if($('#confirmCode').val().trim()!=""){
-					conCode = $('#confirmCode').val().trim();
-					var username = window.localStorage.getItem('toConfirmUser');
-					var password = window.localStorage.getItem('toConfirmPass');
-					testCode(conCode,username,password);
+			$('#saveConfig').click(function(){
+				if($('#serverAddress').val().trim()!=""){
+					deviceHost = $('#serverAddress').val().trim();
+					testHost(deviceHost,"set");
+				}
+			});
+			
+			$('#backbutton').click(function(){
+				var ip = window.localStorage.getItem('I-O-T');
+				if(ip){
+					testHost(ip,"cancel");
+				}else{
+					$('#serverAddress').addClass('invalid');
+					SendToast("You have no server address. It is required to proceed");
 				}
 			});
 			
 			function SendToast(message){
 				$('.toast').hide();
 
-				var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size: 1em;'>" +message+ "</span><button style='color: grey; width: 30%;' class='btn-flat toast-action'>Close</button>";
+				var toastHTML = "<span style='color: white; word-break: keep-all;  width: 70%; font-size: 1em;'>" +message+ "</span><button style='color:gray; margin-left:.5rem; width: 30%;' class='btn-flat toast-action'>&#10006;</button>";
 				M.toast({
 					html: toastHTML
 				});
@@ -383,8 +399,8 @@
 		});
 	</script>
 </head>
-<body>
-	<div class="my-wrapper valign-wrapper">
+<body style="min-height:600px;">
+	<div class="my-wrapper valign-wrapper bgimage">
 		<div class="container">
 			<div class="row">
 				<div class="col l8 s12 hide-on-med-and-down border_right">
@@ -399,13 +415,13 @@
 								<p class="appName ">OVERSIGHT</p>
 							<form class="col s12" method="POST" action="index.html" id='serverForm' onsubmit="return mySubmit(event)">
 								<div class="input-field col s12" style="padding: 0">
-									<i class="material-icons prefix">lock</i>
-									<input id="confirmCode" type="text" class="validate white-text" autocomplete="off" required/>
+									<i class="material-icons prefix" style="font-size: 2.5rem; top: 0.25rem;">insert_link</i>
+									<input id="serverAddress" type="text" class="validate white-text" autocomplete="off" required/>
 									<span class="helper-text" data-error="&#10006; This field is required!" data-success=""></span>
-									<label for="confirmCode">CONFIRMATION CODE</label>
+									<label for="serverAddress">SERVER ADDRESS</label>
 								</div>
-								<button id='btnConfirm' class="submitbtn btn waves-effect waves-light blue" type="submit" name="action">CONFIRM</button>
-								<a id="backbutton" class="submitbtn btn waves-effect waves-light  red" href="index.html">BACK</a>
+								<button id='saveConfig' class="submitbtn btn waves-effect waves-light green" type="submit" name="action">SAVE CONFIG</button>
+								<a id="backbutton" class="submitbtn btn waves-effect waves-light  red" href="#Back">BACK</a>
 							</form>
 
 							<div id='sampleholder'></div>
