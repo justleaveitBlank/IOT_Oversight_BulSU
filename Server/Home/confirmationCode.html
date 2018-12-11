@@ -380,11 +380,14 @@
 				$(this).removeClass('invalid');
 				$(this).removeClass('valid');
 			});
+			
+			$('body').css('min-height', $( window ).height()); 
+			$('body').css('overflow', 'hidden'); 
 		});
 	</script>
 </head>
 <body>
-	<div class="my-wrapper valign-wrapper">
+	<div class="my-wrapper valign-wrapper bgimage">
 		<div class="container">
 			<div class="row">
 				<div class="col l8 s12 hide-on-med-and-down border_right">
