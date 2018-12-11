@@ -612,12 +612,14 @@
 				if(cImg == "search"){
 					var cImg = $(this).children('i.material-icons').text('show_chart');
 					$(toShow).show();
+					$(toShow).css('display','');
 					$('body').css('overflow','hidden');
 				}
 				else
 				{
 					var cImg = $(this).children('i.material-icons').text('search');
 					$(toShow).hide();
+					$(toShow).css('display','none');
 					$('body').css('overflow','');
 				}
 				//$(toShow).hide();
@@ -764,7 +766,7 @@
 						<!-- END SAMPLE -->
 						<a class="btn-floating btn-large waves-effect waves-light deep-purple lighten-1 searchModal sTrigger" href="#" rel="#searchWeekly"><i class="material-icons">search</i></a>
 						
-						<div class="seachContents" id="searchWeekly">
+						<div class="seachContents" id="searchWeekly" style="display:none">
 							<!-- AUTOCOMPLETE -->
 							<div class="row" style="margin: 4rem 0 0 0;">
 								<div class="row" style="margin:0;">
@@ -867,7 +869,7 @@
 						<!-- END SAMPLE -->
 						<a class="btn-floating btn-large waves-effect waves-light deep-purple lighten-1 searchModal sTrigger" href="#" rel="#searchMonthly"><i class="material-icons">search</i></a>
 						
-						<div class="seachContents" id="searchMonthly">
+						<div class="seachContents" id="searchMonthly" style="display:none">
 							<!-- AUTOCOMPLETE -->
 							<div class="row" style="margin: 4rem 0 0 0;">
 								<div class="row" style="margin:0;">
@@ -960,7 +962,7 @@
 						<!-- OverAll -->
 						<a class="btn-floating btn-large waves-effect waves-light deep-purple lighten-1 searchModal sTrigger" href="#" rel="#searchYearly"><i class="material-icons">search</i></a>
 						
-						<div class="seachContents" id="searchYearly">
+						<div class="seachContents" id="searchYearly" style="display:none">
 							<!-- AUTOCOMPLETE -->
 							<div class="row" style="margin: 4rem 0 0 0;">
 								<div class="row" style="margin:0;">
