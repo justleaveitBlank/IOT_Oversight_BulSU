@@ -19,6 +19,9 @@ var dayOfWeek = d.getDay()+1;
 var weeklyID = [];
 var monthlyID = [];
 var yearlyID = [];
+var yearOpt = [];
+var monthOpt = [];
+var weekOpt = [];
 
 // ================================ STATISTICAL COMPUTATIONS SECTION ================================================
 
@@ -42,7 +45,6 @@ function getWeeklyComputation(){
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function(data) {
 			var singleAppChartset = JSON.parse(data.trim());
-			var weekOpt = [];
 			
 			for(var xcount = 0; xcount<singleAppChartset.length; xcount++){
 				for(var curUid in singleAppChartset[xcount]){
@@ -60,12 +62,17 @@ function getWeeklyComputation(){
 								weekOpt.push("Unregistered");
 							}
 						} else {
-							weekOpt.push(singleAppChartset[xcount][curUid][ycount].name);
+							if(!weekOpt.includes(singleAppChartset[xcount][curUid][ycount].name)){
+								weekOpt.push(singleAppChartset[xcount][curUid][ycount].name);
+							}
 						}
 						if(!weekOpt.includes(singleAppChartset[xcount][curUid][ycount].type)){
 							weekOpt.push(singleAppChartset[xcount][curUid][ycount].type);
 						}
-						weekOpt.push(curUid);
+						if(!weekOpt.includes(curUid)){
+							weekOpt.push(curUid);
+						}
+						
 					}
 				}
 			}
@@ -100,7 +107,6 @@ function getMonthlyComputation(){
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function(data) {
 			var singleAppChartset = JSON.parse(data.trim());
-			var monthOpt = [];
 			
 			for(var xcount = 0; xcount<singleAppChartset.length; xcount++){
 				for(var curUid in singleAppChartset[xcount]){
@@ -118,12 +124,16 @@ function getMonthlyComputation(){
 								monthOpt.push("Unregistered");
 							}
 						} else {
-							monthOpt.push(singleAppChartset[xcount][curUid][ycount].name);
+							if(!monthOpt.includes(singleAppChartset[xcount][curUid][ycount].name)){
+								monthOpt.push(singleAppChartset[xcount][curUid][ycount].name);
+							}
 						}
 						if(!monthOpt.includes(singleAppChartset[xcount][curUid][ycount].type)){
 							monthOpt.push(singleAppChartset[xcount][curUid][ycount].type);
 						}
-						monthOpt.push(curUid);
+						if(!monthOpt.includes(curUid)){
+							monthOpt.push(curUid);
+						}
 					}
 				}
 			}
@@ -158,7 +168,6 @@ function getYearlyComputation(){
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function(data) {
 			var singleAppChartset = JSON.parse(data.trim());
-			var yearOpt = [];
 			
 			for(var xcount = 0; xcount<singleAppChartset.length; xcount++){
 				for(var curUid in singleAppChartset[xcount]){
@@ -176,12 +185,16 @@ function getYearlyComputation(){
 								yearOpt.push("Unregistered");
 							}
 						} else {
-							yearOpt.push(singleAppChartset[xcount][curUid][ycount].name);
+							if(!yearOpt.includes(singleAppChartset[xcount][curUid][ycount].name)){
+								yearOpt.push(singleAppChartset[xcount][curUid][ycount].name);
+							}
 						}
 						if(!yearOpt.includes(singleAppChartset[xcount][curUid][ycount].type)){
 							yearOpt.push(singleAppChartset[xcount][curUid][ycount].type);
 						}
-						yearOpt.push(curUid);
+						if(!yearOpt.includes(curUid)){
+							yearOpt.push(curUid);
+						}
 					}
 				}
 			}
@@ -410,25 +423,26 @@ function getchartdata(type){
 
 // reloading all chart and data
 function reloadAll(){
+	yearOpt = [];
+	monthOpt = [];
+	weekOpt = [];
+	
 	reloadWeekly();
 	reloadMonthly();
 	reloadYearly();
 }
 
 function reloadWeekly(){
-	weeklyID = [];
 	getWeeklyComputation();
 	getchartdata(options[0]);
 }
 
 function reloadMonthly(){
-	monthlyID = [];
 	getMonthlyComputation();
 	getchartdata(options[1]);
 }
 
 function reloadYearly(){
-	yearlyID = [];
 	getYearlyComputation();
 	getchartdata(options[2]);
 }
