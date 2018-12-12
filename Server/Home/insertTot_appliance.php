@@ -21,7 +21,7 @@
 			//need to update
 			
 			if($has_power =="1"){
-				if($lstMoUpdate < $current_month){
+				if($lstMoUpdate != $current_month){
 					$upd_query = 'UPDATE t_appliance SET current_power_usage = 0 ,estimated_cost= 0  WHERE uid = "' . $UID . '"';
 					if($con->query($upd_query)){
 						echo mysqli_error($con);
@@ -29,10 +29,13 @@
 					$lstMoUpdate = $current_month;
 					file_put_contents("textVariables.txt","lastUID=".$UID ."||currentConsumedVal=0||lastMoUpdate=".$lstMoUpdate);
 				}
-				$upd_query = 'UPDATE t_appliance SET current_power_usage = ' . $m_consumed . ', avg_watthr = ' . round($m_avg_watthr,2) . ',estimated_cost= '.$e_price.'  WHERE uid = "' . $UID . '"';
-				if($con->query($upd_query)){
-					echo mysqli_error($con);
+				else{
+					$upd_query = 'UPDATE t_appliance SET current_power_usage = ' . $m_consumed . ', avg_watthr = ' . round($m_avg_watthr,2) . ',estimated_cost= '.$e_price.'  WHERE uid = "' . $UID . '"';
+					if($con->query($upd_query)){
+						echo mysqli_error($con);
+					}
 				}
+				
 			}
 			
 		}

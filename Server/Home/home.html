@@ -239,7 +239,7 @@
 			font-size: 1rem;
 			font-weight:700;
 			display:grid;
-			grid-template-columns: repeat(3, 9rem 1rem); 
+			grid-template-columns: repeat(3, 48% 4% 48%);
 			grid-gap: .1rem;
 			line-height: 1.5rem;
 			border-bottom: 1px solid #e0e0e0;
@@ -485,7 +485,8 @@
 		}
 		
 		#adminConfirmUpdate {
-			height: 50%;
+			height: 45%;
+			min-height: 330px;
 		}
 		.d_update_btn, .resolve-redirect{
 			border-radius:50px;
@@ -628,6 +629,8 @@
 			$("#applianceCategHome").change(function() {
 				insertOptions(this.value);
 			});
+			
+			$('body').css('min-height', $( window ).height()); 
 
 		});
 	</script>
@@ -754,6 +757,7 @@
 					<div class="modal-content">
 						<div class="row">
 							<h5>Admin Confirmation</h5>
+							<p class="text_indent">Please input the admin password to update information of this appliance</p>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">

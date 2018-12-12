@@ -676,12 +676,13 @@ if(isset($_POST['getPrice'])){
 		$id = $updates->id;
 		$name = $updates->name;
 		$limit = $updates->limit;
+		$type = $updates->type;
 		$haslimit = 1;
 		if($limit == 0){
 			$haslimit = 0;
 		}
 
-		$query = "UPDATE t_appliance SET appl_name = '".$name."' , appl_name = '".$name."' , has_power_limit = ".$haslimit." , power_limit_value = ".$limit." WHERE uid = '".$id."'";
+		$query = "UPDATE t_appliance SET appl_name = '".$name."' , appl_name = '".$name."',appl_type = '".$type."' , has_power_limit = ".$haslimit." , power_limit_value = ".$limit." WHERE uid = '".$id."'";
 
 		$result = $con->query($query);
 		if($result){

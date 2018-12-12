@@ -2,5 +2,5 @@
 <ActiveUser>
   <ip>192.168.43.1</ip>
   <ip>192.168.2.119</ip>
-  <ip>192.168.2.110</ip>
+  <ip>::1</ip>
 </ActiveUser>

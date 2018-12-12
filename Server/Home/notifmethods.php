@@ -175,10 +175,10 @@
 												<div class="consumption_limit" id='<?php echo $id?>' name='<?php echo $limit?>'>
 													<div class="card-content white-text">
 														<span class="card-title black-text"><b><?php echo $title?></b></span>
-														<p class="black-text">ID: <em><?php echo $app_id?></em></p>
-														<p class="black-text">Name: <em><?php echo $name?></em></p>
-														<p class="black-text">Consumption: <em><?php echo $consumption?> Wh</em></p>
-														<p class="black-text">Limit: <em><?php echo $limit?> kWh</em></p>
+														<div class="black-text"><div><b>ID</b></div> <span>:</span> <div><em><?php echo $app_id?></em></div></div>
+														<div class="black-text"><div><b>Name</b></div> <span>:</span> <div><em><?php echo $name?></em></div></div>
+														<div class="black-text"><div><b>Consumption</b></div> <span>:</span> <div><em><?php echo $consumption?> Wh</em></div></div>
+														<div class="black-text"><div><b>Limit</b></div> <span>:</span> <div><em><?php echo $limit?> kWh</em></div></div>
 													</div>
 												</div>
 
@@ -275,6 +275,7 @@
 							$limit = $row2['power_limit_value'];
 							$color = "orange";
 							$title = "Consumption Almost at Limit";
+							$Kconsumption= $consumption/1000;
 							if($consumption/1000>=$limit){
 								$title = "Consumption Reached Limit";
 								$color = "red";
@@ -296,14 +297,14 @@
 											<div class="col s12 m12 center-block consumption_value" name="<?php echo $consumption?>">
 												<div class="consumption_limit" id='<?php echo $id?>' name='<?php echo $limit?>'>
 													<div class="card-content white-text" style="margin-bottom:1rem;">
-														<span class="card-title black-text"><?php echo $title?></span>
-														<p class="black-text">ID: <em><?php echo $app_id?></em></p>
-														<p class="black-text">Name: <em><?php echo $name?></em></p>
-														<p class="black-text">Consumption: <em><?php echo $consumption?> whr</em></p>
-														<p class="black-text">Limit: <em><?php echo $limit?> kwhr</em></p>
+														<span class="card-title black-text"><b><?php echo $title?></b></span>
+														<div class="black-text nInfo"><div class="valign-wrapper"><b>ID</b></div> <span class='valign-wrapper'><b>:</b></span> <div  class="valign-wrapper"><em><?php echo $app_id?></em></div></div>
+														<div class="black-text nInfo"><div  class="valign-wrapper"><b>Name</b></div> <span class='valign-wrapper'><b>:</b></span> <div  class="valign-wrapper"><em><?php echo $name?></em></div></div>
+														<div class="black-text nInfo"><div  class="valign-wrapper"><b>Consumption</b></div> <span class='valign-wrapper'><b>:</b></span> <div  class="valign-wrapper"><em><?php echo $Kconsumption?> kWh</em></div></div>
+														<div class="black-text nInfo"><div  class="valign-wrapper"><b>Limit</b></div> <span class='valign-wrapper'><b>:</b></span> <div><em  class="valign-wrapper"><?php echo $limit?> kWh / mo</em></div></div>
 													</div>
 													<div class="card-action right-align" name="<?php echo $name?>">
-														<a class="consumption_btn btn-small waves-effect waves-purple modal-trigger sTitle btn-register btn-flat" style="line-height:2rem;" href='#updateLimit' id='<?php echo $app_id;?>'>Update</a>
+														<a class="consumption_btn waves-effect waves-purple modal-trigger sTitle btn-register btn-flat" href='#updateLimit' id='<?php echo $app_id;?>'>Update</a>
 													</div>
 												</div>
 
@@ -338,9 +339,9 @@
 										</div>
 										<div class="divider"></div>
 										<div class="card-action right-align" style="margin-top:1rem;">
-											<a id='<?php echo $app_id;?>' class="register-trigger modal-trigger btn-small waves-effect waves-purple sTitle btn-register btn-flat" style="line-height:2rem;" href="#register_appl">Register</a>
-											<a id='<?php echo $app_id;?>' class="allow-trigger btn-small waves-effect waves-green modal-trigger sTitle btn-accept btn-flat" style="line-height:2rem;" href='#allowUnregistered'>Allow</a>
-											<a class="ignore btn-small waves-effect waves-red sTitle btn-cancel btn-flat" style="line-height:2rem;" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
+											<a id='<?php echo $app_id;?>' class="register-trigger modal-trigger waves-effect waves-purple sTitle btn-register btn-flat"  href="#register_appl">Register</a>
+											<a id='<?php echo $app_id;?>' class="allow-trigger  waves-effect waves-green modal-trigger sTitle btn-accept btn-flat"  href='#allowUnregistered'>Allow</a>
+											<a class="ignore waves-effect waves-red sTitle btn-cancel btn-flat" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
 										</div>
 									</div>
 								</div>
@@ -371,8 +372,8 @@
 										</div>
 										<div class="divider"></div>
 										<div class="card-action right-align" style="margin-top:1rem;">
-											<a id='<?php echo $app_id;?>' class="allow-trigger btn-small waves-effect waves-green modal-trigger sTitle btn-accept btn-flat"  style="line-height:2rem;" href='#allowUnregistered'>Allow</a>
-											<a class="ignore btn-small waves-effect waves-red sTitle btn-cancel btn-flat" style="line-height:2rem;" name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
+											<a id='<?php echo $app_id;?>' class="allow-trigger waves-effect waves-green modal-trigger sTitle btn-accept btn-flat" href='#allowUnregistered'>Allow</a>
+											<a class="ignore waves-effect waves-red sTitle btn-cancel btn-flat"  name='<?php echo $app_id;?>' id='<?php echo $id?>'>Ignore</a>
 										</div>
 									</div>
 								</div>

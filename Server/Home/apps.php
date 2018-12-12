@@ -71,6 +71,7 @@
 									<input type="hidden" class='appl_name' name='<?php echo $row['uid']; ?>' value='<?php echo $row['appl_name']; ?>'>
 									<input type="hidden" class='appl_consumption' name='<?php echo $row['uid']; ?>' value='<?php echo $row['current_power_usage']; ?>'>
 									<input type="hidden" class='appl_limit' name='<?php echo $row['uid']; ?>' value='<?php echo $row['power_limit_value']; ?>'>
+									<input type="hidden" class='appl_type' name='<?php echo $row['uid']; ?>' value='<?php echo $row['appl_type']; ?>'>
 								</div>
 							</div>
 							

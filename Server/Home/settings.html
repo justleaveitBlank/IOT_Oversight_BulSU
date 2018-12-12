@@ -381,7 +381,10 @@
 			top: -.25rem;
 		}
 		#adminConfirmChangeRate, #ChangeMultiplyerRate{
-			height: 40%;
+			height: 35%;
+			min-height:260px;
+			max-height:260px;
+			overflow:hidden;
 		}
 		.btn-accept{
 			color: #66bb6a !important;
@@ -453,6 +456,10 @@
 		input[type="number"] {
 			-moz-appearance: textfield;
 		}
+		#adminConfirmChangePass{
+			min-height:460px;
+			max-height:460px;
+		}
 	</style>
 	<!--JavaScript at end of body for optimized loading-->
 
@@ -486,6 +493,8 @@
 				"Google": 'https://placehold.it/250x250'
 			  },
 			});
+			
+			$('body').css('min-height', $( window ).height()); 
 		});
 	</script>
 </head>
@@ -561,7 +570,7 @@
 		<!-- Modal Structure for Admin Change Multiplyer Rate -->
 		<div id="adminConfirmChangeRate" class="modal modal-fixed-footer">
 			<form class="col s12" method="POST" action="">
-				<div class="modal-content">
+				<div class="modal-content" style="overflow-y:hidden">
 					<div class="row">
 						<h5>ADMIN CONFIRMATION</h5>
 					</div>
@@ -583,7 +592,7 @@
 	<!-- Modal Structure for Change Multiplyer Rate -->
 		<div id="ChangeMultiplyerRate" class="modal modal-fixed-footer">
 			<form class="col s12" method="POST" action="">
-				<div class="modal-content">
+				<div class="modal-content" style="overflow-y:hidden">
 					<div class="row">
 						<h5>CHANGE kWh PRICE RATING</h5>
 					</div>
@@ -605,7 +614,7 @@
 	
 		<div id="adminConfirmChangePass" class="modal modal-fixed-footer">
 			<form class="input-forms col s12" method="POST" action="">
-				<div class="modal-content">
+				<div class="modal-content" style="overflow-y:hidden;">
 					<div class="row">
 						<h5><b>CHANGE ADMINISTRATOR PASSWORD</b></h5>
 					</div>
