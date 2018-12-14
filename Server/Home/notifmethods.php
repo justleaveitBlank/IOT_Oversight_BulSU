@@ -175,10 +175,10 @@
 												<div class="consumption_limit" id='<?php echo $id?>' name='<?php echo $limit?>'>
 													<div class="card-content white-text">
 														<span class="card-title black-text"><b><?php echo $title?></b></span>
-														<div class="black-text"><div><b>ID</b></div> <span>:</span> <div><em><?php echo $app_id?></em></div></div>
-														<div class="black-text"><div><b>Name</b></div> <span>:</span> <div><em><?php echo $name?></em></div></div>
-														<div class="black-text"><div><b>Consumption</b></div> <span>:</span> <div><em><?php echo $consumption?> Wh</em></div></div>
-														<div class="black-text"><div><b>Limit</b></div> <span>:</span> <div><em><?php echo $limit?> kWh</em></div></div>
+														<div class="black-text nInfo"><div><b>ID</b></div> <span>:</span> <div><em><?php echo $app_id?></em></div></div>
+														<div class="black-text nInfo"><div><b>Name</b></div> <span>:</span> <div><em><?php echo $name?></em></div></div>
+														<div class="black-text nInfo"><div><b>Consumption</b></div> <span>:</span> <div><em><?php echo $consumption?> Wh</em></div></div>
+														<div class="black-text nInfo"><div><b>Limit</b></div> <span>:</span> <div><em><?php echo $limit?> kWh</em></div></div>
 													</div>
 												</div>
 
@@ -209,7 +209,7 @@
 									<div id='<?php echo $id?>'>
 										<div class="card-content white-text">
 											<span class="card-title black-text"><b>Unregistered Device</b></span>
-											<p class="black-text">ID: <em><?php echo $app_id;?></em></p>
+											<div class="black-text nInfo"><div class="valign-wrapper"><b>ID</b></div> <span class='valign-wrapper'><b>:</b></span> <div  class="valign-wrapper"><em><?php echo $app_id;?></em></div></div>
 										</div>
 									</div>
 								</div>
@@ -237,7 +237,7 @@
 									<div id='<?php echo $id?>'>
 										<div class="card-content white-text">
 											<span class="card-title black-text"><b>Anonymous Device</b></span>
-											<p class="black-text">ID: No Id</p>
+											<div class="black-text nInfo"><div class="valign-wrapper"><b>ID</b></div> <span class='valign-wrapper'><b>:</b></span> <div  class="valign-wrapper"><em>NO_ID</em></div></div>
 										</div>
 									</div>
 								</div>
@@ -335,9 +335,8 @@
 									<div class='for-id' name='<?php echo $id?>' >
 										<div class="card-content white-text" style="margin-bottom:1rem;">
 											<span class="card-title black-text">Unregistered Device</span>
-											<p class="black-text">ID: <em><?php echo $app_id;?></em></p>
+											<div class="black-text nInfo"><div class="valign-wrapper"><b>ID</b></div> <span class='valign-wrapper'><b>:</b></span> <div  class="valign-wrapper"><em><?php echo $app_id;?></em></div></div>
 										</div>
-										<div class="divider"></div>
 										<div class="card-action right-align" style="margin-top:1rem;">
 											<a id='<?php echo $app_id;?>' class="register-trigger modal-trigger waves-effect waves-purple sTitle btn-register btn-flat"  href="#register_appl">Register</a>
 											<a id='<?php echo $app_id;?>' class="allow-trigger  waves-effect waves-green modal-trigger sTitle btn-accept btn-flat"  href='#allowUnregistered'>Allow</a>
@@ -368,7 +367,7 @@
 									<div class='for-id' name='<?php echo $id?>' >
 										<div class="card-content white-text" style="margin-bottom:1rem;">
 											<span class="card-title black-text">Anonymous Device</span>
-											<p class="black-text">ID: <em>No Id</em></p>
+											<div class="black-text nInfo"><div class="valign-wrapper"><b>ID</b></div> <span class='valign-wrapper'><b>:</b></span> <div  class="valign-wrapper"><em><?php echo $app_id;?></em></div></div>
 										</div>
 										<div class="divider"></div>
 										<div class="card-action right-align" style="margin-top:1rem;">

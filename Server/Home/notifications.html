@@ -419,7 +419,6 @@
 			max-height: 100% !important;
 		}
 		.dropdown-content {
-			height: 500% !important;
 			width: 100% !important;
 		}
 		.btn-accept{
@@ -491,12 +490,6 @@
 			max-width:100%;
 			margin: 0 auto;
 			border-radius:50px;
-		}
-		.modal.modal-fixed-footer .modal-content {
-			height: max-content !important;
-			max-height: max-content !important;
-			width: 100%;
-			overflow:hidden;
 		}
 		.input-field .prefix {
 			position: absolute;
@@ -709,7 +702,10 @@
 				$('#applianceType').formSelect();
 			});
 			
-			$('body').css('min-height', $( window ).height()); 
+			$('body').css('min-height', $( window ).height());
+			$('#register_appl , #updateLimit , #allowUnregistered').click(function() {
+				$('body').css('overflow', 'hidden');
+			});			
 		});
 	</script>
 </head>
@@ -811,11 +807,11 @@
 			<!-- Modal Structure for Unregistered Device Granted-->
 			<div id="allowUnregistered" class="modal modal-fixed-footer">
 				<form method="POST" action="">
-					<div class="modal-content">
+					<div class="modal-content" style="overflow-y: hidden;">
 						<div class="row">
 							<h5>Allow Restrictions</h5>
 						</div>
-						<div class="row">
+						<div class="row" style="height:100%">
 							<div class="input-field col s12">
 								<select id='Restrictions'>
 									<option value="69" disabled selected>Choose your option</option>
@@ -869,12 +865,12 @@
 
 			<!-- Modal Structure -->
 			<div id="register_appl" class="modal modal-fixed-footer">
-				<div class="modal-content" style="display: block; overflow: hidden;">
+				<div class="modal-content" style="display: block; overflow-y: scroll;">
 					<h5>Register Appliances</h5>
-					<div class="row" style="margin-bottom: 0; height: 100% !important;">
-						<div class="col s12 m4 l4 overhidden" style="display:block; width:100%; height: inherit; padding-top:.5rem;">
+					<div class="row" style="margin-bottom: 0;">
+						<div class="col s12 m4 l4 overhidden" style="display:block; width:100%; padding: .5rem 0; height:100%;">
 							<form method="POST" action="">
-								<div class="input-field col s12">
+								<div class="input-field col s12" style="padding:0; margin-top:1.5rem;">
 									<input id="d_id" type="text" disabled="disabled" class="validate border_bottom_green border_bottom_darkgray" style="background:rgba(0,0,0,0);border:none; color:black;" autocomplete="off" required>
 									<label for="d_id" id='d_id_label' class="grey-text text-darken-2">Appliance ID</label>
 								</div>
