@@ -121,7 +121,7 @@ function add_jqueries() {
 		}
 	});
 
-	$('.u_field').blur(function () {
+	$('#d_updater').focus(function () {
 		if (($('#d_ID').hasClass('invalid')) || ($('#d_NAME').hasClass('invalid')) || ($('#d_LIMIT').hasClass('invalid'))) {
 			$('#d_updater').removeClass('modal-close');
 			ToastMessage("Check your Inputs");
