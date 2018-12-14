@@ -1,1 +1,1 @@
-lastUID=f7ba179||currentConsumedVal=0||lastMoUpdate=12
+lastUID=164da4b9||currentConsumedVal=0.5||lastMoUpdate=12

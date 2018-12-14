@@ -410,17 +410,7 @@
 			background: rgba(0, 0, 0, 0.4);
 			color: black;
 		}
-		.modal-content { 
-			overflow-y:visible; 
-		}
-		.modal.modal-fixed-footer .modal-content {
-			overflow-y: scroll;
-			display: block;
-			max-height: 100% !important;
-		}
-		.dropdown-content {
-			width: 100% !important;
-		}
+		
 		.btn-accept{
 			color: #66bb6a !important;
 			background-color:rgba(0,0,0,0) !important;
@@ -584,6 +574,37 @@
 		#updateLimit{
 			max-height: 450px;
 			min-height: 430px;
+		}
+		
+		#applianceType,
+		#applianceCateg, 
+		#Restrictions{
+			background: rgba(0,0,0,0.1);
+			border: none;
+			border-radius: 50px;
+			padding: 0 1rem;
+		}
+		
+		#applianceTypeHome option, 
+		#applianceCategHome option, 
+		#Restrictions option{
+			background: #ffffff;
+			border-radius: 50px;
+			padding: 0 1rem;
+		}
+		
+		.sLabel{
+			padding: 1.3rem;
+			font-size: 1rem;
+			color:#616161;
+		}
+		@media only screen and (max-width: 480px) {
+			select {
+			   background: #ffffff;
+				border-radius: 50px;
+				padding: 0 1rem;
+				color: #00000;
+			}
 		}
 		
 	</style>
@@ -812,8 +833,9 @@
 							<h5>Allow Restrictions</h5>
 						</div>
 						<div class="row" style="height:100%">
-							<div class="input-field col s12">
-								<select id='Restrictions'>
+							<div class="col s12">
+								<label class="sLabel">Restrictions</label>
+								<select id='Restrictions'  class="browser-default">
 									<option value="69" disabled selected>Choose your option</option>
 									<option value="0">No Restrictions</option>
 									<option value="1">5 mins</option>
@@ -823,7 +845,7 @@
 									<option value="5">6 hours</option>
 									<option value="6">12 hrs</option>
 								</select>
-								<label>Restrictions</label>
+								
 							</div>
 						</div>
 					</div>
@@ -874,8 +896,9 @@
 									<input id="d_id" type="text" disabled="disabled" class="validate border_bottom_green border_bottom_darkgray" style="background:rgba(0,0,0,0);border:none; color:black;" autocomplete="off" required>
 									<label for="d_id" id='d_id_label' class="grey-text text-darken-2">Appliance ID</label>
 								</div>
-								<div class="input-field col s12">
-									<select id="applianceCateg" class="border_bottom_darkgray grey-text height:100px;">
+								<div class="col s12">
+								<label class="sLabel">Device Category</label>
+									<select  id="applianceCateg" class="browser-default">
 										<option class="grey-text text-darken-2" value="0" disabled selected>Choose appliance category</option>
 										<option class="black-text text-darken-2" value="1">AIR CONDITIONING</option>
 										<option class="black-text text-darken-2" value="2">COMPUTERS</option>
@@ -884,16 +907,15 @@
 										<option class="black-text text-darken-2" value="5">LIGHTINGS</option>
 										<option class="black-text text-darken-2" value="6">OTHERS</option>
 									</select>
-									<label>Device Category</label>
 								</div>
-								<div class="input-field col s12">
-									<select id="applianceType" class="border_bottom_darkgray grey-text height:100px;" disabled>
-										
-									</select>
-									<label>Device Category</label>
+								<div class="col s12">
+									<label class="sLabel">Device Type</label>
+									<select id="applianceType" class="browser-default">
+										<option class="grey-text text-darken-2" value="0" disabled selected>Choose appliance category</option>
+									</select>			
 								</div>
 								
-								<div class="input-field col s12">
+								<div class="input-field col s12" style="margin-top:1.6rem;">
 									<input id="d_name" type="text" class="validate border_bottom_green border_bottom_darkgray" autocomplete="off" required>
 									<label for="d_name" class="grey-text text-darken-2">Appliance Name</label>
 								</div>
