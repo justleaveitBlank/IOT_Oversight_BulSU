@@ -496,6 +496,7 @@ function checkPlugged() {
 					$(".appliance-info").each(function () {
 						$(this).appendTo($("#registered-apps"));
 						$(this).find('.switch').hide();
+						$(".appliance-info[name='" + data.uid + "']").find('.collapsible-header').removeClass("ClassNgPlugged");
 					});
 					if ($("#plugged-apps").find($(".appliance-info[name='" + data.uid + "']")).length == 0) {
 						$(".appliance-info[name='" + data.uid + "']").appendTo($("#plugged-apps"));
@@ -506,6 +507,7 @@ function checkPlugged() {
 					$(".appliance-info").each(function () {
 						$(this).appendTo($("#registered-apps"));
 						$(this).find('.switch').hide();
+						$(".appliance-info[name='" + data.uid + "']").find('.collapsible-header').removeClass("ClassNgPlugged");
 					});
 					if(data.plugged=="1"){
 						$('.additional-note').hide();
@@ -537,6 +539,7 @@ function checkPlugged() {
 				$(".appliance-info").each(function () {
 					$(this).appendTo($("#registered-apps"));
 					$(this).find('.switch').hide();
+					$(".appliance-info[name='" + data.uid + "']").find('.collapsible-header').removeClass("ClassNgPlugged");
 				});
 				$("#noappnotice").show();
 				$('#unregisterednotice').hide();
